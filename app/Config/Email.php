@@ -9,7 +9,7 @@ class Email extends BaseConfig
     /**
      * @var string
      */
-    public $fromEmail = "help.anakkendali@gmail.com";
+    public $fromEmail = "";
 
     /**
      * @var string
@@ -54,14 +54,14 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPUser = "help.anakkendali@gmail.com";
+    public $SMTPUser = "";
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    public $SMTPPass = "Anam114113";
+    public $SMTPPass = "";
 
     /**
      * SMTP Port
