@@ -105,6 +105,8 @@ $routes->group('admin', function ($routes) {
 	$routes->get('getclass', 'DataBillings::getclassandbillings', ['filter' => 'permission:manage.bendahara']);
 	$routes->get('getnama', 'DataBillings::getnama', ['filter' => 'permission:manage.bendahara']);
 
+	$routes->get('data-payments', 'DataPayments::index', ['filter' => 'permission:manage.bendahara']);
+	$routes->get('data-payments-datatable', 'DataPayments::datatable', ['filter' => 'permission:manage.bendahara']);
 
 	$routes->get('data-billings-datatable-perindividu', 'DataBillings::datatable_perindividu', ['filter' => 'permission:manage.bendahara']);
 	$routes->get('detail-data-billings-perindividu', 'DataBillings::get_detailperindividu', ['filter' => 'permission:manage.bendahara']);
