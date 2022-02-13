@@ -106,7 +106,7 @@
                         <span><?= lang('Files.Parenting') ?></span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/admin/data-breach"><?= lang('Files.Data Breach') ?></a></li>
+                        <li><a href="/admin/data-violation"><?= lang('Files.Data Violation') ?></a></li>
                         <li><a href="/admin/data-permission"><?= lang('Files.Data Permission') ?></a></li>
                         <li><a href="/admin/data-visitation"><?= lang('Files.Data Visitation') ?></a></li>
                     </ul>

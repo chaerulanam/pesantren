@@ -442,7 +442,7 @@ class DataBillings extends BaseController
             $kelasid = $this->request->getGet('kelas');
 
             $nama = $this->userModel
-                ->select('users.id as userid, nama_lengkap')
+                ->select('users.id as userid, profil.id as profilid, nama_lengkap')
                 ->join('users_profil', 'users_profil.user_id = users.id')
                 ->join('profil', 'users_profil.profil_id = profil.id')
                 ->join('kelas_profil', 'kelas_profil.santri_id = profil.id')
