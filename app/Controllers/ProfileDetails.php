@@ -37,7 +37,15 @@ class ProfileDetails extends BaseController
                 'page_title' => view('admin/partials/page-title', ['title' => 'Profile', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
             ];
             // dd($data);
-            return view('admin/profil-detail', $data);
+            if (has_permission('admin')) {
+                return view('admin/profil-detail', $data);
+            } else {
+                if ($username == user()->username) {
+                    return view('admin/profil-detail', $data);
+                } else {
+                    return redirect()->to('/admin');
+                }
+            }
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }

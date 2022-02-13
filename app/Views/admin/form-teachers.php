@@ -281,7 +281,7 @@
                             <div class="card-body">
                                 <div class="clearfix"></div>
                                 <div class="mb-4">
-                                    <img src="assets/images/users/default.png" alt=""
+                                    <img src="/assets/images/users/default.png" alt=""
                                         class="avatar-lg rounded img-thumbnail" id="preview">
                                     <input type="file" class="form-control-file" id="foto" onchange="preview()">
                                 </div>

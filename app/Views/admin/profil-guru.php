@@ -55,6 +55,7 @@
                                         <p class="card-title-desc">
                                         </p>
                                     </div>
+                                    <?php if (has_permission('admin')) : ?>
                                     <div class="col-md-8">
                                         <div class="float-end btn-group">
                                             <a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus"
@@ -65,6 +66,7 @@
                                                 Upload</a>
                                         </div>
                                     </div>
+                                    <?php endif; ?>
                                 </div>
 
                                 <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"

@@ -72,13 +72,26 @@ class ProfileTeachers extends BaseController
                     </a>';
                     if ($key->active == 1) {
                         $row[] = '<span class="badge bg-success text-white">Active</span>';
-                        $row[] = '<div class="btn-group me-1 mt-1">
+                        if (has_permission('admin')) {
+                            $row[] = '<div class="btn-group me-1 mt-1">
                         <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu">
-                        <a class="dropdown-item" href="detail-students?username=' . $key->username . '" >Detail</a>
+                        <a class="dropdown-item" href="detail-teachers?username=' . $key->username . '" >Detail</a>                        
                         <a class="dropdown-item" id="delete" href="#" data-id="' . $key->profilid . '" data-userid="' . $key->userid . '">Delete</a>
                         </div>
-                    </div>';
+                        </div>';
+                        } else {
+                            if ($key->userid == user_id()) {
+                                $row[] = '<div class="btn-group me-1 mt-1">
+                                <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
+                                <div class="dropdown-menu">
+                                <a class="dropdown-item" href="detail-teachers?username=' . $key->username . '" >Detail</a>                        
+                                </div>
+                                </div>';
+                            } else {
+                                $row[] = '-';
+                            }
+                        }
                         // <a class="dropdown-item" id="" href="#" data-bs-toggle="modal" data-bs-target=".update" data-id="' . $key->userid . '">Update</a>
                     } else if ($key->active == 0) {
                         if ($key->username == 0) {
