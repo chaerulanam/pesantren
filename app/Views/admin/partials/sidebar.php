@@ -76,7 +76,7 @@
                 </li>
 
                 <li class="menu-title"><?= lang('Files.Sections') ?></li>
-
+                <?php if (has_permission('manage.bendahara')) : ?>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-money-stack"></i>
@@ -98,6 +98,8 @@
                         </li>
                     </ul>
                 </li>
+                <?php endif; ?>
+                <?php if (has_permission('manage.pengasuhan')) : ?>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-users-alt"></i>
@@ -109,6 +111,8 @@
                         <li><a href="/admin/data-visitation"><?= lang('Files.Data Visitation') ?></a></li>
                     </ul>
                 </li>
+                <?php endif; ?>
+                <?php if (has_permission('manage.pengajaran')) : ?>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-comment-alt-info"></i>
@@ -124,6 +128,8 @@
                         <li><a href="/admin/data-values-ranks"><?= lang('Files.Data Values and Ranks') ?></a></li>
                     </ul>
                 </li>
+                <?php endif; ?>
+                <?php if (has_permission('manage.kesehatan')) : ?>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-heartbeat"></i>
@@ -137,20 +143,21 @@
                         <li><a href="/admin/data-language"><?= lang('Files.Language') ?></a></li>
                     </ul>
                 </li>
-
+                <?php endif; ?>
+                <?php if (has_permission('manage.guru')) : ?>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="fas fa-user-tie"></i>
                         <span><?= lang('Files.Teachers') ?></span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a
-                                href="/admin/attendances-schedules-lessons"><?= lang('Files.Attendances Schedules Lessons') ?></a>
+                        <li><a href="/admin/presences"><?= lang('Files.Attendances Schedules Lessons') ?></a>
                         </li>
                         <li><a href="/admin/values-lessons"><?= lang('Files.Values Lessons') ?></a></li>
                     </ul>
                 </li>
-
+                <?php endif; ?>
+                <?php if (has_permission('manage.author')) : ?>
                 <li class="menu-title"><?= lang('Files.Blog') ?></li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -181,6 +188,8 @@
                         <span><?= lang('Files.Comments') ?></span>
                     </a>
                 </li>
+                <?php endif; ?>
+                <?php if (has_permission('manage.admin')) : ?>
                 <li class="menu-title"><?= lang('Files.Settings') ?></li>
                 <li>
                     <a href="/admin/site-identity" class="waves-effect">
@@ -194,6 +203,7 @@
                         <span><?= lang('Files.School Years') ?></span>
                     </a>
                 </li>
+                <?php endif; ?>
             </ul>
         </div>
         <!-- Sidebar -->

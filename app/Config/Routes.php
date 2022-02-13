@@ -67,6 +67,8 @@ $routes->group('admin', function ($routes) {
 	$routes->post('update-teachers', 'ProfileTeachers::update', ['filter' => 'permission:manage.guru']);
 	$routes->post('delete-teachers', 'ProfileTeachers::delete', ['filter' => 'permission:manage.guru']);
 
+	$routes->get('precences', 'Precences::index', ['filter' => 'permission:manage.guru']);
+
 	$routes->get('master-billings', 'MasterBillings::index', ['filter' => 'permission:manage.bendahara']);
 	$routes->get('master-billings-datatable', 'MasterBillings::datatable', ['filter' => 'permission:manage.bendahara']);
 	$routes->post('add-master-billings', 'MasterBillings::add', ['filter' => 'permission:manage.bendahara']);
