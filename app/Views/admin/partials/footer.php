@@ -4,12 +4,12 @@
             <div class="col-sm-6">
                 <script>
                 document.write(new Date().getFullYear())
-                </script> © Minible.
+                </script> © Al-Ishlah Tajug.
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">
-                    Crafted with <i class="mdi mdi-heart text-danger"></i> by <a href="https://themesbrand.com/"
-                        target="_blank" class="text-reset">Themesbrand</a>
+                    Developed <i class="mdi mdi-heart text-danger"></i> by <a href="https://anakkendali.com/"
+                        target="_blank" class="text-reset">Chaerul Anam</a>
                 </div>
             </div>
         </div>

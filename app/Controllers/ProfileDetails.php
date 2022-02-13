@@ -37,7 +37,7 @@ class ProfileDetails extends BaseController
                 'page_title' => view('admin/partials/page-title', ['title' => 'Profile', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
             ];
             // dd($data);
-            if (has_permission('admin')) {
+            if (has_permission('manage.admin')) {
                 return view('admin/profil-detail', $data);
             } else {
                 if ($username == user()->username) {

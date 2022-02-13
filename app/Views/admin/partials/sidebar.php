@@ -63,9 +63,15 @@
                         <span><?= lang('Files.Profile') ?></span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <?php if (has_permission('manage.santri')) : ?>
                         <li><a href="/admin/data-students"><?= lang('Files.Students') ?></a></li>
+                        <?php endif; ?>
+                        <?php if (has_permission('manage.guru')) : ?>
                         <li><a href="/admin/data-teachers"><?= lang('Files.Teachers') ?></a></li>
+                        <?php endif; ?>
+                        <?php if (has_permission('manage.alumni')) : ?>
                         <li><a href="/admin/data-graduates"><?= lang('Files.Graduates') ?></a></li>
+                        <?php endif; ?>
                     </ul>
                 </li>
 

@@ -72,7 +72,7 @@ class ProfileStudents extends BaseController
                     </a>';
                     if ($key->active == 1) {
                         $row[] = '<span class="badge bg-success text-white">Active</span>';
-                        if (has_permission('admin')) {
+                        if (has_permission('manage.admin')) {
                             $row[] = '<div class="btn-group me-1 mt-1">
                         <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu">

@@ -55,7 +55,7 @@
                                         <p class="card-title-desc">
                                         </p>
                                     </div>
-                                    <?php if (has_permission('admin')) : ?>
+                                    <?php if (has_permission('manage.admin')) : ?>
                                     <div class="col-md-8">
                                         <div class="float-end btn-group">
                                             <a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus"
