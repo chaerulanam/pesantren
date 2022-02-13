@@ -4,16 +4,16 @@
 <head>
 
     <?= $title_meta ?>
-    <?= $this->include('santri/partials/head-css') ?>
+    <?= $this->include('admin/partials/head-css') ?>
 
 </head>
 
-<?= $this->include('santri/partials/body') ?>
+<?= $this->include('admin/partials/body') ?>
 
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-    <?= $this->include('santri/partials/menu') ?>
+    <?= $this->include('admin/partials/menu') ?>
 
     <!-- ============================================================== -->
     <!-- Start right Content here -->
@@ -50,9 +50,9 @@
                             <div class="col-4">
                                 <div class="text-muted">
                                     <h5 class="font-size-16 mb-3">Tagihan untuk:</h5>
-                                    <h5 class="font-size-15 mb-2"><?= $myprofil->nama_lengkap; ?></h5>
-                                    <p class="mb-1"><?= $myprofil->alamat_lengkap; ?></p>
-                                    <p><?= $myprofil->no_hp; ?></p>
+                                    <h5 class="font-size-15 mb-2"><?= $invoice[0]->nama_lengkap; ?></h5>
+                                    <p class="mb-1"><?= $invoice[0]->alamat_lengkap; ?></p>
+                                    <p><?= $invoice[0]->no_hp; ?></p>
                                 </div>
                             </div>
                             <div class="col-5"></div>
@@ -74,7 +74,7 @@
                         <div class="py-2">
                             <h5 class="font-size-15">Rincian Pembayaran</h5>
 
-                            <table id="table-invoice" class="table table-striped table-bordered dt-responsive nowrap"
+                            <table id="table-invoice" class="table table-striped table-borderless dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
@@ -108,6 +108,7 @@
                                     </h4>
                                 </div>
                             </div>
+
                             <div class="row mt-2">
                                 <table id="table-invoice"
                                     class="table table-striped table-bordered dt-responsive nowrap"
@@ -161,16 +162,16 @@
             <!-- End Page-content -->
 
 
-            <?= $this->include('santri/partials/footer') ?>
+            <?= $this->include('admin/partials/footer') ?>
         </div>
         <!-- end main content-->
 
     </div>
     <!-- END layout-wrapper -->
 
-    <?= $this->include('santri/partials/right-sidebar') ?>
+    <?= $this->include('admin/partials/right-sidebar') ?>
 
-    <?= $this->include('santri/partials/vendor-scripts') ?>
+    <?= $this->include('admin/partials/vendor-scripts') ?>
 
     <script src="<?= base_url(); ?>/assets/js/app.js"></script>
 

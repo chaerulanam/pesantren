@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Controllers\Santri;
+namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use App\Models\DataTagihanModel;
 use App\Models\PembayaranModel;
 
@@ -41,6 +40,6 @@ class Invoice extends BaseController
         ];
 
         // dd($data);
-        return view('santri/invoice', $data);
+        return view('admin/invoice', $data);
     }
 }
