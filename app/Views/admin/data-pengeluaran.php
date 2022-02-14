@@ -57,8 +57,7 @@
                                         <div class="float-end button-checkout">
                                             <div class="btn-group">
                                                 <a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus"
-                                                    id="entrimanual" data-bs-toggle="modal"
-                                                    data-bs-target=".entrimanual">
+                                                    id="entri" data-bs-toggle="modal" data-bs-target=".entri">
                                                     Tambah Baru</a>
                                             </div>
                                         </div>
@@ -70,34 +69,26 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kelas</th>
+                                            <th>Nama Penerima</th>
+                                            <th>Nominal</th>
                                             <th>Deskripsi</th>
-                                            <th>Wali Kelas</th>
-                                            <th>Action</th>
+                                            <th>Bukti</th>
+                                            <th>Tahun Ajaran</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
 
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Kelas</th>
-                                            <th>Deskripsi</th>
-                                            <th>Wali Kelas</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
                                 </table>
                             </div>
 
-                            <div class="modal fade entrimanual" tabindex="-1" role="dialog"
+                            <div class="modal fade entri" tabindex="-1" role="dialog"
                                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Tambah Master Kelas
+                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Form master classes
                                             </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close">
@@ -105,26 +96,20 @@
                                         </div>
                                         <div class="modal-body">
                                             <form>
-                                                <div class="form-group c_form_group">
-                                                    <label>Kelas</label>
-                                                    <input type="text" class="form-control email" id="Kelas" name=""
-                                                        placeholder="Kelas">
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label>Nama Penerima</label>
+                                                    <input type="text" class="form-control email" id="Nama-Penerima"
+                                                        name="" placeholder="Nama Penerima">
                                                 </div>
-                                                <div class="form-group c_form_group">
+                                                <div class="form-group c_form_group mb-3">
                                                     <label>Deskripsi</label>
                                                     <input type="text" class="form-control" id="Deskripsi"
                                                         placeholder="Deskripsi">
                                                 </div>
-                                                <div class="form-group c_form_group">
-                                                    <label class="col-md-2 col-form-label">Wali Kelas</label>
-                                                    <div class="col-md-10">
-                                                        <select class="form-select" id="Wali-Kelas">
-                                                            <?php foreach ($wali as $key) : ?>
-                                                            <option value="<?= $key->profilid; ?>">
-                                                                <?= $key->nama_lengkap; ?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </div>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label>Nominal</label>
+                                                    <input type="text" class="form-control" id="Nominal"
+                                                        placeholder="Nominal">
                                                 </div>
                                             </form>
                                         </div>
@@ -138,12 +123,12 @@
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
 
-                            <div class="modal fade editmodal" tabindex="-1" role="dialog"
-                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal fade edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Update Kelas
+                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Update data pengeluaran
                                             </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close">
@@ -152,27 +137,27 @@
                                         <div class="modal-body">
                                             <form>
                                                 <input type="hidden" id="id">
-                                                <div class="form-group c_form_group">
-                                                    <label>Kelas</label>
-                                                    <input type="text" class="form-control" id="Kelas-Edit" name=""
-                                                        placeholder="Kelas" disabled>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label>Nama Penerima</label>
+                                                    <input type="text" class="form-control" id="Nama-Penerima-Edit"
+                                                        name="" placeholder="Nama Penerima" disabled>
                                                 </div>
-                                                <div class="form-group c_form_group">
+                                                <div class="form-group c_form_group mb-3">
                                                     <label>Deskripsi</label>
                                                     <input type="text" class="form-control" id="Deskripsi-Edit"
                                                         placeholder="Deskripsi" disabled>
                                                 </div>
-                                                <div class="form-group c_form_group">
-                                                    <label class="col-md-2 col-form-label">Wali Kelas</label>
-                                                    <div class="col-md-10">
-                                                        <select class="form-select" id="Wali-Kelas-Edit">
-                                                            <option value=>-Select-</option>
-                                                            <?php foreach ($wali as $key) : ?>
-                                                            <option value="<?= $key->profilid; ?>">
-                                                                <?= $key->nama_lengkap; ?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </div>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label>Nominal</label>
+                                                    <input type="text" class="form-control" id="Nominal-Edit"
+                                                        placeholder="Nominal" disabled>
+                                                </div>
+                                                <label>Bukti</label>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <img src="<?= base_url(); ?>/assets/images/users/default.png" alt=""
+                                                        class="avatar-lg rounded img-thumbnail" id="preview">
+                                                    <input type="file" class="form-control-file" id="foto"
+                                                        onchange="ambil_gambar()">
                                                 </div>
                                             </form>
                                         </div>
@@ -230,13 +215,26 @@
 <script src="<?= base_url() ?>/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
 <script>
+function ambil_gambar() {
+    var file = $("input[type=file]").get(0).files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            $("#preview").attr("src", reader.result);
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
 function ambil_data() {
     $("#datatable").DataTable({
         "destroy": true,
     }).clear();
 
     $.ajax({
-        url: "<?= route_to('admin/master-classes-datatable') ?>",
+        url: "<?= route_to('admin/data-expenditure-datatable') ?>",
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
@@ -288,14 +286,14 @@ $(document).ready(function() {
 $(document).on('click', '#button-entri', function(e) {
     var data = {
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
-        'kelas': $('#Kelas').val(),
-        'wali': $('#Wali-Kelas').val(),
+        'nama_penerima': $('#Nama-Penerima').val(),
+        'nominal': $('#Nominal').val(),
         'deskripsi': $('#Deskripsi').val(),
     }
 
     // console.log(data);
     $.ajax({
-        url: "<?= route_to('admin/add-master-classes') ?>",
+        url: "<?= route_to('admin/add-data-expenditure') ?>",
         type: "POST",
         data: data,
         // global: false,
@@ -311,15 +309,17 @@ $(document).on('click', '#button-entri', function(e) {
         success: function(data) {
             // console.log(data);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
-            if (data.kelas != undefined) {
-                toastr.error(data.kelas);
+            if (data.nama_penerima != undefined) {
+                toastr.error(data.nama_penerima);
+            } else if (data.nominal != undefined) {
+                toastr.error(data.nominal);
             } else if (data.deskripsi != undefined) {
                 toastr.error(data.deskripsi);
             } else if (data.error != undefined) {
                 toastr.error(data.error);
             } else if (data.success != undefined) {
                 toastr.success(data.success);
-                $('.entrimanual').modal('hide');
+                $('.entri').modal('hide');
                 ambil_data();
             }
         }
@@ -331,6 +331,7 @@ $(document).on('click', '#button-delete', function(e) {
         'id': $(this).attr('data-id'),
         'csrf_token_name': $('input[name=csrf_token_name]').val()
     };
+    // console.log(data);
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -341,10 +342,8 @@ $(document).on('click', '#button-delete', function(e) {
         confirmButtonText: "Yes, delete it!"
     }).then(function(result) {
         if (result.value) {
-
-            // console.log(data);
             $.ajax({
-                url: "<?= route_to('admin/remove-master-classes') ?>",
+                url: "<?= route_to('admin/remove-data-expenditure') ?>",
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
@@ -353,7 +352,7 @@ $(document).on('click', '#button-delete', function(e) {
                 dataType: "json",
                 method: "post",
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $('input[name=csrf_token_name]').val(data.csrf_token_name);
                     if (data.error != undefined) {
                         Swal.fire("Failed!", data.error, "error");
@@ -367,40 +366,40 @@ $(document).on('click', '#button-delete', function(e) {
     });
 });
 
-$(document).on('click', '#editmodal', function(e) {
+$(document).on('click', '#edit', function(e) {
     var data = {
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
         'id': $(this).attr("data-id"),
     }
 
     $.ajax({
-        url: "<?= route_to('admin/detail-master-classes') ?>",
+        url: "<?= route_to('admin/detail-data-expenditure') ?>",
         type: "GET",
         data: data,
         success: function(data) {
+            // console.log(data);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
-            $('#Kelas-Edit').val(data.kelas);
+            $('#Nama-Penerima-Edit').val(data.nama_penerima);
             $('#Deskripsi-Edit').val(data.deskripsi);
-            $('#Wali-Kelas-Edit').val(data.wali_id);
+            $('#Nominal-Edit').val(data.nominal);
             $('#id').val(data.id);
         }
     });
 });
 
 $(document).on('click', '#button-update', function(e) {
-    var data = {
-        'csrf_token_name': $('input[name=csrf_token_name]').val(),
-        'id': $('#id').val(),
-        'wali': $('#Wali-Kelas-Edit').val(),
-    }
+    let foto = $('#foto').prop('files')[0];
+    let fd = new FormData();
+    fd.append('foto', foto);
+    fd.append('id', $('#id').val());
 
     // console.log(data);
     $.ajax({
-        url: "<?= route_to('admin/update-master-classes') ?>",
+        url: "<?= route_to('admin/update-data-expenditure') ?>",
         type: "POST",
-        data: data,
-        // global: false,
-        // async: false,
+        data: fd,
+        processData: false,
+        contentType: false,
         beforeSend: function() {
             $('#button-update').removeAttr('disable');
             $('#button-update').html('<i class="fa fa-spin fa-spinner"></i>');
@@ -410,18 +409,47 @@ $(document).on('click', '#button-update', function(e) {
             $('#button-update').html('Update');
         },
         success: function(data) {
-            console.log(data);
+            // console.log(data);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
             if (data.error != undefined) {
                 toastr.error(data.error);
+            } else if (data.foto != undefined) {
+                toastr.error(data.foto);
             } else if (data.success != undefined) {
                 toastr.success(data.success);
-                $('.editmodal').modal('hide');
+                $('.edit').modal('hide');
                 ambil_data();
             }
         }
     });
 });
+</script>
+
+<script type="text/javascript">
+var rupiah = document.getElementById('Nominal');
+rupiah.addEventListener('keyup', function(e) {
+    // tambahkan 'Rp.' pada saat form di ketik
+    // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+    rupiah.value = formatRupiah(this.value, 'Rp ');
+});
+
+/* Fungsi formatRupiah */
+function formatRupiah(angka, prefix) {
+    var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    // tambahkan titik jika yang di input sudah menjadi angka ribuan
+    if (ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+    }
+
+    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+}
 </script>
 
 <script src="<?= base_url() ?>/assets/js/app.js"></script>

@@ -59,14 +59,14 @@
                                     <li class="nav-item">
                                         <button class="nav-link active" data-bs-toggle="tab" role="tab"
                                             onclick="ambil_data('SMP')">
-                                            <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                            <span class="d-block d-sm-none">SMP</span>
                                             <span class="d-none d-sm-block">SMP</span>
                                         </button>
                                     </li>
                                     <li class="nav-item">
                                         <button class="nav-link" data-bs-toggle="tab" role="tab"
                                             onclick="ambil_data('SMA')">
-                                            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                            <span class="d-block d-sm-none">SMA</span>
                                             <span class="d-none d-sm-block">SMA</span>
                                         </button>
                                     </li>

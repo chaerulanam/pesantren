@@ -419,10 +419,6 @@ function preview() {
         reader.readAsDataURL(file);
     }
 }
-$(document).ready(function() {
-
-
-});
 </script>
 
 <script>

@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\PerizinanModel;
+use App\Models\PelanggaranModel;
 
-class DataPermissions extends BaseController
+class DataViolations extends BaseController
 {
     public function __construct()
     {
-        $this->perizinanModel = new PerizinanModel();
+        $this->pelanggaranModel = new PelanggaranModel();
     }
     public function index()
     {
@@ -25,7 +25,7 @@ class DataPermissions extends BaseController
             'page_title' => view('admin/partials/page-title', ['title' => 'Data Payments', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
         ];
         // dd($data);
-        return view('admin/data-perizinan', $data);
+        return view('admin/data-pelanggaran', $data);
     }
 
     public function datatable()
@@ -35,22 +35,22 @@ class DataPermissions extends BaseController
             $csrfhash = csrf_hash();
             $tahun = $this->request->getGet('tahun');
             if ($tahun != "") {
-                $posts = $this->perizinanModel
-                    ->select('*, perizinan.id as perizinanid, perizinan.status, perizinan.created_at, perizinan.updated_at')
-                    ->join('profil', 'perizinan.santri_id = profil.id')
+                $posts = $this->pelanggaranModel
+                    ->select('*, pelanggaran.id as pelanggaranid, pelanggaran.status, pelanggaran.created_at, pelanggaran.updated_at')
+                    ->join('profil', 'pelanggaran.santri_id = profil.id')
                     ->join('users_profil', 'users_profil.profil_id = profil.id')
                     ->join('users', 'users_profil.user_id = users.id')
-                    ->join('master_kelas', 'perizinan.kelas_id = master_kelas.id')
-                    ->where('perizinan.tahun_ajaran', $tahun)
+                    ->join('master_kelas', 'pelanggaran.kelas_id = master_kelas.id')
+                    ->where('pelanggaran.tahun_ajaran', $tahun)
                     ->findAll();
             } else {
-                $posts = $this->perizinanModel
-                    ->select('*, perizinan.id as perizinanid, perizinan.status, perizinan.created_at, perizinan.updated_at')
-                    ->join('profil', 'perizinan.santri_id = profil.id')
+                $posts = $this->pelanggaranModel
+                    ->select('*, pelanggaran.id as pelanggaranid, pelanggaran.status, pelanggaran.created_at, pelanggaran.updated_at')
+                    ->join('profil', 'pelanggaran.santri_id = profil.id')
                     ->join('users_profil', 'users_profil.profil_id = profil.id')
                     ->join('users', 'users_profil.user_id = users.id')
-                    ->join('master_kelas', 'perizinan.kelas_id = master_kelas.id')
-                    ->where('perizinan.tahun_ajaran', $this->tahunModel->TahunAktif())
+                    ->join('master_kelas', 'pelanggaran.kelas_id = master_kelas.id')
+                    ->where('pelanggaran.tahun_ajaran', $this->tahunModel->TahunAktif())
                     ->findAll();
             }
             if ($posts) {
@@ -60,7 +60,8 @@ class DataPermissions extends BaseController
                     $row = array();
                     $row[] = $no;
                     $row[] = $key->nama_lengkap . ' | ' . $key->kelas;
-                    $row[] = $key->keperluan;
+                    $row[] = $key->nama_pelanggaran;
+                    $row[] = $key->hukuman;
                     if ($key->status == 1) {
                         $row[] = '<div class="btn-group d-flex justify-content-center"><span class="badge bg-danger text-white">Belum Selesai</span></div>';
                         $row[] = $key->tahun_ajaran;
@@ -74,10 +75,10 @@ class DataPermissions extends BaseController
                     }
 
                     $row[] = '<div class="btn-group d-flex justify-content-center">
-                <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target=".edit" id="edit" data-id="' . $key->perizinanid .  '">
+                <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target=".edit" id="edit" data-id="' . $key->pelanggaranid .  '">
                 <i class="nav-icon fas fa-edit"></i>
                 </a>
-                 <a href="#" class="btn btn-outline-danger" id="button-delete" data-id="' . $key->perizinanid .  '">
+                 <a href="#" class="btn btn-outline-danger" id="button-delete" data-id="' . $key->pelanggaranid .  '">
                 <i class="nav-icon fas fa-trash"></i>
                 </a>
                 </div>';
@@ -113,10 +114,16 @@ class DataPermissions extends BaseController
                             'required' => 'Nama lengkap harus diisi !'
                         ]
                     ],
-                    'keperluan' => [
+                    'nama_pelanggaran' => [
                         'rules' => 'required',
                         'errors' => [
-                            'required' => 'Keperluan harus diisi !'
+                            'required' => 'Nama pelanggaran harus diisi !'
+                        ]
+                    ],
+                    'hukuman' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Hukuman harus diisi !'
                         ]
                     ],
                 ]
@@ -129,16 +136,17 @@ class DataPermissions extends BaseController
 
             $data = [
                 'kelas_id' => $this->request->getPost('kelas'),
-                'keperluan' => $this->request->getPost('keperluan'),
+                'nama_pelanggaran' => $this->request->getPost('nama_pelanggaran'),
+                'hukuman' => $this->request->getPost('hukuman'),
                 'santri_id' => $this->request->getPost('profil'),
                 'tahun_ajaran' => $this->tahunModel->TahunAktif(),
                 'status' => 1,
             ];
 
-            if (!$this->perizinanModel->save($data)) {
-                $data = array('error' => 'Gagal menambah data perizinan.');
+            if (!$this->pelanggaranModel->save($data)) {
+                $data = array('error' => 'Gagal menambah data pelanggaran.');
             }
-            $data = array('success' => 'Berhasil menambah data perizinan.');
+            $data = array('success' => 'Berhasil menambah data pelanggaran.');
             $data[$csrfname] = $csrfhash;
             return $this->response->setJSON($data);
         } else {
@@ -152,10 +160,10 @@ class DataPermissions extends BaseController
             $csrfname = csrf_token();
             $csrfhash = csrf_hash();
             $id = $this->request->getPost('id');
-            if (!$this->perizinanModel->delete($id)) {
-                $data = array('error' => 'Gagal menghapus data perizinan');
+            if (!$this->pelanggaranModel->delete($id)) {
+                $data = array('error' => 'Gagal menghapus data pelanggaran');
             } else {
-                $data = array('success' => 'Berhasil menghapus data perizinan');
+                $data = array('success' => 'Berhasil menghapus data pelanggaran');
             }
             $data[$csrfname] = $csrfhash;
             return $this->response->setJSON($data);
@@ -170,19 +178,19 @@ class DataPermissions extends BaseController
             $csrfname = csrf_token();
             $csrfhash = csrf_hash();
             $id = $this->request->getGet('id');
-            $post = $this->perizinanModel
-                ->select('*, perizinan.status, perizinan.created_at, perizinan.updated_at')
-                ->join('profil', 'perizinan.santri_id = profil.id')
+            $post = $this->pelanggaranModel
+                ->select('*, pelanggaran.status, pelanggaran.created_at, pelanggaran.updated_at')
+                ->join('profil', 'pelanggaran.santri_id = profil.id')
                 ->join('users_profil', 'users_profil.profil_id = profil.id')
                 ->join('users', 'users_profil.user_id = users.id')
-                ->join('master_kelas', 'perizinan.kelas_id = master_kelas.id')
+                ->join('master_kelas', 'pelanggaran.kelas_id = master_kelas.id')
                 ->find($id);
 
             $data = [
                 'id' => $id,
                 'kelas' => $post->kelas,
                 'nama_lengkap' => $post->nama_lengkap,
-                'keperluan' => $post->keperluan,
+                'nama_pelanggaran' => $post->nama_pelanggaran,
                 'status' => $post->status,
             ];
 
@@ -204,10 +212,10 @@ class DataPermissions extends BaseController
                 'status' => $this->request->getPost('status')
             ];
 
-            if (!$this->perizinanModel->save($data)) {
-                $data = array('error' => 'Gagal mengubah status perizinan.');
+            if (!$this->pelanggaranModel->save($data)) {
+                $data = array('error' => 'Gagal mengubah status pelanggaran.');
             }
-            $data = array('success' => 'Berhasil mengubah status perizinan.');
+            $data = array('success' => 'Berhasil mengubah status pelanggaran.');
             $data[$csrfname] = $csrfhash;
             return $this->response->setJSON($data);
         } else {

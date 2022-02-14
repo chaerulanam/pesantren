@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\JadwalPelajaranModel;
 use App\Models\KehadiranModel;
+use App\Models\PerizinanModel;
 use CodeIgniter\I18n\Time;
 
 class Presences extends BaseController
@@ -12,6 +13,7 @@ class Presences extends BaseController
     {
         $this->jadwalpelajaranModel = new JadwalPelajaranModel();
         $this->kehadiranModel = new KehadiranModel();
+        $this->perizinanModel = new PerizinanModel();
         $this->time = new Time('now', 'Asia/Jakarta', 'id');
     }
     public function index()
@@ -135,14 +137,26 @@ class Presences extends BaseController
                         ->where('jadwal_id', $key->jadwalid)
                         ->groupBy('date(created_at)')
                         ->countAllresults();
+
+                    $izin = $this->perizinanModel
+                        ->where('status', '1')
+                        ->where('santri_id', $key->profilid)
+                        ->countAllresults();
+
                     $no++;
                     $row = array();
                     // $row1 = array();
                     $row[] = $no;
                     $row[] = $key->nama_lengkap;
-                    $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input hadir' . $no . '" id="hadir' . $no . '" data-no="' . $no . '"  data-status="hadir"></div>';
-                    $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input izin' . $no . '" id="izin' . $no . '" data-no="' . $no . '"  data-status="izin"></div>';
-                    $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input absen' . $no . '" id="absen' . $no . '" data-no="' . $no . '"  data-status="absen"></div>';
+                    if ($izin > 0) {
+                        $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input hadir' . $no . '" id="hadir' . $no . '" data-no="' . $no . '"  data-status="hadir" disabled></div>';
+                        $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input izin' . $no . '" id="izin' . $no . '" data-no="' . $no . '"  data-status="izin" checked disabled></div>';
+                        $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input absen' . $no . '" id="absen' . $no . '" data-no="' . $no . '"  data-status="absen" disabled></div>';
+                    } else {
+                        $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input hadir' . $no . '" id="hadir' . $no . '" data-no="' . $no . '"  data-status="hadir"></div>';
+                        $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input izin' . $no . '" id="izin' . $no . '" data-no="' . $no . '"  data-status="izin"></div>';
+                        $row[] = '<div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input absen' . $no . '" id="absen' . $no . '" data-no="' . $no . '"  data-status="absen"></div>';
+                    }
                     $row1 = $key->profilid;
                     $dataid[] = $row1;
                     $data[] = $row;
@@ -179,11 +193,24 @@ class Presences extends BaseController
 
             for ($i = 0; $i < count($profil); $i++) {
                 if ($profil[$i] > 0) {
-                    $row = [
-                        'jadwal_id' => $jadwal,
-                        'santri_id' => $profil[$i],
-                        'status' => $status[$i],
-                    ];
+                    $izin = $this->perizinanModel
+                        ->where('status', '1')
+                        ->where('santri_id', $profil[$i])
+                        ->countAllresults();
+                    if ($izin > 0) {
+                        $row = [
+                            'jadwal_id' => $jadwal,
+                            'santri_id' => $profil[$i],
+                            'status' => 'izin',
+                        ];
+                    } else {
+                        $row = [
+                            'jadwal_id' => $jadwal,
+                            'santri_id' => $profil[$i],
+                            'status' => $status[$i],
+                        ];
+                    }
+
                     $data[] = $row;
                 }
             }

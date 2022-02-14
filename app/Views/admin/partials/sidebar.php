@@ -86,6 +86,7 @@
                         <li><a href="/admin/data-billings"><?= lang('Files.Data Billings') ?></a></li>
                         <li><a href="/admin/data-payments"><?= lang('Files.Data Payments') ?></a></li>
                         <li><a href="/admin/master-billings"><?= lang('Files.Master Billings') ?></a></li>
+                        <li><a href="/admin/data-expenditure"><?= lang('Files.Data Expenditure') ?></a></li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <span><?= lang('Files.Transaction') ?></span>

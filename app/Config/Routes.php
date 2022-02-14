@@ -122,6 +122,13 @@ $routes->group('admin', function ($routes) {
 	$routes->post('remove-data-billings-perindividu', 'DataBillings::delete_perindividu', ['filter' => 'permission:manage.bendahara']);
 	$routes->post('update-data-billings-perindividu', 'DataBillings::update_perindividu', ['filter' => 'permission:manage.bendahara']);
 
+	$routes->get('data-expenditure', 'DataExpenditures::index', ['filter' => 'permission:manage.bendahara']);
+	$routes->get('data-expenditure-datatable', 'DataExpenditures::datatable', ['filter' => 'permission:manage.bendahara']);
+	$routes->get('detail-data-expenditure', 'DataExpenditures::get_detail', ['filter' => 'permission:manage.bendahara']);
+	$routes->post('add-data-expenditure', 'DataExpenditures::add', ['filter' => 'permission:manage.bendahara']);
+	$routes->post('remove-data-expenditure', 'DataExpenditures::delete', ['filter' => 'permission:manage.bendahara']);
+	$routes->post('update-data-expenditure', 'DataExpenditures::update', ['filter' => 'permission:manage.bendahara']);
+
 	$routes->get('data-classes', 'DataClasses::index', ['filter' => 'permission:manage.pengajaran']);
 	$routes->get('data-classes-datatable', 'DataClasses::datatable', ['filter' => 'permission:manage.pengajaran']);
 	$routes->get('detail-data-classes', 'DataClasses::get_detail', ['filter' => 'permission:manage.pengajaran']);
