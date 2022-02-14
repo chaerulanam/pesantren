@@ -263,7 +263,7 @@ function ambil_data() {
                         "orderable": false,
                     }],
                     "language": {
-                        "emptyTable": "Tidak ada data tagihan"
+                        "emptyTable": "Tidak ada data"
                     },
                     "buttons": [{
                             extend: 'copy',

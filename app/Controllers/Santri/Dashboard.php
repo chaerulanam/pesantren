@@ -24,7 +24,12 @@ class Dashboard extends BaseController
             'page_title' => view('santri/partials/page-title', ['title' => 'Dashboard', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
         ];
         // dd($data);
-        return view('santri/dashboard', $data);
+        // return view('santri/dashboard', $data);
+        if (in_groups('santri')) {
+            return view('santri/dashboard', $data);
+        } else {
+            return redirect()->to('/admin');
+        }
     }
 
     public function profil()

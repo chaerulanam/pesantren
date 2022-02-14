@@ -318,7 +318,7 @@ function ambil_data(jenjang = null) {
                         "orderable": false,
                     }],
                     "language": {
-                        "emptyTable": "Tidak ada data tagihan"
+                        "emptyTable": "Tidak ada data"
                     },
                     "buttons": [{
                             extend: 'copy',

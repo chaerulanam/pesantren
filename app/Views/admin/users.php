@@ -344,7 +344,7 @@
                                 "orderable": false,
                             }],
                             "language": {
-                                "emptyTable": "Tidak ada data tagihan"
+                                "emptyTable": "Tidak ada data"
                             },
                             "buttons": [{
                                     extend: 'copy',

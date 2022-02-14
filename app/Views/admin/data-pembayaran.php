@@ -44,7 +44,6 @@
                         <div class="card">
                             <div class="card-body">
 
-
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mt-2 col-6">
@@ -255,7 +254,7 @@ function ambil_data() {
                         "orderable": false,
                     }],
                     "language": {
-                        "emptyTable": "Tidak ada data tagihan"
+                        "emptyTable": "Tidak ada data"
                     },
                     "buttons": [{
                             extend: 'copy',

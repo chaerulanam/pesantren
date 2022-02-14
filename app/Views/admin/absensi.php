@@ -43,15 +43,6 @@
                 <?= csrf_field() ?>
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="float-end mb-2 btn-group div-button-update">
-                            <a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri"
-                                data-bs-toggle="modal" data-bs-target=".entri">
-                                Tambah Jadwal Pelajaran</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
                                 <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
@@ -61,104 +52,59 @@
                                             <th>No</th>
                                             <th>Kelas</th>
                                             <th>Nama Pelajaran</th>
-                                            <th>Hari</th>
-                                            <th>Jam</th>
-                                            <th>Pengajar</th>
+                                            <th>Jadwal Mengajar</th>
+                                            <th>Total Masuk</th>
                                             <th>Tahun Ajaran</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
-
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Kelas</th>
-                                            <th>Nama Pelajaran</th>
-                                            <th>Hari</th>
-                                            <th>Jam</th>
-                                            <th>Pengajar</th>
-                                            <th>Tahun Ajaran</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
                                 </table>
-
-
                             </div><!-- end card-body -->
                         </div><!-- end card -->
                     </div>
                 </div>
 
-                <div class="modal fade entri" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                <div class="modal fade absen" tabindex="-1" role="dialog" aria-labelledby="absen" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Tambah Data Kelas</h5>
+                                <h5 class="modal-title">Absen Santri</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                 </button>
                             </div>
+                            <div class="col-md-6">
+                                <div class="ms-3">
+                                    <div>
+                                        <p class="mb-1 text-muted mata_pelajaran">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ms-3">
+                                    <div>
+                                        <p class="mb-1 text-muted kelas"></p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="modal-body">
-                                <form>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label class="form-label">Plih Kelas</label>
-                                            <select class="form-control select2" id="Kelas">
-                                                <?php foreach ($kelas as $key) : ?>
-                                                <option value="<?= $key->id ?>">
-                                                    <?= $key->kelas . ' (' . $key->deskripsi . ')'; ?>
-                                                </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Nama Pelajaran</label>
-                                                <select class="form-control select2" id="Pelajaran">
-                                                    <?php foreach ($pelajaran as $key) : ?>
-                                                    <option value="<?= $key->id ?>">
-                                                        <?= $key->nama_pelajaran; ?>
-                                                    </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Jadwal</label>
-                                                <select class="form-control select2" id="Jadwal">
-                                                    <?php $hari = ['Ahad', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum\'at', 'Sabtu'];
-                                                    foreach ($jadwal as $key) : ?>
-                                                    <option value="<?= $key->id ?>">
-                                                        <?= $hari[$key->hari] . '  ' . $key->jam; ?>
-                                                    </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Pengajar</label>
-                                                <select class="form-control select2" id="Profil">
-                                                    <?php foreach ($guru as $key) : ?>
-                                                    <option value="<?= $key->id ?>">
-                                                        <?= $key->nama_lengkap; ?>
-                                                    </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                <table id="datatable-absen"
+                                    class="table table-striped table-bordered dt-responsive nowrap"
+                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Lengkap</th>
+                                            <th>Hadir</th>
+                                            <th>Izin</th>
+                                            <th>Tidak Hadir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
@@ -252,7 +198,7 @@ function ambil_data(tahun = null) {
     }).clear();
 
     $.ajax({
-        url: "<?= route_to('admin/data-lessons-schedules-datatable') ?>",
+        url: "<?= route_to('admin/presences-datatable') ?>",
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
@@ -279,7 +225,7 @@ function ambil_data(tahun = null) {
                         "orderable": false,
                     }],
                     "language": {
-                        "emptyTable": "Tidak ada data tagihan"
+                        "emptyTable": "Tidak ada data"
                     },
                     "buttons": [{
                             extend: 'copy',
@@ -303,51 +249,95 @@ $(document).ready(function() {
 </script>
 
 <script>
-$(document).on('click', '#button-entri', function(e) {
+var l;
+var profil_id = [];
+var state = [];
+var jadwal_id;
+$(document).on('click', '#absen', function(e) {
+    jadwal_id = $(this).attr('data-id');
     var data = {
+        'id': jadwal_id,
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
-        'profilid': $('#Profil').val(),
-        'kelasid': $('#Kelas').val(),
-        'pelajaranid': $('#Pelajaran').val(),
-        'jadwalid': $('#Jadwal').val(),
     }
+    // console.log(data);
+    $("#datatable-absen").DataTable({
+        "destroy": true,
+    }).clear();
 
-    console.log(data);
     $.ajax({
-        url: "<?= route_to('admin/add-data-lessons-schedules') ?>",
-        type: "POST",
+        url: "<?= route_to('admin/presences-datatable-absen') ?>",
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
         data: data,
-        // global: false,
-        // async: false,
-        beforeSend: function() {
-            $('#button-entri').removeAttr('disable');
-            $('#button-entri').html('<i class="fa fa-spin fa-spinner"></i>');
-        },
-        complete: function(e) {
-            $('#button-entri').prop('disable', 'disable');
-            $('#button-entri').html('Submit');
-        },
+        type: "get",
+        dataType: "json",
+        method: "get",
         success: function(data) {
-            console.log(data);
+            l = data.posts.length;
+            // console.log(l);
+            for (var i = 1; i <= l; i++) {
+                state[i] = 'absen';
+                profil_id[i] = data.id[i - 1];
+            }
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
-            if (data.error != undefined) {
-                toastr.error(data.error);
-            } else if (data.success != undefined) {
-                toastr.success(data.success);
-                $('.entri').modal('hide');
-                ambil_data("SMP");
+            if (data.responce == "success") {
+                $("#datatable-absen").DataTable({
+                    "destroy": true,
+                    "data": data.posts,
+                    "responsive": true,
+                    "lengthChange": true,
+                    "autoWidth": false,
+                    "searching": false,
+                    "pageLength": 50,
+                    "columnDefs": [{
+                        "targets": [0],
+                        "orderable": false,
+                    }],
+                    "language": {
+                        "emptyTable": "Tidak ada data"
+                    }
+                });
+            } else {
+
             }
         }
     });
 });
-</script>
 
-<script>
-$(document).on('click', '#button-delete', function(e) {
-    var data = {
-        'id': $(this).attr('data-id'),
-        'csrf_token_name': $('input[name=csrf_token_name]').val(),
+$(document).on('change', 'input[type="checkbox"]', function() {
+    status = $(this).attr('data-status');
+    no = $(this).attr('data-no');
+
+    if ($('#hadir' + no).prop('checked')) {
+        $('#izin' + no).attr('disabled', 'disabled');
+        $('#absen' + no).attr('disabled', 'disabled');
+        state[no] = status;
+    } else if ($('#izin' + no).prop('checked')) {
+        $('#hadir' + no).attr('disabled', 'disabled');
+        $('#absen' + no).attr('disabled', 'disabled');
+        state[no] = status;
+    } else if ($('#absen' + no).prop('checked')) {
+        $('#izin' + no).attr('disabled', 'disabled');
+        $('#hadir' + no).attr('disabled', 'disabled');
+        state[no] = status;
+    } else {
+        $('#hadir' + no).removeAttr('disabled', 'disabled');
+        $('#izin' + no).removeAttr('disabled', 'disabled');
+        $('#absen' + no).removeAttr('disabled', 'disabled');
+        state[no] = 'absen';
     }
+
+});
+
+$(document).on('click', '#button-entri', function(e) {
+    var data = {
+        'csrf_token_name': $('input[name=csrf_token_name]').val(),
+        'profil': profil_id,
+        'jadwal': jadwal_id,
+        'status': state,
+    }
+
     console.log(data);
     Swal.fire({
         title: "Are you sure?",
@@ -356,25 +346,32 @@ $(document).on('click', '#button-delete', function(e) {
         showCancelButton: true,
         confirmButtonColor: "#34c38f",
         cancelButtonColor: "#f46a6a",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Yes, submit it!"
     }).then(function(result) {
         if (result.value) {
             $.ajax({
-                url: "<?= route_to('admin/remove-data-lessons-schedules') ?>",
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
+                url: "<?= route_to('admin/add-presences') ?>",
+                type: "POST",
                 data: data,
-                type: "post",
                 dataType: "json",
-                method: "post",
+                // global: false,
+                // async: false,
+                beforeSend: function() {
+                    $('#button-entri').removeAttr('disable');
+                    $('#button-entri').html('<i class="fa fa-spin fa-spinner"></i>');
+                },
+                complete: function(e) {
+                    $('#button-entri').prop('disable', 'disable');
+                    $('#button-entri').html('Submit');
+                },
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
                     $('input[name=csrf_token_name]').val(data.csrf_token_name);
                     if (data.error != undefined) {
                         Swal.fire("Failed!", data.error, "error");
                     } else if (data.success != undefined) {
-                        Swal.fire("Deleted!", data.success, "success");
+                        Swal.fire("Submited!", data.success, "success");
+                        $('.absen').modal('hide');
                         ambil_data();
                     }
                 }

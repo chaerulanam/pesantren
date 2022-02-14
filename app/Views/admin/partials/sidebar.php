@@ -40,7 +40,7 @@
                         <span><?= lang('Files.Dashboard') ?></span>
                     </a>
                 </li>
-
+                <?php if (has_permission('manage.admin')) : ?>
                 <li class="menu-title"><?= lang('Files.Users') ?></li>
                 <li>
                     <a href="/admin/data-users" class="waves-effect">
@@ -54,7 +54,7 @@
                         <span><?= lang('Files.Management Users') ?></span>
                     </a>
                 </li>
-
+                <?php endif; ?>
                 <li class="menu-title"><?= lang('Files.Profile') ?></li>
 
                 <li>

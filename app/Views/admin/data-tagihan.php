@@ -413,7 +413,7 @@ function ambil_data_perkelas() {
                         "orderable": false,
                     }],
                     "language": {
-                        "emptyTable": "Tidak ada data tagihan"
+                        "emptyTable": "Tidak ada data"
                     },
                     "buttons": [{
                             extend: 'copy',
@@ -465,7 +465,7 @@ function ambil_data_perindividu() {
                         "orderable": false,
                     }],
                     "language": {
-                        "emptyTable": "Tidak ada data tagihan"
+                        "emptyTable": "Tidak ada data"
                     },
                     "buttons": [{
                             extend: 'copy',
