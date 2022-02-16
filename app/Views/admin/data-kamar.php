@@ -44,7 +44,8 @@
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <div class="float-start btn-group col-6">
-                            <select class="form-select" id="tahun" onchange="ambil_data('SMP');">
+                            <select class="form-select" id="tahun"
+                                onchange="ambil_data('Laki-laki'); ambil_data('Perempuan');">
                                 <option value="">-Filter Tahun-</option>
                                 <?php foreach ($alltahun as $key) : ?>
                                 <option><?= $key->tahun; ?></option>
@@ -53,14 +54,14 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-2">
-                        <div class="float-end btn-group div-button-update">
+                        <div class="float-end mb-2 btn-group div-button-update">
                             <a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri"
                                 data-bs-toggle="modal" data-bs-target=".entri">
-                                Tambah Kelas Santri</a>
+                                Tambah Kamar Santri</a>
                         </div>
                     </div>
                 </div>
-                <div class="row" id="div1">
+                <div class="row">
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
@@ -68,16 +69,16 @@
                                 <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                                     <li class="nav-item">
                                         <button class="nav-link active" data-bs-toggle="tab" role="tab"
-                                            onclick="ambil_data('SMP')">
-                                            <span class="d-block d-sm-none">SMP</span>
-                                            <span class="d-none d-sm-block">SMP</span>
+                                            onclick="ambil_data('Laki-laki')">
+                                            <span class="d-block d-sm-none">Laki-laki</span>
+                                            <span class="d-none d-sm-block">Laki-laki</span>
                                         </button>
                                     </li>
                                     <li class="nav-item">
                                         <button class="nav-link" data-bs-toggle="tab" role="tab"
-                                            onclick="ambil_data('SMA')">
-                                            <span class="d-block d-sm-none">SMA</span>
-                                            <span class="d-none d-sm-block">SMA</span>
+                                            onclick="ambil_data('Perempuan')">
+                                            <span class="d-block d-sm-none">Perempuan</span>
+                                            <span class="d-none d-sm-block">Perempuan</span>
                                         </button>
                                     </li>
                                 </ul>
@@ -85,7 +86,6 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div class="tab-pane active mt-2" id="SMP" role="tabpanel">
-
                                         <table id="datatable"
                                             class="table table-striped table-bordered dt-responsive nowrap"
                                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -96,9 +96,9 @@
                                                                 type="checkbox" class="form-check-input" id="allcheck">
                                                         </div>
                                                     </th>
-                                                    <th>Nama Lengkap</th>
-                                                    <th>Kelas</th>
-                                                    <th>NISN</th>
+                                                    <th>Nama Lengkap & NISN</th>
+                                                    <th>Kamar</th>
+                                                    <th>Nama Gedung</th>
                                                     <th>Tahun Ajaran</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -120,7 +120,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Tambah Data Kelas</h5>
+                                <h5 class="modal-title">Tambah Data Kamar</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                 </button>
                             </div>
@@ -137,11 +137,11 @@
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="mb-3">
-                                                <label class="form-label">Plih Kelas</label>
-                                                <select class="form-control select2" id="Kelas">
-                                                    <?php foreach ($kelas as $key) : ?>
+                                                <label class="form-label">Plih Kamar</label>
+                                                <select class="form-control select2" id="Kamar">
+                                                    <?php foreach ($kamar as $key) : ?>
                                                     <option value="<?= $key->id ?>">
-                                                        <?= $key->kelas . ' (' . $key->deskripsi . ')'; ?>
+                                                        <?= $key->nama_kamar . ' (' . $key->nama_gedung . ')'; ?>
                                                     </option>
                                                     <?php endforeach; ?>
                                                 </select>
@@ -164,7 +164,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Update Data Kelas</h5>
+                                <h5 class="modal-title">Update Data Kamar</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                 </button>
                             </div>
@@ -173,11 +173,11 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">
-                                                <label class="form-label">Plih Kelas</label>
-                                                <select class="form-select" id="Kelas-Update">
-                                                    <?php foreach ($kelas as $key) : ?>
+                                                <label class="form-label">Plih Kamar</label>
+                                                <select class="form-select" id="Kamar-Update">
+                                                    <?php foreach ($kamar as $key) : ?>
                                                     <option value="<?= $key->id ?>">
-                                                        <?= $key->kelas . ' (' . $key->deskripsi . ')'; ?>
+                                                        <?= $key->nama_kamar . ' (' . $key->nama_gedung . ')'; ?>
                                                     </option>
                                                     <?php endforeach; ?>
                                                 </select>
@@ -272,8 +272,7 @@ function($) {
 </script>
 
 <script>
-function ambil_data(jenjang = null) {
-
+function ambil_data(jenis_kelamin = null) {
     $("#datatable").DataTable({
         "destroy": true,
     }).clear();
@@ -282,17 +281,17 @@ function ambil_data(jenjang = null) {
 
     $('input:checkbox').prop('checked', this.value = 0);
     $('.div-button-update').html(
-        '<a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kelas Santri</a>'
+        '<a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kamar Santri</a>'
     );
 
     $.ajax({
-        url: "<?= route_to('admin/data-classes-datatable') ?>",
+        url: "<?= route_to('admin/data-room-datatable') ?>",
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
         data: {
             'csrf_token_name': $('input[name=csrf_token_name]').val(),
-            'jenjang': jenjang,
+            'jenis_kelamin': jenis_kelamin,
             'tahun': $('#tahun').val(),
         },
         type: "get",
@@ -338,7 +337,7 @@ function ambil_data(jenjang = null) {
     });
 }
 $(document).ready(function() {
-    ambil_data("SMP");
+    ambil_data("Laki-laki");
 });
 </script>
 
@@ -358,7 +357,7 @@ $(document).ready(function() {
             lu = lc;
             if (lc > 0) {
                 $('.div-button-update').html(
-                    '<a href="javascript:void(0);" class="btn btn-outline-success fas fa-edit" id="editmodal" data-bs-toggle="modal" data-bs-target=".editmodal">Update Kelas Santri </a><a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kelas Santri</a>'
+                    '<a href="javascript:void(0);" class="btn btn-outline-success fas fa-edit" id="editmodal" data-bs-toggle="modal" data-bs-target=".editmodal">Update Kamar Santri </a><a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kamar Santri</a>'
                 );
             }
 
@@ -366,11 +365,10 @@ $(document).ready(function() {
                 santri_id[i - 1] = $('.check' + (i) + ':checked').attr('data-santri-id');
             }
 
-            // console.log(santri_id);
         } else {
             no = 1;
             $('.div-button-update').html(
-                '<a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kelas Santri</a>'
+                '<a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kamar Santri</a>'
             );
 
             for (let i = 1; i <= lu; i++) {
@@ -379,15 +377,14 @@ $(document).ready(function() {
 
 
         }
-        console.log(santri_id);
-
-
+        // console.log(santri_id);
     });
 
     $(document).on('change', 'input[type="checkbox"]', function() {
         $idsantri = $(this).attr('data-santri-id');
         $no = $(this).attr('data-no');
         var lc = $('#check:checked').length;
+
         if (this.checked) {
             no++;
             santri_id[$no - 1] = $idsantri;
@@ -401,13 +398,14 @@ $(document).ready(function() {
             if (no <= 0) {
                 $('input:checkbox').prop('checked', this.value = 0);
                 $('.div-button-update').html(
-                    '<a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kelas Santri</a>'
+                    '<a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kamar Santri</a>'
                 );
             }
             santri_id[$no - 1] = null;
         }
         console.log(santri_id);
         console.log(no);
+
     });
 });
 </script>
@@ -416,13 +414,13 @@ $(document).ready(function() {
 $(document).on('click', '#button-entri', function(e) {
     var data = {
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
-        'userid': $('#Username').val(),
-        'kelasid': $('#Kelas').val(),
+        'santriid': $('#Username').val(),
+        'kamarid': $('#Kamar').val(),
     }
 
     // console.log(data);
     $.ajax({
-        url: "<?= route_to('admin/add-data-classes') ?>",
+        url: "<?= route_to('admin/add-data-room') ?>",
         type: "POST",
         data: data,
         // global: false,
@@ -444,7 +442,7 @@ $(document).on('click', '#button-entri', function(e) {
                 toastr.success(data.success);
                 $('.entri').modal('hide');
                 $('#div1').load(location.href + " #div1");
-                ambil_data("SMP");
+                ambil_data("Laki-laki");
             }
         }
     });
@@ -456,12 +454,12 @@ $(document).on('click', '#button-update', function(e) {
     var data = {
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
         'santriid': santri_id,
-        'kelasid': $('#Kelas-Update').val(),
+        'kamarid': $('#Kamar-Update').val(),
     }
 
-    console.log(data);
+    // console.log(data);
     $.ajax({
-        url: "<?= route_to('admin/update-data-classes') ?>",
+        url: "<?= route_to('admin/update-data-room') ?>",
         type: "POST",
         data: data,
         // global: false,
@@ -483,52 +481,8 @@ $(document).on('click', '#button-update', function(e) {
                 toastr.success(data.success);
                 $('.editmodal').modal('hide');
                 $('#div1').load(location.href + " #div1");
-                ambil_data('SMP');
+                ambil_data();
             }
-        }
-    });
-});
-</script>
-
-<script>
-$(document).on('click', '#delete', function(e) {
-    var data = {
-        'profilid': $(this).attr('data-id'),
-        'userid': $(this).attr('data-userid'),
-        'csrf_token_name': $('input[name=csrf_token_name]').val(),
-    }
-    console.log(data);
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#34c38f",
-        cancelButtonColor: "#f46a6a",
-        confirmButtonText: "Yes, delete it!"
-    }).then(function(result) {
-        if (result.value) {
-            $.ajax({
-                url: "<?= route_to('admin/delete-students') ?>",
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                data: data,
-                type: "post",
-                dataType: "json",
-                method: "post",
-                success: function(data) {
-                    // console.log(data);
-                    $('input[name=csrf_token_name]').val(data.csrf_token_name);
-                    if (data.error != undefined) {
-                        Swal.fire("Failed!", data.error, "error");
-                    } else if (data.success != undefined) {
-                        Swal.fire("Deleted!", data.success, "success");
-                        $('#div1').load(location.href + " #div1");
-                        ambil_data('SMP');
-                    }
-                }
-            });
         }
     });
 });
@@ -551,7 +505,7 @@ $(document).on('click', '#button-delete', function(e) {
 
             // console.log(data);
             $.ajax({
-                url: "<?= route_to('admin/remove-data-classes') ?>",
+                url: "<?= route_to('admin/remove-data-room') ?>",
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
@@ -567,7 +521,7 @@ $(document).on('click', '#button-delete', function(e) {
                     } else if (data.success != undefined) {
                         Swal.fire("Deleted!", data.success, "success");
                         $('#div1').load(location.href + " #div1");
-                        ambil_data('SMP');
+                        ambil_data('Laki-laki');
                     }
                 }
             });
@@ -575,7 +529,6 @@ $(document).on('click', '#button-delete', function(e) {
     });
 });
 </script>
-
 
 <script src="<?= base_url(); ?>/assets/js/app.js"></script>
 

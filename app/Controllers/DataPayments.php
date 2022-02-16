@@ -22,7 +22,7 @@ class DataPayments extends BaseController
                 ->join('orangtua', 'orangtua.profil_id = profil.id')
                 ->join('wali', 'wali.profil_id = profil.id')
                 ->get()->getRow(),
-            'alltahun' => $this->tahunModel->findAll(),
+            'alltahun' => $this->tahunModel->groupBy('tahun')->findAll(),
             'title_table' => 'Data ' . lang('Files.Profile') . ' ' . lang('Files.Students'),
             'title_meta' => view('admin/partials/title-meta', ['title' => 'Data Payments', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
             'page_title' => view('admin/partials/page-title', ['title' => 'Data Payments', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])

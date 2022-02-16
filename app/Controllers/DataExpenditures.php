@@ -20,8 +20,8 @@ class DataExpenditures extends BaseController
                 ->join('orangtua', 'orangtua.profil_id = profil.id')
                 ->join('wali', 'wali.profil_id = profil.id')
                 ->get()->getRow(),
-            'alltahun' => $this->tahunModel->findAll(),
-            'title_table' => 'Data ' . lang('Files.Profile') . ' ' . lang('Files.Students'),
+            'alltahun' => $this->tahunModel->groupBy('tahun')->findAll(),
+            'title_table' => 'Data pengeluaran',
             'title_meta' => view('admin/partials/title-meta', ['title' => 'Data Expenditure', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
             'page_title' => view('admin/partials/page-title', ['title' => 'Data Expenditure', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
         ];

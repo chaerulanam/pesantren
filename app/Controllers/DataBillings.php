@@ -24,7 +24,7 @@ class DataBillings extends BaseController
                 ->join('orangtua', 'orangtua.profil_id = profil.id')
                 ->join('wali', 'wali.profil_id = profil.id')
                 ->get()->getRow(),
-            'alltahun' => $this->tahunModel->findAll(),
+            'alltahun' => $this->tahunModel->groupBy('tahun')->findAll(),
             'title_table' => 'Data ' . lang('Files.Profile') . ' ' . lang('Files.Students'),
             'title_meta' => view('admin/partials/title-meta', ['title' => 'Data Billings', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
             'page_title' => view('admin/partials/page-title', ['title' => 'Data Billings', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
@@ -46,8 +46,7 @@ class DataBillings extends BaseController
                     ->join('users', 'tagihan.user_id = users.id')
                     ->join('users_profil', 'users_profil.user_id = users.id')
                     ->join('profil', 'users_profil.profil_id = profil.id')
-                    ->join('kelas_profil', 'kelas_profil.santri_id = profil.id')
-                    ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id')
+                    ->join('master_kelas', 'tagihan.kelas_id = master_kelas.id')
                     ->groupBy('kelas')
                     ->groupBy('tahun_ajaran')
                     ->groupBy('nama_tagihan')
@@ -62,8 +61,7 @@ class DataBillings extends BaseController
                     ->join('users', 'tagihan.user_id = users.id')
                     ->join('users_profil', 'users_profil.user_id = users.id')
                     ->join('profil', 'users_profil.profil_id = profil.id')
-                    ->join('kelas_profil', 'kelas_profil.santri_id = profil.id')
-                    ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id')
+                    ->join('master_kelas', 'tagihan.kelas_id = master_kelas.id')
                     ->groupBy('kelas')
                     ->groupBy('tahun_ajaran')
                     ->groupBy('nama_tagihan')
@@ -116,8 +114,7 @@ class DataBillings extends BaseController
                     ->join('users', 'tagihan.user_id = users.id')
                     ->join('users_profil', 'users_profil.user_id = users.id')
                     ->join('profil', 'users_profil.profil_id = profil.id')
-                    ->join('kelas_profil', 'kelas_profil.santri_id = profil.id')
-                    ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id')
+                    ->join('master_kelas', 'tagihan.kelas_id = master_kelas.id')
                     ->groupBy('kelas')
                     ->groupBy('no_tagihan')
                     ->groupBy('tahun_ajaran')
@@ -130,8 +127,7 @@ class DataBillings extends BaseController
                     ->join('users', 'tagihan.user_id = users.id')
                     ->join('users_profil', 'users_profil.user_id = users.id')
                     ->join('profil', 'users_profil.profil_id = profil.id')
-                    ->join('kelas_profil', 'kelas_profil.santri_id = profil.id')
-                    ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id')
+                    ->join('master_kelas', 'tagihan.kelas_id = master_kelas.id')
                     ->groupBy('kelas')
                     ->groupBy('no_tagihan')
                     ->groupBy('tahun_ajaran')

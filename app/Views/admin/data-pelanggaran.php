@@ -45,7 +45,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <div class="mt-2 col-6">
+                                        <div class="mt-2 col-6 mb-2">
                                             <select class="form-select" id="tahun" onchange="ambil_data()">
                                                 <option value="">-Filter Tahun-</option>
                                                 <?php foreach ($alltahun as $key) : ?>
@@ -54,11 +54,11 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-8 mb-3 mt-2">
+                                    <div class="col-md-8 mb-3 mb-2">
                                         <div class="float-end btn-group">
                                             <a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus"
                                                 data-bs-toggle="modal" data-bs-target=".entri">
-                                                Tambah Pelanggaran</a>
+                                                Tambah Baru</a>
                                         </div>
                                     </div>
                                 </div>

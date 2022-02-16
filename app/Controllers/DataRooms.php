@@ -2,16 +2,16 @@
 
 namespace App\Controllers;
 
-use App\Models\KelasProfilModel;
-use App\Models\MasterKelasModel;
+use App\Models\KamarProfilModel;
+use App\Models\MasterKamarModel;
 use App\Models\ProfilModel;
 
-class DataClasses extends BaseController
+class DataRooms extends BaseController
 {
     public function __construct()
     {
-        $this->kelasprofilModel = new KelasProfilModel();
-        $this->masterkelasModel = new MasterKelasModel();
+        $this->kamarprofilModel = new KamarProfilModel();
+        $this->masterkamarModel = new MasterKamarModel();
         $this->profilModel = new ProfilModel();
     }
     public function index()
@@ -31,14 +31,14 @@ class DataClasses extends BaseController
                 ->where('name', 'santri')
                 ->where('users_profil.user_id', null)
                 ->findAll(),
-            'kelas' => $this->masterkelasModel->groupBy('deskripsi')
-                ->groupBy('kelas')->findAll(),
+            'kamar' => $this->masterkamarModel->groupBy('nama_gedung')
+                ->groupBy('nama_kamar')->findAll(),
             'alltahun' => $this->tahunModel->groupBy('tahun')->findAll(),
-            'title_meta' => view('admin/partials/title-meta', ['title' => 'Data Classes', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
-            'page_title' => view('admin/partials/page-title', ['title' => 'Data Classes', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
+            'title_meta' => view('admin/partials/title-meta', ['title' => 'Room Santri', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
+            'page_title' => view('admin/partials/page-title', ['title' => 'Room Santri', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
         ];
         // dd($data);
-        return view('admin/data-kelas', $data);
+        return view('admin/data-kamar', $data);
     }
 
     public function datatable()
@@ -47,7 +47,7 @@ class DataClasses extends BaseController
             $csrfname = csrf_token();
             $csrfhash = csrf_hash();
 
-            $jenjang = $this->request->getGet('jenjang');
+            $kelamin = $this->request->getGet('jenis_kelamin');
             $tahun = $this->request->getGet('tahun');
 
             $profil = $this->userModel
@@ -56,33 +56,31 @@ class DataClasses extends BaseController
                 ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id')
                 ->join('users_profil', 'users_profil.user_id = users.id', 'LEFT')
                 ->join('profil', 'users_profil.profil_id = profil.id')
-                ->join('kelas_profil', 'kelas_profil.santri_id = profil.id', 'LEFT')
-                ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id', 'LEFT')
+                ->join('kamar_profil', 'kamar_profil.santri_id = profil.id', 'LEFT')
+                ->join('master_kamar', 'kamar_profil.kamar_id = master_kamar.id', 'LEFT')
                 ->where('name', 'santri')
-                ->where('kelas_id', null)
+                ->where('kamar_id', null)
                 ->where('santri_id', null)
                 ->findAll();
             if ($tahun != "") {
-                $posts = $this->kelasprofilModel
-                    ->select('kelas_profil.id as tabelid, master_kelas.id as kelasid, santri_id, santri.nama_lengkap as santri, wali.nama_lengkap as wali, santri.nisn, tahun_ajaran, kelas')
-                    ->join('profil santri', 'kelas_profil.santri_id = santri.id')
-                    ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id')
-                    ->join('profil wali', 'master_kelas.wali_id = wali.id', 'LEFT')
-                    ->where('master_kelas.deskripsi', $jenjang)
-                    ->where('kelas_profil.tahun_ajaran', $tahun)
+                $posts = $this->kamarprofilModel
+                    ->select('kamar_profil.id as tabelid, master_kamar.id as kamarid, santri_id, santri.nama_lengkap as santri, wali.nama_lengkap as wali, santri.nisn, tahun_ajaran, nama_kamar, nama_gedung')
+                    ->join('profil santri', 'kamar_profil.santri_id = santri.id')
+                    ->join('master_kamar', 'kamar_profil.kamar_id = master_kamar.id')
+                    ->join('profil wali', 'master_kamar.wali_id = wali.id', 'LEFT')
+                    ->where('master_kamar.jenis_kelamin', $kelamin)
+                    ->where('kamar_profil.tahun_ajaran', $tahun)
                     ->findAll();
             } else {
-                $posts = $this->kelasprofilModel
-                    ->select('kelas_profil.id as tabelid, master_kelas.id as kelasid, santri_id, santri.nama_lengkap as santri, wali.nama_lengkap as wali, santri.nisn, tahun_ajaran, kelas')
-                    ->join('profil santri', 'kelas_profil.santri_id = santri.id')
-                    ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id')
-                    ->join('profil wali', 'master_kelas.wali_id = wali.id', 'LEFT')
-                    ->where('master_kelas.deskripsi', $jenjang)
-                    ->where('kelas_profil.tahun_ajaran', $this->tahunModel->TahunAktif())
+                $posts = $this->kamarprofilModel
+                    ->select('kamar_profil.id as tabelid, master_kamar.id as kamarid, santri_id, santri.nama_lengkap as santri, wali.nama_lengkap as wali, santri.nisn, tahun_ajaran, nama_kamar, nama_gedung')
+                    ->join('profil santri', 'kamar_profil.santri_id = santri.id')
+                    ->join('master_kamar', 'kamar_profil.kamar_id = master_kamar.id')
+                    ->join('profil wali', 'master_kamar.wali_id = wali.id', 'LEFT')
+                    ->where('master_kamar.jenis_kelamin', $kelamin)
+                    ->where('kamar_profil.tahun_ajaran', $this->tahunModel->TahunAktif())
                     ->findAll();
             }
-
-
 
             if ($posts) {
                 $no = 0;
@@ -91,10 +89,10 @@ class DataClasses extends BaseController
                     $row = array();
                     $row[] = '<div class="btn-group d-flex justify-content-center"><input
                 type="checkbox" class="form-check-input check' . $no . '"
-                id="check" data-no="' . $no . '" data-santri-id="' . $key->santri_id . '" data-kelas-id="' . $key->kelas_id . '" data-id="' . $key->tabelid . '"></div>';
-                    $row[] = $key->santri;
-                    $row[] = $key->kelas;
-                    $row[] = $key->nisn;
+                id="check" data-no="' . $no . '" data-santri-id="' . $key->santri_id . '" data-kamar-id="' . $key->kamar_id . '"></div>';
+                    $row[] = $key->santri . ' | ' . $key->nisn;
+                    $row[] = $key->nama_gedung;
+                    $row[] = $key->nama_kamar;
                     $row[] = $key->tahun_ajaran;
                     $row[] = '<div class="btn-group d-flex justify-content-center">
                  <a href="#" class="btn btn-outline-danger" id="button-delete" data-id="' . $key->tabelid .  '">
@@ -121,13 +119,13 @@ class DataClasses extends BaseController
             $csrfhash = csrf_hash();
             if (!$this->validate(
                 [
-                    'kelasid' => [
+                    'kamarid' => [
                         'rules' => 'required',
                         'errors' => [
-                            'required' => 'Kelas is required !'
+                            'required' => 'Kamar is required !'
                         ]
                     ],
-                    'userid' => [
+                    'santriid' => [
                         'rules' => 'required',
                         'errors' => [
                             'required' => 'Nama Lengkap is required !'
@@ -142,15 +140,15 @@ class DataClasses extends BaseController
             }
 
             $data = [
-                'kelas_id' => $this->request->getPost('kelasid'),
-                'santri_id' => $this->request->getPost('userid'),
+                'kamar_id' => $this->request->getPost('kamarid'),
+                'santri_id' => $this->request->getPost('santriid'),
                 'tahun_ajaran' => $this->tahunModel->where('status', 1)->get()->getRow()->tahun,
             ];
 
-            if (!$this->kelasprofilModel->save($data)) {
-                $data = array('error' => 'Failed add to data class.');
+            if (!$this->kamarprofilModel->save($data)) {
+                $data = array('error' => 'Gagal menambah data kamar santri.');
             }
-            $data = array('success' => 'Successfully add to data class.');
+            $data = array('success' => 'Berhasil menambah data kamar santri.');
             $data[$csrfname] = $csrfhash;
             return $this->response->setJSON($data);
         } else {
@@ -165,23 +163,23 @@ class DataClasses extends BaseController
             $csrfhash = csrf_hash();
 
             $santri_id = $this->request->getPost('santriid');
-            $kelas_id = $this->request->getPost('kelasid');
+            $kamar_id = $this->request->getPost('kamarid');
 
             for ($i = 0; $i < count($santri_id); $i++) {
                 if ($santri_id[$i] != null) {
                     if (
-                        $this->kelasprofilModel
+                        $this->kamarprofilModel
                         ->where('santri_id', $santri_id[$i])
                         ->where('tahun_ajaran', $this->tahunModel->TahunAktif())
                         ->countAllResults() != 0
                     ) {
-                        $data = array('error' => 'Santri sudah memiliki kelas tahun ini');
+                        $data = array('error' => 'Santri sudah memiliki kamar di tahun ini');
                         $data[$csrfname] = $csrfhash;
                         return $this->response->setJSON($data);
                     }
                     $row = [
                         'santri_id' => $santri_id[$i],
-                        'kelas_id' => $kelas_id,
+                        'kamar_id' => $kamar_id,
                         'tahun_ajaran' => $this->tahunModel->TahunAktif(),
                     ];
 
@@ -189,15 +187,15 @@ class DataClasses extends BaseController
                 }
             }
 
-            if (!$this->kelasprofilModel->insertBatch($data)) {
-                $data = array('error' => 'Gagal mengubah kelas.');
+            if (!$this->kamarprofilModel->insertBatch($data)) {
+                $data = array('error' => 'Gagal mengubah kamar.');
             }
 
             for ($i = 0; $i < count($santri_id); $i++) {
                 if ($santri_id[$i] != null) {
                     $data = [
                         'user_id' => user()->id,
-                        'pesan' => 'Update kelas santri_id = ' . $santri_id[$i] . ' ke kelas_id = ' . $kelas_id,
+                        'pesan' => 'Mengubah santri id = ' . $santri_id[$i] . ' ke kamar id = ' . $kamar_id,
                     ];
                     $data[] = $row;
                 }
@@ -205,7 +203,7 @@ class DataClasses extends BaseController
 
             $this->logModel->save($data);
 
-            $data = array('success' => 'Berhasil mengubah data kelas.');
+            $data = array('success' => 'Berhasil mengubah kamar santri.');
             $data[$csrfname] = $csrfhash;
             return $this->response->setJSON($data);
         } else {
@@ -220,19 +218,19 @@ class DataClasses extends BaseController
             $csrfhash = csrf_hash();
             $id = $this->request->getPost('id');
 
-            if (!$this->kelasprofilModel->delete($id)) {
-                $data = array('error' => 'Gagal menghapus data kelas.');
+            if (!$this->kamarprofilModel->delete($id)) {
+                $data = array('error' => 'Gagal menghapus data kamar santri.');
                 $data[$csrfname] = $csrfhash;
                 return $this->response->setJSON($data);
             }
 
             $data = [
                 'user_id' => user()->id,
-                'pesan' => 'Menghapus data kelas',
+                'pesan' => 'Menghapus data kamar',
             ];
             $this->logModel->save($data);
 
-            $data = array('success' => 'Berhasil menghapus data kelas santri.');
+            $data = array('success' => 'Berhasil menghapus data kamar santri.');
             $data[$csrfname] = $csrfhash;
             return $this->response->setJSON($data);
         } else {

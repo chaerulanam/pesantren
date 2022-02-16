@@ -693,6 +693,8 @@ $(document).on('click', '#button-entri-perindividu', function(e) {
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
     }
 
+    console.log(data);
+
     $.ajax({
         url: "<?= route_to('admin/add-data-billings-perindividu') ?>",
         data: data,

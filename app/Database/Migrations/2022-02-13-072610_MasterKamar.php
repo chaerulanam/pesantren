@@ -27,8 +27,15 @@ class MasterKamar extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => 100,
             ],
+            'wali_id'          => [
+                'type'           => 'INT',
+                'constraint'     => 5,
+                'unsigned'       => true,
+                'null' => true,
+            ],
         ]);
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('wali_id', 'profil', 'id', '', 'CASCADE');
         $this->forge->createTable('master_kamar');
     }
 

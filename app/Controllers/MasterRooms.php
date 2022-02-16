@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Models\MasterKelasModel;
+use App\Models\MasterKamarModel;
 use Myth\Auth\Models\UserModel;
 
-class MasterClasses extends BaseController
+class MasterRooms extends BaseController
 {
     public function __construct()
     {
         $this->userModel = new UserModel();
-        $this->masterkelasModel = new MasterKelasModel();
+        $this->masterkamarModel = new MasterKamarModel();
     }
     public function index()
     {
@@ -32,12 +32,12 @@ class MasterClasses extends BaseController
                 ->orWhere('name', 'pengasuhan')
                 ->orWhere('name', 'pengajaran')
                 ->findAll(),
-            'title_meta' => view('admin/partials/title-meta', ['title' => 'Master Classes', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
-            'page_title' => view('admin/partials/page-title', ['title' => 'Master Classes', 'pagetitle' => $this->opsiModel->getopsi('sitename'),]),
-            'title_table' => lang('Files.Master Classes')
+            'title_meta' => view('admin/partials/title-meta', ['title' => 'Master Room', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
+            'page_title' => view('admin/partials/page-title', ['title' => 'Master Room', 'pagetitle' => $this->opsiModel->getopsi('sitename'),]),
+            'title_table' => lang('Files.Master Room')
         ];
         // dd($data);
-        return view('admin/master-kelas', $data);
+        return view('admin/master-kamar', $data);
     }
 
     public function datatable()
@@ -45,12 +45,12 @@ class MasterClasses extends BaseController
         if ($this->request->isAJAX()) {
             $csrfname = csrf_token();
             $csrfhash = csrf_hash();
-            if ($posts = $this->masterkelasModel
-                ->select('master_kelas.id as id, kelas, master_kelas.deskripsi, nama_lengkap')
-                ->join('profil', 'master_kelas.wali_id = profil.id', 'LEFT')
-                ->groupBy('deskripsi')
-                ->groupBy('kelas')
-                // ->orderBy('kelas', 'ASC')
+            if ($posts = $this->masterkamarModel
+                ->select('*, master_kamar.id as id, master_kamar.jenis_kelamin')
+                ->join('profil', 'master_kamar.wali_id = profil.id', 'LEFT')
+                ->groupBy('nama_gedung')
+                ->groupBy('nama_kamar')
+                // ->orderBy('kamar', 'ASC')
                 ->findAll()
             ) {
                 $no = 0;
@@ -58,8 +58,9 @@ class MasterClasses extends BaseController
                     $no++;
                     $row = array();
                     $row[] = $no;
-                    $row[] = $key->kelas;
-                    $row[] = $key->deskripsi;
+                    $row[] = $key->nama_kamar;
+                    $row[] = $key->nama_gedung;
+                    $row[] = $key->jenis_kelamin;
                     $row[] = $key->nama_lengkap;
                     $row[] = '<div class="btn-group d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-info" id="editmodal" data-bs-toggle="modal"
@@ -90,22 +91,22 @@ class MasterClasses extends BaseController
             $csrfhash = csrf_hash();
             if (!$this->validate(
                 [
-                    'kelas' => [
+                    'nama_kamar' => [
                         'rules' => 'required',
                         'errors' => [
-                            'required' => 'Kelas is required !'
+                            'required' => 'Kamar harus diisi !'
                         ]
                     ],
-                    'deskripsi' => [
+                    'nama_gedung' => [
                         'rules' => 'required',
                         'errors' => [
-                            'required' => 'Deskripsi is required !'
+                            'required' => 'Nama gedung harus diisi !'
                         ]
                     ],
                     'wali' => [
                         'rules' => 'required',
                         'errors' => [
-                            'required' => 'Wali Kelas is required !'
+                            'required' => 'Wali kamar harus diisi !'
                         ]
                     ],
                 ]
@@ -117,12 +118,13 @@ class MasterClasses extends BaseController
             }
 
             $data = [
-                'kelas' => $this->request->getPost('kelas'),
-                'deskripsi' => $this->request->getPost('deskripsi'),
-                'wali_id' => $this->request->getPost('wali')
+                'nama_kamar' => $this->request->getPost('nama_kamar'),
+                'nama_gedung' => $this->request->getPost('nama_gedung'),
+                'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
+                'wali_id' => $this->request->getPost('wali'),
             ];
 
-            if (!$this->masterkelasModel->save($data)) {
+            if (!$this->masterkamarModel->save($data)) {
                 $data = array('error' => 'Failed add to master class.');
             }
             $data = array('success' => 'Successfully add to master class.');
@@ -139,7 +141,7 @@ class MasterClasses extends BaseController
             $csrfname = csrf_token();
             $csrfhash = csrf_hash();
             $id = $this->request->getPost('id');
-            if (!$this->masterkelasModel->delete($id)) {
+            if (!$this->masterkamarModel->delete($id)) {
                 $data = array('error' => 'Failed delete master class');
             } else {
                 $data = array('success' => 'Successfully delete master class');
@@ -157,12 +159,13 @@ class MasterClasses extends BaseController
             $csrfname = csrf_token();
             $csrfhash = csrf_hash();
             $id = $this->request->getGet('id');
-            $post = $this->masterkelasModel->find($id);
+            $post = $this->masterkamarModel->find($id);
 
             $data = [
                 'id' => $post->id,
-                'kelas' => $post->kelas,
-                'deskripsi' => $post->deskripsi,
+                'nama_kamar' => $post->nama_kamar,
+                'nama_gedung' => $post->nama_gedung,
+                'jenis_kelamin' => $post->jenis_kelamin,
                 'wali_id' => $post->wali_id,
             ];
 
@@ -184,7 +187,7 @@ class MasterClasses extends BaseController
                 'wali_id' => $this->request->getPost('wali')
             ];
 
-            if (!$this->masterkelasModel->save($data)) {
+            if (!$this->masterkamarModel->save($data)) {
                 $data = array('error' => 'Failed update to master class.');
             }
             $data = array('success' => 'Successfully update to master class.');

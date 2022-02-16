@@ -163,6 +163,20 @@ $routes->group('admin', function ($routes) {
 	$routes->post('add-data-violation', 'DataViolations::add', ['filter' => 'permission:manage.pengasuhan']);
 	$routes->post('remove-data-violation', 'DataViolations::delete', ['filter' => 'permission:manage.pengasuhan']);
 	$routes->post('update-data-violation', 'DataViolations::update', ['filter' => 'permission:manage.pengasuhan']);
+
+	$routes->get('master-room', 'MasterRooms::index', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->get('master-room-datatable', 'MasterRooms::datatable', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->get('detail-master-room', 'MasterRooms::get_detail', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->post('add-master-room', 'MasterRooms::add', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->post('remove-master-room', 'MasterRooms::delete', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->post('update-master-room', 'MasterRooms::update', ['filter' => 'permission:manage.pengasuhan']);
+
+	$routes->get('data-room', 'DataRooms::index', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->get('data-room-datatable', 'DataRooms::datatable', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->get('detail-data-room', 'DataRooms::get_detail', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->post('add-data-room', 'DataRooms::add', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->post('remove-data-room', 'DataRooms::delete', ['filter' => 'permission:manage.pengasuhan']);
+	$routes->post('update-data-room', 'DataRooms::update', ['filter' => 'permission:manage.pengasuhan']);
 });
 
 $routes->group('santri', function ($routes) {

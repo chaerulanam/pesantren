@@ -53,7 +53,7 @@
                                         <p class="card-title-desc">
                                         </p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mb-2">
                                         <div class="float-end button-checkout">
                                             <div class="btn-group">
                                                 <a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus"

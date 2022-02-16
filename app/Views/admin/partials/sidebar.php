@@ -110,6 +110,8 @@
                         <li><a href="/admin/data-violation"><?= lang('Files.Data Violation') ?></a></li>
                         <li><a href="/admin/data-permission"><?= lang('Files.Data Permission') ?></a></li>
                         <li><a href="/admin/data-visitation"><?= lang('Files.Data Visitation') ?></a></li>
+                        <li><a href="/admin/data-room"><?= lang('Files.Room Santri') ?></a></li>
+                        <li><a href="/admin/master-room"><?= lang('Files.Master Room') ?></a></li>
                     </ul>
                 </li>
                 <?php endif; ?>

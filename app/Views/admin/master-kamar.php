@@ -53,12 +53,11 @@
                                         <p class="card-title-desc">
                                         </p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mb-2">
                                         <div class="float-end button-checkout">
                                             <div class="btn-group">
                                                 <a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus"
-                                                    id="entrimanual" data-bs-toggle="modal"
-                                                    data-bs-target=".entrimanual">
+                                                    id="entri" data-bs-toggle="modal" data-bs-target=".entri">
                                                     Tambah Baru</a>
                                             </div>
                                         </div>
@@ -70,9 +69,10 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kelas</th>
-                                            <th>Deskripsi</th>
-                                            <th>Wali Kelas</th>
+                                            <th>Kamar</th>
+                                            <th>Nama Gedung</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Wali Kamar</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -80,24 +80,15 @@
                                     <tbody>
 
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Kelas</th>
-                                            <th>Deskripsi</th>
-                                            <th>Wali Kelas</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
                                 </table>
                             </div>
 
-                            <div class="modal fade entrimanual" tabindex="-1" role="dialog"
+                            <div class="modal fade entri" tabindex="-1" role="dialog"
                                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Tambah Master Kelas
+                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Tambah Master Kamar
                                             </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close">
@@ -105,20 +96,29 @@
                                         </div>
                                         <div class="modal-body">
                                             <form>
-                                                <div class="form-group c_form_group">
-                                                    <label>Kelas</label>
-                                                    <input type="text" class="form-control email" id="Kelas" name=""
-                                                        placeholder="Kelas">
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label>Kamar</label>
+                                                    <input type="text" class="form-control email" id="Kamar" name=""
+                                                        placeholder="Kamar">
                                                 </div>
-                                                <div class="form-group c_form_group">
-                                                    <label>Deskripsi</label>
-                                                    <input type="text" class="form-control" id="Deskripsi"
-                                                        placeholder="Deskripsi">
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label>Nama Gedung</label>
+                                                    <input type="text" class="form-control" id="Nama-Gedung"
+                                                        placeholder="Nama Gedung">
                                                 </div>
-                                                <div class="form-group c_form_group">
-                                                    <label class="col-md-2 col-form-label">Wali Kelas</label>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label class="col-form-label">Jenis Kelamin</label>
                                                     <div class="col-md-10">
-                                                        <select class="form-select" id="Wali-Kelas">
+                                                        <select class="form-select" id="Jenis-Kelamin">
+                                                            <option>Laki-laki</option>
+                                                            <option>Perempuan</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group c_form_group mb3">
+                                                    <label class="col-md-2 col-form-label">Wali Kamar</label>
+                                                    <div class="col-md-10">
+                                                        <select class="form-select" id="Wali-Kamar">
                                                             <?php foreach ($wali as $key) : ?>
                                                             <option value="<?= $key->profilid; ?>">
                                                                 <?= $key->nama_lengkap; ?></option>
@@ -143,7 +143,7 @@
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Update Kelas
+                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Update Kamar
                                             </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close">
@@ -152,20 +152,29 @@
                                         <div class="modal-body">
                                             <form>
                                                 <input type="hidden" id="id">
-                                                <div class="form-group c_form_group">
-                                                    <label>Kelas</label>
-                                                    <input type="text" class="form-control" id="Kelas-Edit" name=""
-                                                        placeholder="Kelas" disabled>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label>Kamar</label>
+                                                    <input type="text" class="form-control" id="Kamar-Edit" name=""
+                                                        placeholder="Kamar" disabled>
                                                 </div>
-                                                <div class="form-group c_form_group">
-                                                    <label>Deskripsi</label>
-                                                    <input type="text" class="form-control" id="Deskripsi-Edit"
-                                                        placeholder="Deskripsi" disabled>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label>Nama Gedung</label>
+                                                    <input type="text" class="form-control" id="Nama-Gedung-Edit"
+                                                        placeholder="Nama Gedung" disabled>
                                                 </div>
-                                                <div class="form-group c_form_group">
-                                                    <label class="col-md-2 col-form-label">Wali Kelas</label>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label class="col-form-label">Jenis Kelamin</label>
                                                     <div class="col-md-10">
-                                                        <select class="form-select" id="Wali-Kelas-Edit">
+                                                        <select class="form-select" id="Jenis-Kelamin-Edit" disabled>
+                                                            <option>Laki-laki</option>
+                                                            <option>Perempuan</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group c_form_group mb-3">
+                                                    <label class="col-form-label">Wali Kamar</label>
+                                                    <div class="col-md-10">
+                                                        <select class="form-select" id="Wali-Kamar-Edit">
                                                             <?php foreach ($wali as $key) : ?>
                                                             <option value="<?= $key->profilid; ?>">
                                                                 <?= $key->nama_lengkap; ?></option>
@@ -235,7 +244,7 @@ function ambil_data() {
     }).clear();
 
     $.ajax({
-        url: "<?= route_to('admin/master-classes-datatable') ?>",
+        url: "<?= route_to('admin/master-room-datatable') ?>",
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
@@ -287,14 +296,15 @@ $(document).ready(function() {
 $(document).on('click', '#button-entri', function(e) {
     var data = {
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
-        'kelas': $('#Kelas').val(),
-        'wali': $('#Wali-Kelas').val(),
-        'deskripsi': $('#Deskripsi').val(),
+        'nama_kamar': $('#Kamar').val(),
+        'wali': $('#Wali-Kamar').val(),
+        'nama_gedung': $('#Nama-Gedung').val(),
+        'jenis_kelamin': $('#Jenis-Kelamin').val(),
     }
 
-    // console.log(data);
+    console.log(data);
     $.ajax({
-        url: "<?= route_to('admin/add-master-classes') ?>",
+        url: "<?= route_to('admin/add-master-room') ?>",
         type: "POST",
         data: data,
         // global: false,
@@ -308,17 +318,17 @@ $(document).on('click', '#button-entri', function(e) {
             $('#button-entri').html('Submit');
         },
         success: function(data) {
-            // console.log(data);
+            console.log(data);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
-            if (data.kelas != undefined) {
-                toastr.error(data.kelas);
-            } else if (data.deskripsi != undefined) {
-                toastr.error(data.deskripsi);
+            if (data.nama_kamar != undefined) {
+                toastr.error(data.nama_kamar);
+            } else if (data.nama_gedung != undefined) {
+                toastr.error(data.nama_gedung);
             } else if (data.error != undefined) {
                 toastr.error(data.error);
             } else if (data.success != undefined) {
                 toastr.success(data.success);
-                $('.entrimanual').modal('hide');
+                $('.entri').modal('hide');
                 ambil_data();
             }
         }
@@ -343,7 +353,7 @@ $(document).on('click', '#button-delete', function(e) {
 
             // console.log(data);
             $.ajax({
-                url: "<?= route_to('admin/remove-master-classes') ?>",
+                url: "<?= route_to('admin/remove-master-room') ?>",
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
@@ -373,14 +383,15 @@ $(document).on('click', '#editmodal', function(e) {
     }
 
     $.ajax({
-        url: "<?= route_to('admin/detail-master-classes') ?>",
+        url: "<?= route_to('admin/detail-master-room') ?>",
         type: "GET",
         data: data,
         success: function(data) {
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
-            $('#Kelas-Edit').val(data.kelas);
-            $('#Deskripsi-Edit').val(data.deskripsi);
-            $('#Wali-Kelas-Edit').val(data.wali_id);
+            $('#Kamar-Edit').val(data.nama_kamar);
+            $('#Nama-Gedung-Edit').val(data.nama_gedung);
+            $('#Wali-Kamar-Edit').val(data.wali_id);
+            $('#Jenis-Kelamin-Edit').val(data.jenis_kelamin);
             $('#id').val(data.id);
         }
     });
@@ -390,12 +401,12 @@ $(document).on('click', '#button-update', function(e) {
     var data = {
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
         'id': $('#id').val(),
-        'wali': $('#Wali-Kelas-Edit').val(),
+        'wali': $('#Wali-Kamar-Edit').val(),
     }
 
     // console.log(data);
     $.ajax({
-        url: "<?= route_to('admin/update-master-classes') ?>",
+        url: "<?= route_to('admin/update-master-room') ?>",
         type: "POST",
         data: data,
         // global: false,
