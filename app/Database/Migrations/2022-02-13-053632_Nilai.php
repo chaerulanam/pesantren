@@ -18,6 +18,11 @@ class Nilai extends Migration
             'nilai'       => [
                 'type'       => 'FLOAT',
             ],
+            'santri_id'          => [
+                'type'           => 'INT',
+                'constraint'     => 5,
+                'unsigned'       => true,
+            ],
             'jadwal_id'       => [
                 'type'       => 'INT',
                 'constraint' => 5,
@@ -38,6 +43,7 @@ class Nilai extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('jadwal_id', 'jadwal_pelajaran', 'id', '', 'CASCADE');
+        $this->forge->addForeignKey('santri_id', 'profil', 'id', '', 'CASCADE');
         $this->forge->createTable('nilai');
     }
 

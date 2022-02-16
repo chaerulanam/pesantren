@@ -73,6 +73,13 @@ $routes->group('admin', function ($routes) {
 	// $routes->post('detail-presences', 'Presences::get_detail', ['filter' => 'permission:manage.guru']);
 	$routes->post('add-presences', 'Presences::add', ['filter' => 'permission:manage.guru']);
 
+	$routes->get('values', 'Values::index', ['filter' => 'permission:manage.guru']);
+	$routes->get('values-datatable', 'Values::datatable', ['filter' => 'permission:manage.guru']);
+	$routes->get('values-datatable-nilai', 'Values::datatable_nilai', ['filter' => 'permission:manage.guru']);
+	// $routes->post('detail-values', 'Values::get_detail', ['filter' => 'permission:manage.guru']);
+	$routes->post('add-values', 'Values::add', ['filter' => 'permission:manage.guru']);
+
+
 	$routes->get('master-billings', 'MasterBillings::index', ['filter' => 'permission:manage.bendahara']);
 	$routes->get('master-billings-datatable', 'MasterBillings::datatable', ['filter' => 'permission:manage.bendahara']);
 	$routes->post('add-master-billings', 'MasterBillings::add', ['filter' => 'permission:manage.bendahara']);

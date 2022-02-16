@@ -66,11 +66,11 @@
                     </div>
                 </div>
 
-                <div class="modal fade absen" tabindex="-1" role="dialog" aria-labelledby="absen" aria-hidden="true">
+                <div class="modal fade nilai" tabindex="-1" role="dialog" aria-labelledby="nilai" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Absen Santri</h5>
+                                <h5 class="modal-title">Nilai Santri</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                 </button>
                             </div>
@@ -90,16 +90,14 @@
                                 </div>
                             </div>
                             <div class="modal-body">
-                                <table id="datatable-absen"
+                                <table id="datatable-nilai"
                                     class="table table-striped table-bordered dt-responsive nowrap"
                                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Lengkap</th>
-                                            <th>Hadir</th>
-                                            <th>Izin</th>
-                                            <th>Tidak Hadir</th>
+                                            <th>Form Nilai</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -109,7 +107,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-primary theme-bg gradient button-entri"
-                                    id="button-entri">Submit</button>
+                                    id="button-entri" disabled>Submit</button>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
@@ -192,13 +190,19 @@ function($) {
 </script>
 
 <script>
+function setTwoNumberDecimal(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+    $('#button-entri').prop('disabled', false);
+    // console.log('hello');
+}
+
 function ambil_data(tahun = null) {
     $("#datatable").DataTable({
         "destroy": true,
     }).clear();
 
     $.ajax({
-        url: "<?= route_to('admin/presences-datatable') ?>",
+        url: "<?= route_to('admin/values-datatable') ?>",
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
@@ -251,21 +255,21 @@ $(document).ready(function() {
 <script>
 var l;
 var profil_id = [];
-var state = [];
+var val = [];
 var jadwal_id;
-$(document).on('click', '#absen', function(e) {
+$(document).on('click', '#nilai', function(e) {
     jadwal_id = $(this).attr('data-id');
     var data = {
         'id': jadwal_id,
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
     }
     // console.log(data);
-    $("#datatable-absen").DataTable({
+    $("#datatable-nilai").DataTable({
         "destroy": true,
     }).clear();
 
     $.ajax({
-        url: "<?= route_to('admin/presences-datatable-absen') ?>",
+        url: "<?= route_to('admin/values-datatable-nilai') ?>",
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
@@ -277,14 +281,14 @@ $(document).on('click', '#absen', function(e) {
             $('.kelas').text('Kelas : ' + data.kelas)
             $('.mata_pelajaran').text('Mata Pelajaran : ' + data.mapel)
             l = data.posts.length;
-            // console.log(l);
+            // console.log(data);
             for (var i = 1; i <= l; i++) {
-                state[i] = 'absen';
+                val[i] = 0;
                 profil_id[i] = data.id[i - 1];
             }
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
             if (data.responce == "success") {
-                $("#datatable-absen").DataTable({
+                $("#datatable-nilai").DataTable({
                     "destroy": true,
                     "data": data.posts,
                     "responsive": true,
@@ -307,29 +311,11 @@ $(document).on('click', '#absen', function(e) {
     });
 });
 
-$(document).on('change', 'input[type="checkbox"]', function() {
-    status = $(this).attr('data-status');
-    no = $(this).attr('data-no');
+$(document).on('change', 'input[type="number"]', function() {
+    no = $(this).attr('data-id');
+    val[no] = $('#form-nilai' + no).val();
 
-    if ($('#hadir' + no).prop('checked')) {
-        $('#izin' + no).attr('disabled', 'disabled');
-        $('#absen' + no).attr('disabled', 'disabled');
-        state[no] = status;
-    } else if ($('#izin' + no).prop('checked')) {
-        $('#hadir' + no).attr('disabled', 'disabled');
-        $('#absen' + no).attr('disabled', 'disabled');
-        state[no] = status;
-    } else if ($('#absen' + no).prop('checked')) {
-        $('#izin' + no).attr('disabled', 'disabled');
-        $('#hadir' + no).attr('disabled', 'disabled');
-        state[no] = status;
-    } else {
-        $('#hadir' + no).removeAttr('disabled', 'disabled');
-        $('#izin' + no).removeAttr('disabled', 'disabled');
-        $('#absen' + no).removeAttr('disabled', 'disabled');
-        state[no] = 'absen';
-    }
-
+    // console.log(no);
 });
 
 $(document).on('click', '#button-entri', function(e) {
@@ -337,10 +323,10 @@ $(document).on('click', '#button-entri', function(e) {
         'csrf_token_name': $('input[name=csrf_token_name]').val(),
         'profil': profil_id,
         'jadwal': jadwal_id,
-        'status': state,
+        'nilai': val,
     }
 
-    console.log(data);
+    // console.log(data);
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -352,7 +338,7 @@ $(document).on('click', '#button-entri', function(e) {
     }).then(function(result) {
         if (result.value) {
             $.ajax({
-                url: "<?= route_to('admin/add-presences') ?>",
+                url: "<?= route_to('admin/add-values') ?>",
                 type: "POST",
                 data: data,
                 dataType: "json",
@@ -367,13 +353,13 @@ $(document).on('click', '#button-entri', function(e) {
                     $('#button-entri').html('Submit');
                 },
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $('input[name=csrf_token_name]').val(data.csrf_token_name);
                     if (data.error != undefined) {
                         Swal.fire("Failed!", data.error, "error");
                     } else if (data.success != undefined) {
                         Swal.fire("Submited!", data.success, "success");
-                        $('.absen').modal('hide');
+                        $('.nilai').modal('hide');
                         ambil_data();
                     }
                 }

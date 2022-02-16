@@ -19,4 +19,11 @@ class MasterTahunModel extends Model
             ->where('status', 1)
             ->get()->getRow()->tahun;
     }
+
+    function SemesterAktif()
+    {
+        return $this
+            ->where('status', 1)
+            ->get()->getRow()->semester;
+    }
 }

@@ -132,7 +132,7 @@
                     </ul>
                 </li>
                 <?php endif; ?>
-                <?php if (has_permission('manage.kesehatan')) : ?>
+                <!-- <?php if (has_permission('manage.kesehatan')) : ?>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-heartbeat"></i>
@@ -146,7 +146,7 @@
                         <li><a href="/admin/data-language"><?= lang('Files.Language') ?></a></li>
                     </ul>
                 </li>
-                <?php endif; ?>
+                <?php endif; ?> -->
                 <?php if (has_permission('manage.guru')) : ?>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -156,7 +156,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/admin/presences"><?= lang('Files.Attendances Schedules Lessons') ?></a>
                         </li>
-                        <li><a href="/admin/values-lessons"><?= lang('Files.Values Lessons') ?></a></li>
+                        <li><a href="/admin/values"><?= lang('Files.Values Lessons') ?></a></li>
                     </ul>
                 </li>
                 <?php endif; ?>
