@@ -112,9 +112,11 @@
                                 <p class="fs-5 text-white mb-4 pb-2">Menjadi salah satu pusat pendidikan Islam, yang
                                     mencetak sumber daya manusia unggul, dan mempunyai landasan iman & takwa yang kuat.
                                     Tempat yang tepat untuk membangun karakter putra-putri anda.</p>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Tonton
+                                <a href="https://www.youtube.com/channel/UCT4epiMdlDgDPs4ihQ-BHDA/videos"
+                                    class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Tonton
                                     video</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Daftar
+                                <a href="http://al-ishlahtajug.sch.id/"
+                                    class="btn btn-light py-md-3 px-md-5 animated slideInRight">Daftar
                                     sekarang</a>
                             </div>
                         </div>
@@ -400,7 +402,8 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <h4 class="text-white mb-3">Kontak</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Jl. Raya Sudimampir, Tugu, Kec. Balongan
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Jl. Raya Sudimampir, Tugu, Kec. Balongan,
+                        Kab. Indramayu, Jawa Barat
                     </p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>(0234) 353074</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>al_ishlahtajug@yahoo.co.id</p>

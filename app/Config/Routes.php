@@ -37,6 +37,11 @@ $routes->get('admin', 'Dashboard::index', ['filter' => 'permission:dashboard.vie
 $routes->group('admin', function ($routes) {
 	$routes->get('/', 'Dashboard::index', ['filter' => 'permission:dashboard.view']);
 	$routes->get('index', 'Dashboard::index', ['filter' => 'permission:dashboard.view']);
+	$routes->get('chart', 'Dashboard::chart', ['filter' => 'permission:dashboard.view']);
+	$routes->get('datatable-pembayaran', 'Dashboard::chart', ['filter' => 'permission:dashboard.view']);
+	$routes->get('datatable-pelanggar', 'Dashboard::chart', ['filter' => 'permission:dashboard.view']);
+	$routes->get('datatable-absen', 'Dashboard::chart', ['filter' => 'permission:dashboard.view']);
+
 	$routes->get('data-users', 'Users::index', ['filter' => 'permission:manage.users']);
 	$routes->get('data-users-datatable', 'Users::datatable', ['filter' => 'permission:manage.users']);
 	$routes->get('data-users-detail', 'Users::get_detail', ['filter' => 'permission:manage.users']);
