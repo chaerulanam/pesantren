@@ -45,79 +45,79 @@ class ProfileStudents extends BaseController
 
     public function datatable()
     {
-        if ($this->request->isAJAX()) {
-            $csrfname = csrf_token();
-            $csrfhash = csrf_hash();
-            if ($posts = $this->profilModel
-                ->select('users.id as userid, profil.id as profilid, username, active, nama_lengkap, jenjang_pendidikan, jenis_kelamin, tempat_lahir, tanggal_lahir, foto')
-                ->join('users_profil', 'users_profil.profil_id = profil.id', 'LEFT')
-                ->join('users', 'users_profil.user_id = users.id', 'LEFT')
-                ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
-                ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id')
-                ->where('name', 'santri')
-                ->findAll()
-            ) {
-                $no = 0;
-                foreach ($posts as $key) {
-                    $no++;
-                    $row = array();
-                    $row[] = $no;
-                    $row[] = $key->username;
-                    $row[] = $key->nama_lengkap;
-                    $row[] = $key->jenis_kelamin;
-                    $row[] = $key->jenjang_pendidikan;
-                    $row[] = $key->tempat_lahir . ', ' . $key->tanggal_lahir;
-                    $row[] = '<a href="' . base_url() . '/assets/images/users/' . $key->foto . '" title="Foto Profil ' . $key->nama_lengkap . '">
-                    <img class="img-fluid" alt="Foto Profil ' . $key->nama_lengkap . '" src="' . base_url() . '/assets/images/users/' . $key->foto . '" width="145">
+        // if ($this->request->isAJAX()) {
+        $csrfname = csrf_token();
+        $csrfhash = csrf_hash();
+        if ($posts = $this->profilModel
+            ->select('users.id as userid, profil.id as profilid, username, active, nama_lengkap, jenjang_pendidikan, jenis_kelamin, tempat_lahir, tanggal_lahir, foto')
+            ->join('users_profil', 'users_profil.profil_id = profil.id')
+            ->join('users', 'users_profil.user_id = users.id')
+            ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
+            ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id')
+            ->where('name', 'santri')
+            ->findAll()
+        ) {
+            $no = 0;
+            foreach ($posts as $key) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $key->username;
+                $row[] = $key->nama_lengkap;
+                $row[] = $key->jenis_kelamin;
+                $row[] = $key->jenjang_pendidikan;
+                $row[] = $key->tempat_lahir . ', ' . $key->tanggal_lahir;
+                $row[] = '<a href="' . base_url() . '/assets/images/users/' . $key->foto . '" title="profil">
+                    <img class="img-fluid" alt="" src="' . base_url() . '/assets/images/users/' . $key->foto . '" width="145">
                     </a>';
-                    if ($key->active == 1) {
-                        $row[] = '<span class="badge bg-success text-white">Active</span>';
-                        if (has_permission('manage.admin')) {
-                            $row[] = '<div class="btn-group me-1 mt-1">
+                if ($key->active == 1) {
+                    $row[] = '<span class="badge bg-success text-white">Active</span>';
+                    if (has_permission('manage.admin')) {
+                        $row[] = '<div class="btn-group me-1 mt-1">
                         <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu">
                         <a class="dropdown-item" href="detail-students?username=' . $key->username . '" >Detail</a>                        
                         <a class="dropdown-item" id="delete" href="#" data-id="' . $key->profilid . '" data-userid="' . $key->userid . '">Delete</a>
                         </div>
                         </div>';
-                        } else {
-                            if ($key->userid == user_id()) {
-                                $row[] = '<div class="btn-group me-1 mt-1">
+                    } else {
+                        if ($key->userid == user_id()) {
+                            $row[] = '<div class="btn-group me-1 mt-1">
                                 <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                                 <div class="dropdown-menu">
                                 <a class="dropdown-item" href="detail-students?username=' . $key->username . '" >Detail</a>                        
                                 </div>
                                 </div>';
-                            } else {
-                                $row[] = '-';
-                            }
+                        } else {
+                            $row[] = '-';
                         }
-                        // <a class="dropdown-item" id="" href="#" data-bs-toggle="modal" data-bs-target=".update" data-id="' . $key->userid . '">Update</a>
-                    } else if ($key->active == 0) {
-                        if ($key->username == 0) {
-                            $row[] = '<span class="badge bg-secondary text-white">Username Not Set</span>';
-                            $row[] = '<div class="btn-group me-1 mt-1">
+                    }
+                    // <a class="dropdown-item" id="" href="#" data-bs-toggle="modal" data-bs-target=".update" data-id="' . $key->userid . '">Update</a>
+                } else if ($key->active == 0) {
+                    if ($key->username == 0) {
+                        $row[] = '<span class="badge bg-secondary text-white">Username Not Set</span>';
+                        $row[] = '<div class="btn-group me-1 mt-1">
                             <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                             <div class="dropdown-menu">
                                <a class="dropdown-item" id="setusername" href="#" data-bs-toggle="modal" data-bs-target=".setusername" data-id="' . $key->profilid . '">Set Username</a>
                             </div>
                         </div>';
-                        } else {
-                            $row[] = '<span class="badge bg-danger text-white">Not Active</span>';
-                        }
+                    } else {
+                        $row[] = '<span class="badge bg-danger text-white">Not Active</span>';
                     }
-
-                    $data[] = $row;
                 }
-                $data = array('responce' => 'success', 'posts' => $data);
-            } else {
-                $data = array('responce' => 'success', 'posts' => '');
+
+                $data[] = $row;
             }
-            $data[$csrfname] = $csrfhash;
-            return $this->response->setJSON($data);
+            $data = array('responce' => 'success', 'posts' => $data);
         } else {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            $data = array('responce' => 'success', 'posts' => '');
         }
+        $data[$csrfname] = $csrfhash;
+        return $this->response->setJSON($data);
+        // } else {
+        //     throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        // }
     }
 
     public function add()

@@ -9,6 +9,8 @@ class All extends Seeder
     public function run()
     {
         $this->call('Opsi');
+        $this->call('Admin');
+        $this->call('Users');
         $this->call('Groups');
         $this->call('GroupsUsers');
         $this->call('Permissions');
@@ -18,5 +20,7 @@ class All extends Seeder
         $this->call('MasterPelajaran');
         $this->call('MasterTahun');
         $this->call('MasterTagihan');
+        $this->call('Profil');
+        $this->call('UsersProfil');
     }
 }

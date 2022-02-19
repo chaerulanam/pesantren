@@ -24,6 +24,7 @@ class Home extends BaseController
 			'title_meta' => view('admin/partials/title-meta', ['title' => 'Home', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
 			'page_title' => view('admin/partials/page-title', ['title' => 'Home', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
 		];
+		// dd($data);
 		return view('index', $data);
 	}
 

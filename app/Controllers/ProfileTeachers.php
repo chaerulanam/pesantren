@@ -50,11 +50,15 @@ class ProfileTeachers extends BaseController
             $csrfhash = csrf_hash();
             if ($posts = $this->profilModel
                 ->select('users.id as userid, profil.id as profilid, username, active, nama_lengkap, jenjang_pendidikan, jenis_kelamin, tempat_lahir, tanggal_lahir, foto')
-                ->join('users_profil', 'users_profil.profil_id = profil.id', 'LEFT')
-                ->join('users', 'users_profil.user_id = users.id', 'LEFT')
-                ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
-                ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id')
-                ->where('name', 'guru')
+                ->join('auth_groups_users', 'auth_groups_users.user_id = users.id', 'LEFT')
+                ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id', 'LEFT')
+                ->orWhere('jenjang_pendidikan !=', 'SD')
+                ->orWhere('jenjang_pendidikan !=', 'SMP')
+                ->orWhere('jenjang_pendidikan !=', 'SMA')
+                ->orWhere('name', 'guru')
+                ->orWhere('name', 'bendahara')
+                ->orWhere('name', 'pengajaran')
+                ->orWhere('name', 'pengasuhan')
                 ->findAll()
             ) {
                 $no = 0;
@@ -67,7 +71,7 @@ class ProfileTeachers extends BaseController
                     $row[] = $key->jenis_kelamin;
                     $row[] = $key->jenjang_pendidikan;
                     $row[] = $key->tempat_lahir . ', ' . $key->tanggal_lahir;
-                    $row[] = '<a class="image-popup-vertical-fit" href="' . base_url() . '/assets/images/users/' . $key->foto . '" title="Caption. Can be aligned it to any side and contain any HTML.">
+                    $row[] = '<a class="image-popup-vertical-fit" href="' . base_url() . '/assets/images/users/' . $key->foto . '" title="profil">
                     <img class="img-fluid" alt="" src="' . base_url() . '/assets/images/users/' . $key->foto . '" width="145">
                     </a>';
                     if ($key->active == 1) {

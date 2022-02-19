@@ -33,6 +33,30 @@ class GroupsPermissions extends Seeder
                 'group_id' => 1,
                 'permission_id'    => 6
             ],
+            [
+                'group_id' => 1,
+                'permission_id'    => 7
+            ],
+            [
+                'group_id' => 1,
+                'permission_id'    => 8
+            ],
+            [
+                'group_id' => 1,
+                'permission_id'    => 9
+            ],
+            [
+                'group_id' => 1,
+                'permission_id'    => 10
+            ],
+            [
+                'group_id' => 1,
+                'permission_id'    => 11
+            ],
+            [
+                'group_id' => 1,
+                'permission_id'    => 12
+            ],
         ];
 
         // Using Query Builder
