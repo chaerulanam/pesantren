@@ -47,8 +47,13 @@
                                     <div class="text-center">
                                         <div class="clearfix"></div>
                                         <div>
-                                            <img src="/assets/images/users/<?= $profil->foto ?>" alt=""
+                                            <?php if ($profil->foto == "") : ?>
+                                            <img src="/assets/images/users/default.png" alt=""
                                                 class="img-thumbnail rounded" height="100" width="150">
+                                            <?php else : ?>
+                                            <img src="/assets/images/users/default.png" alt=""
+                                                class="img-thumbnail rounded" height="100" width="150">
+                                            <?php endif; ?>
                                         </div>
                                         <h5 class="mt-3 mb-1"></h5>
 

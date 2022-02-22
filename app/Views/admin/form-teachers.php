@@ -33,8 +33,8 @@
                                         <label for="example-text-input" class="col-md-12 col-form-label">Nama
                                             Lengkap</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" oninput="this.value = this.value.toUpperCase()"
-                                                type="text" placeholder="Nama Lengkap" id="nama_lengkap">
+                                            <input class="form-control" type="text" placeholder="Nama Lengkap"
+                                                id="nama_lengkap">
                                         </div>
                                     </div>
                                 </div>
@@ -48,8 +48,8 @@
                                         <label for="example-text-input" class="col-md-12 col-form-label">Sekolah
                                             Asal</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" oninput="this.value = this.value.toUpperCase()"
-                                                type="text" placeholder="Sekolah Asal" id="sekolah_asal">
+                                            <input class="form-control" type="text" placeholder="Sekolah Asal"
+                                                id="sekolah_asal">
                                         </div>
                                     </div>
                                 </div>
@@ -83,8 +83,9 @@
                                     <div class="mb-3 row">
                                         <label for="example-text-input" class="col-md-12 col-form-label">NISN</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" oninput="this.value = this.value.toUpperCase()"
-                                                type="number" placeholder="NISN" id="nisn">
+                                            <input class="form-control" type="number" placeholder="NISN" id="nisn"
+                                                minlength="0" maxlength="16"
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                         </div>
                                     </div>
                                 </div>
@@ -97,8 +98,8 @@
                                     <div class="mb-3 row">
                                         <label for="tempat_lahir" class="col-md-12 col-form-label">Tempat Lahir</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" oninput="this.value = this.value.toUpperCase()"
-                                                type="text" placeholder="Tempat Lahir" id="tempat_lahir">
+                                            <input class="form-control" type="text" placeholder="Tempat Lahir"
+                                                id="tempat_lahir">
                                         </div>
                                     </div>
                                 </div>
@@ -116,8 +117,8 @@
                                         <label for="tanggal_lahir" class="col-md-12 col-form-label">Tanggal
                                             Lahir</label>
                                         <div class="col-md-10">
-                                            <input class="form-control" oninput="this.value = this.value.toUpperCase()"
-                                                type="date" value="2019-08-19" id="tanggal_lahir">
+                                            <input class="form-control" type="date" value="2019-08-19"
+                                                id="tanggal_lahir">
                                         </div>
                                     </div>
                                 </div>
@@ -184,9 +185,8 @@
                                         <label for="example-text-input" class="col-md-12 col-form-label">Nomor HP yang
                                             Aktif</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" oninput="this.value = this.value.toUpperCase()"
-                                                type="number" placeholder="No. HP" id="no_hp" minlength="8"
-                                                maxlength="13"
+                                            <input class="form-control" type="number" placeholder="No. HP" id="no_hp"
+                                                minlength="8" maxlength="13"
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                         </div>
                                     </div>
@@ -200,8 +200,8 @@
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label for="basicpill-address-input">Alamat Lengkap</label>
-                                <input id="alamat" oninput="this.value = this.value.toUpperCase()" class="form-control"
-                                    placeholder="Jalan, Blok/Dusun, RT/RW" rows="2"></input>
+                                <input id="alamat" class="form-control" placeholder="Jalan, Blok/Dusun, RT/RW"
+                                    rows="2"></input>
                             </div>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Kabupaten</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="kabupaten" onchange="getkecamatan()">
+                                            <select class="form-select" id="kabupaten" onchange="getKecamatan()">
                                                 <option value=>Select</option>
                                             </select>
                                         </div>
@@ -245,7 +245,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Kecamatan</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="kecamatan" onchange="getdesa()">
+                                            <select class="form-select" id="kecamatan" onchange="getDesa()">
                                                 <option value=>Select</option>
                                             </select>
                                         </div>
@@ -281,7 +281,7 @@
                             <div class="card-body">
                                 <div class="clearfix"></div>
                                 <div class="mb-4">
-                                    <img src="/assets/images/users/default.png" alt=""
+                                    <img src="<?= base_url(); ?>/assets/images/default.png" alt=""
                                         class="avatar-lg rounded img-thumbnail" id="preview">
                                     <input type="file" class="form-control-file" id="foto" onchange="preview()">
                                 </div>
@@ -301,8 +301,8 @@
                                         <label for="example-text-input" class="col-md-12 col-form-label">Nama
                                             Ayah</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" oninput="this.value = this.value.toUpperCase()"
-                                                type="text" placeholder="Nama Ayah" id="nama_ayah">
+                                            <input class="form-control" type="text" placeholder="Nama Ayah"
+                                                id="nama_ayah">
                                         </div>
                                     </div>
                                 </div>
@@ -341,11 +341,11 @@
                                             <select class="form-select" id="penghasilan_ayah">
                                                 <option value=>Select</option>
                                                 <option>Tidak Berpenghasilan</option>
-                                                <option>Kurang dari Rp. 1.000.000</option>
-                                                <option>Rp. 1.000.000 s/d 2.000.000</option>
-                                                <option>Rp. 3.000.000 s/d 4.000.000</optione=>
-                                                <option>Rp. 4.000.000 s/d 5.000.000</option>
-                                                <option>Lebih dari Rp. 5.000.000</option>
+                                                <option>Kurang dari Rp 1.000.000</option>
+                                                <option>Rp 1.000.000 - 2.000.000</option>
+                                                <option>Rp 3.000.000 - 4.000.000</optione=>
+                                                <option>Rp 4.000.000 - 5.000.000</option>
+                                                <option>Lebih dari Rp 5.000.000</option>
                                             </select>
                                         </div>
                                     </div>
@@ -390,8 +390,8 @@
                                         <label for="example-text-input" class="col-md-12 col-form-label">Nama
                                             Ibu</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" oninput="this.value = this.value.toUpperCase()"
-                                                type="text" placeholder="Nama Ibu" id="nama_ibu">
+                                            <input class="form-control" type="text" placeholder="Nama Ibu"
+                                                id="nama_ibu">
                                         </div>
                                     </div>
                                 </div>
@@ -430,11 +430,11 @@
                                             <select class="form-select" id="penghasilan_ibu">
                                                 <option value=>Select</option>
                                                 <option>Tidak Berpenghasilan</option>
-                                                <option>Kurang dari Rp. 1.000.000</option>
-                                                <option>Rp. 1.000.000 s/d 2.000.000</option>
-                                                <option>Rp. 3.000.000 s/d 4.000.000</optione=>
-                                                <option>Rp. 4.000.000 s/d 5.000.000</option>
-                                                <option>Lebih dari Rp. 5.000.000</option>
+                                                <option>Kurang dari Rp 1.000.000</option>
+                                                <option>Rp 1.000.000 - 2.000.000</option>
+                                                <option>Rp 3.000.000 - 4.000.000</optione=>
+                                                <option>Rp 4.000.000 - 5.000.000</option>
+                                                <option>Lebih dari Rp 5.000.000</option>
                                             </select>
                                         </div>
                                     </div>
@@ -485,9 +485,8 @@
                                             <label for="example-text-input" class="col-md-12 col-form-label">Nama
                                                 Wali</label>
                                             <div class="col-md-12">
-                                                <input class="form-control"
-                                                    oninput="this.value = this.value.toUpperCase()" type="text"
-                                                    placeholder="Nama Wali" id="nama_wali">
+                                                <input class="form-control" type="text" placeholder="Nama Wali"
+                                                    id="nama_wali">
                                             </div>
                                         </div>
                                     </div>
@@ -524,11 +523,11 @@
                                                 <select class="form-select" id="penghasilan_wali">
                                                     <option value=>Select</option>
                                                     <option>Tidak Berpenghasilan</option>
-                                                    <option>Kurang dari Rp. 1.000.000</option>
-                                                    <option>Rp. 1.000.000 s/d 2.000.000</option>
-                                                    <option>Rp. 3.000.000 s/d 4.000.000</optione=>
-                                                    <option>Rp. 4.000.000 s/d 5.000.000</option>
-                                                    <option>Lebih dari Rp. 5.000.000</option>
+                                                    <option>Kurang dari Rp 1.000.000</option>
+                                                    <option>Rp 1.000.000 - 2.000.000</option>
+                                                    <option>Rp 3.000.000 - 4.000.000</optione=>
+                                                    <option>Rp 4.000.000 - 5.000.000</option>
+                                                    <option>Lebih dari Rp 5.000.000</option>
                                                 </select>
                                             </div>
                                         </div>

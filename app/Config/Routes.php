@@ -59,6 +59,7 @@ $routes->group('admin', function ($routes) {
 	$routes->get('data-students', 'ProfileStudents::index', ['filter' => 'permission:manage.santri']);
 	$routes->get('data-students-datatable', 'ProfileStudents::datatable', ['filter' => 'permission:manage.santri']);
 	$routes->get('detail-students', 'ProfileDetails::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('get-detail-students', 'ProfileStudents::get_detail', ['filter' => 'permission:manage.santri']);
 	$routes->post('add-students', 'ProfileStudents::add', ['filter' => 'permission:manage.santri']);
 	$routes->post('setuser-students', 'ProfileStudents::setusersprofil', ['filter' => 'permission:manage.santri']);
 	$routes->post('update-students', 'ProfileStudents::update', ['filter' => 'permission:manage.santri']);

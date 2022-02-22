@@ -45,6 +45,10 @@ class Pembayaran extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => 15,
             ],
+            'nama_penerima' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => 100,
+            ],
             'tahun_ajaran'          => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 20,

@@ -434,68 +434,74 @@ $(document).ready(function() {
 </script>
 
 <script>
-$(document).ready(function() {
+$(document).ready(function(e) {
     $.ajax({
         method: "get",
-        url: "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json",
+        url: "https://dev.farizdotid.com/api/daerahindonesia/provinsi",
         success: function(data) {
-            // console.log(data[1]);
-            ldata = data.length;
+            // console.log(data);
+            $('#provinsi').append('<option value=>Select</option>');
+            ldata = data.provinsi.length;
             for (let i = 0; i < ldata; i++) {
-                $('#provinsi').append('<option value=' + data[i].id + '>' + data[i].name +
+                $('#provinsi').append('<option value=' + data.provinsi[i].id + '>' + data.provinsi[
+                        i].nama +
                     '</option>')
             }
         }
     });
-
-
 });
 
 function getKabupaten() {
+    var idprov = $('#provinsi').val();
     $('#kabupaten').find('option').remove().end()
     $('#kecamatan').find('option').remove().end()
-    var idprov = $('#provinsi').val();
+    $('#desa').find('option').remove().end()
     // console.log($('#provinsi :selected').text());
     $.ajax({
         method: "get",
-        url: "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" + idprov + ".json",
+        url: "https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=" + idprov,
         success: function(data) {
+            ldata = data.kota_kabupaten.length;
             $('#kabupaten').append('<option value=>Select</option>');
-            ldata = data.length;
             for (let i = 0; i < ldata; i++) {
-                $('#kabupaten').append('<option value=' + data[i].id + '>' + data[i].name + '</option>')
+                $('#kabupaten').append('<option value=' + data.kota_kabupaten[i].id + '>' +
+                    data.kota_kabupaten[i].nama + '</option>')
             }
         }
     });
 }
 
-function getkecamatan() {
+function getKecamatan() {
     var idkota = $('#kabupaten').val();
     $('#kecamatan').find('option').remove().end()
+    $('#desa').find('option').remove().end()
     $.ajax({
         method: "get",
-        url: "https://www.emsifa.com/api-wilayah-indonesia/api/districts/" + idkota + ".json",
+        url: "https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=" + idkota,
         success: function(data) {
+            // console.log(data);
             $('#kecamatan').append('<option value=>Select</option>');
-            ldata = data.length;
+            ldata = data.kecamatan.length;
             for (let i = 0; i < ldata; i++) {
-                $('#kecamatan').append('<option value=' + data[i].id + '>' + data[i].name + '</option>')
+                $('#kecamatan').append('<option value=' + data.kecamatan[i].id + '>' + data.kecamatan[i]
+                    .nama + '</option>')
             }
         }
     });
 }
 
-function getdesa() {
+function getDesa() {
     var idkec = $('#kecamatan').val();
     $('#desa').find('option').remove().end()
     $.ajax({
         method: "get",
-        url: "https://www.emsifa.com/api-wilayah-indonesia/api/villages/" + idkec + ".json",
+        url: "https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=" + idkec,
         success: function(data) {
+            ldata = data.kelurahan.length;
             $('#desa').append('<option value=>Select</option>');
-            ldata = data.length;
             for (let i = 0; i < ldata; i++) {
-                $('#desa').append('<option value=' + data[i].id + '>' + data[i].name + '</option>')
+                $('#desa').append('<option value=' + data.kelurahan[i].id + '>' + data.kelurahan[i].nama +
+                    '</option>')
             }
         }
     });

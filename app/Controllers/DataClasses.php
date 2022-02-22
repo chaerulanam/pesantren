@@ -31,8 +31,7 @@ class DataClasses extends BaseController
                 ->where('name', 'santri')
                 ->where('users_profil.user_id', null)
                 ->findAll(),
-            'kelas' => $this->masterkelasModel->groupBy('deskripsi')
-                ->groupBy('kelas')->findAll(),
+            'kelas' => $this->masterkelasModel->findAll(),
             'alltahun' => $this->tahunModel->groupBy('tahun')->findAll(),
             'title_meta' => view('admin/partials/title-meta', ['title' => 'Data Classes', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
             'page_title' => view('admin/partials/page-title', ['title' => 'Data Classes', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
@@ -70,6 +69,7 @@ class DataClasses extends BaseController
                     ->join('profil wali', 'master_kelas.wali_id = wali.id', 'LEFT')
                     ->where('master_kelas.deskripsi', $jenjang)
                     ->where('kelas_profil.tahun_ajaran', $tahun)
+                    ->groupBy('kelas')
                     ->findAll();
             } else {
                 $posts = $this->kelasprofilModel

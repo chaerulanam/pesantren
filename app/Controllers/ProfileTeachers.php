@@ -31,9 +31,7 @@ class ProfileTeachers extends BaseController
                 ->select('users.id as userid, username, name')
                 ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
                 ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id')
-                ->join('users_profil', 'users_profil.user_id = users.id', 'LEFT')
-                ->where('name', 'guru')
-                ->where('users_profil.user_id', null)
+                ->where('name', 'none')
                 ->findAll(),
             'title_table' => 'Data ' . lang('Files.Profile') . ' ' . lang('Files.Students'),
             'title_meta' => view('admin/partials/title-meta', ['title' => 'Profile', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
@@ -50,15 +48,15 @@ class ProfileTeachers extends BaseController
             $csrfhash = csrf_hash();
             if ($posts = $this->profilModel
                 ->select('users.id as userid, profil.id as profilid, username, active, nama_lengkap, jenjang_pendidikan, jenis_kelamin, tempat_lahir, tanggal_lahir, foto')
-                ->join('auth_groups_users', 'auth_groups_users.user_id = users.id', 'LEFT')
-                ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id', 'LEFT')
-                ->orWhere('jenjang_pendidikan !=', 'SD')
-                ->orWhere('jenjang_pendidikan !=', 'SMP')
-                ->orWhere('jenjang_pendidikan !=', 'SMA')
+                ->join('users_profil', 'users_profil.profil_id = profil.id')
+                ->join('users', 'users_profil.user_id = users.id')
+                ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
+                ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id')
                 ->orWhere('name', 'guru')
                 ->orWhere('name', 'bendahara')
                 ->orWhere('name', 'pengajaran')
                 ->orWhere('name', 'pengasuhan')
+                ->orderBy('profil.id', 'DESC')
                 ->findAll()
             ) {
                 $no = 0;
@@ -71,9 +69,15 @@ class ProfileTeachers extends BaseController
                     $row[] = $key->jenis_kelamin;
                     $row[] = $key->jenjang_pendidikan;
                     $row[] = $key->tempat_lahir . ', ' . $key->tanggal_lahir;
-                    $row[] = '<a class="image-popup-vertical-fit" href="' . base_url() . '/assets/images/users/' . $key->foto . '" title="profil">
-                    <img class="img-fluid" alt="" src="' . base_url() . '/assets/images/users/' . $key->foto . '" width="145">
-                    </a>';
+                    if ($key->foto == "") {
+                        $row[] = '<a href="' . base_url() . '/assets/images/users/default.png" title="profil">
+                        <img class="img-fluid" alt="" src="' . base_url() . '/assets/images/users/default.png" width="145">
+                        </a>';
+                    } else {
+                        $row[] = '<a href="' . base_url() . '/assets/images/users/' . $key->foto . '" title="profil">
+                        <img class="img-fluid" alt="" src="' . base_url() . '/assets/images/users/' . $key->foto . '" width="145">
+                        </a>';
+                    }
                     if ($key->active == 1) {
                         $row[] = '<span class="badge bg-success text-white">Active</span>';
                         if (has_permission('manage.admin')) {
@@ -132,16 +136,6 @@ class ProfileTeachers extends BaseController
 
             $user_id = $this->request->getPost('user_id');
 
-            // if (
-            //     $this->profilModel
-            //     ->where('user_id', $user_id)
-            //     ->countAllResults() > 0
-            // ) {
-            //     $data = array('error' => 'Anda Sudah Menginput Data');
-            //     $data[$csrfname] = $csrfhash;
-            //     return $this->response->setJSON($data);
-            // }
-
             if (!$this->validate(
                 [
                     'user_id' => [
@@ -151,79 +145,79 @@ class ProfileTeachers extends BaseController
                         ]
                     ],
                     'nama_lengkap' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Nama Lengkap Harus Diisi !'
                         ]
                     ],
                     'sekolah_asal' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Sekolah Asal Harus Diisi !'
                         ]
                     ],
                     'jenis_kelamin' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Jenis Kelamin Harus Diisi !'
                         ]
                     ],
                     'no_hp' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'No Hp Harus Diisi !'
                         ]
                     ],
                     'nik' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'NIK Harus Diisi !'
                         ]
                     ],
                     'no_kk' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'No KK Harus Diisi !'
                         ]
                     ],
                     'tempat_lahir' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Tempat Lahir Harus Diisi !'
                         ]
                     ],
                     'tanggal_lahir' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Tanggal Lahir Harus Diisi !'
                         ]
                     ],
                     'alamat' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Alamat Lengkap Harus Diisi !'
                         ]
                     ],
                     'desa' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Desa Harus Diisi !'
                         ]
                     ],
                     'kecamatan' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Kecamatan Harus Diisi !'
                         ]
                     ],
                     'kabupaten' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Kabupaten Harus Diisi !'
                         ]
                     ],
                     'provinsi' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Provinsi Harus Diisi !'
                         ]
@@ -238,49 +232,49 @@ class ProfileTeachers extends BaseController
                         ]
                     ],
                     'nama_ayah' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Nama Ayah Harus Diisi !'
                         ]
                     ],
                     'pendidikan_ayah' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Pendidikan Ayah Harus Diisi !'
                         ]
                     ],
                     'penghasilan_ayah' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Penghasilan Ayah Harus Diisi !'
                         ]
                     ],
                     'pekerjaan_ayah' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Pekerjaan Ayah Harus Diisi !'
                         ]
                     ],
                     'nama_ibu' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Nama Ibu Harus Diisi !'
                         ]
                     ],
                     'pendidikan_ibu' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Pendidikan Ibu Harus Diisi !'
                         ]
                     ],
                     'penghasilan_ibu' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Penghasilan Ibu Harus Diisi !'
                         ]
                     ],
                     'pekerjaan_ibu' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Pekerjaan Ibu Harus Diisi !'
                         ]
@@ -360,6 +354,12 @@ class ProfileTeachers extends BaseController
                 $data = array('error' => 'Failed Add to Users Profil');
                 $data[$csrfname] = $csrfhash;
                 return $this->response->setJSON($data);
+            }
+
+            if (!$this->auth->removeUserFromGroup($user_id, 'none')) {
+                $data = array('error' => 'Gagal Menghapus Grup User');
+            } else if (!$this->auth->addUserToGroup($user_id, 'santri')) {
+                $data = array('error' => 'Gagal Menambah Grup User');
             }
 
             $data = [

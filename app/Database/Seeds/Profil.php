@@ -31,7 +31,7 @@ class Profil extends Seeder
                 'tanggal_lahir' => $faker->date('Y-m-d', 'now'),
                 'jenjang_pendidikan' => $jenjang,
                 'no_hp' => $faker->e164PhoneNumber,
-                'alamat_lengkap' => '$faker->address',
+                'alamat_lengkap' => $faker->address,
                 'deskripsi' => $faker->realText,
                 'created_at' => Time::now(),
                 'updated_at' => Time::now(),
@@ -113,5 +113,20 @@ class Profil extends Seeder
             $data1[] = $row;
         }
         $this->db->table('orangtua')->insertBatch($data1);
+
+        for ($i = 0; $i < 910; $i++) {
+            $row = [
+                'nama_wali' => $faker->name('male'),
+                'hubungan_sosial' => "Kakek",
+                'penghasilan_wali' => "diatas 5 juta",
+                'pekerjaan_wali' => "PNS",
+                'profil_id' => $i + 1,
+                'created_at' => Time::now(),
+                'updated_at' => Time::now(),
+            ];
+            $data2[] = $row;
+        }
+
+        $this->db->table('wali')->insertBatch($data2);
     }
 }

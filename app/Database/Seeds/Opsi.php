@@ -11,7 +11,7 @@ class Opsi extends Seeder
         $data = [
             [
                 'nama' => 'sitename',
-                'isi'    => 'Aplikasi Anak Kendali',
+                'isi'    => 'Al-Ishlah Tajug',
             ], [
                 'nama' => 'sitedesc',
                 'isi'    => 'Aplikasi pengolahan data pesantren',

@@ -314,6 +314,9 @@ function ambil_data(jenjang = null) {
                     "responsive": true,
                     "lengthChange": true,
                     "autoWidth": false,
+                    "order": [
+                        [2, "asc"]
+                    ],
                     "columnDefs": [{
                         "targets": [0],
                         "orderable": false,
@@ -393,7 +396,7 @@ $(document).ready(function() {
             santri_id[$no - 1] = $idsantri;
             if (lc > 0) {
                 $('.div-button-update').html(
-                    '<a href="javascript:void(0);" class="btn btn-outline-success fas fa-edit" id="editmodal" data-bs-toggle="modal" data-bs-target=".editmodal">Update Kamar Santri </a><a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kamar Santri</a>'
+                    '<a href="javascript:void(0);" class="btn btn-outline-success fas fa-edit" id="editmodal" data-bs-toggle="modal" data-bs-target=".editmodal">Update Kelas Santri </a><a href="javascript:void(0);" class="btn btn-outline-info fas fa-plus" id="entri" data-bs-toggle="modal" data-bs-target=".entri"> Tambah Kelas Santri</a>'
                 );
             }
         } else {

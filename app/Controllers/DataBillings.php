@@ -50,6 +50,7 @@ class DataBillings extends BaseController
                     ->groupBy('kelas')
                     ->groupBy('tahun_ajaran')
                     ->groupBy('nama_tagihan')
+                    ->orderBy('tagihan.id', 'DESC')
                     ->selectSum('tagihan.status')
                     ->selectSum('tagihan.nominal')
                     ->where('tagihan.tahun_ajaran', $tahun)
@@ -65,6 +66,7 @@ class DataBillings extends BaseController
                     ->groupBy('kelas')
                     ->groupBy('tahun_ajaran')
                     ->groupBy('nama_tagihan')
+                    ->orderBy('tagihan.id', 'DESC')
                     ->selectSum('tagihan.status')
                     ->selectSum('tagihan.nominal')
                     ->where('tagihan.tahun_ajaran', $this->tahunModel->TahunAktif())
@@ -118,6 +120,7 @@ class DataBillings extends BaseController
                     ->groupBy('kelas')
                     ->groupBy('no_tagihan')
                     ->groupBy('tahun_ajaran')
+                    ->orderBy('tagihan.id', 'DESC')
                     ->where('tagihan.tahun_ajaran', $tahun)
                     ->findAll();
             } else {
@@ -131,6 +134,7 @@ class DataBillings extends BaseController
                     ->groupBy('kelas')
                     ->groupBy('no_tagihan')
                     ->groupBy('tahun_ajaran')
+                    ->orderBy('tagihan.id', 'DESC')
                     ->where('tagihan.tahun_ajaran', $this->tahunModel->TahunAktif())
                     ->findAll();
             }
