@@ -150,8 +150,15 @@ class Tagihan extends BaseController
 
             $tahun = $this->request->getGet('tahun');
 
-            $posts = $this->pembayaranModel
-                ->where('tahun_ajaran', $this->tahunModel->TahunAktif())
+            $posts = $this->tagihanModel
+                ->select('*, tagihan.deskripsi as desc, tagihan.updated_at')
+                ->join('master_tagihan', 'tagihan.master_tagihan_id = master_tagihan.id')
+                ->join('pembayaran', 'tagihan.invoice = pembayaran.order_id')
+                ->join('users', 'tagihan.user_id = users.id')
+                ->join('users_profil', 'users_profil.user_id = users.id')
+                ->join('profil', 'users_profil.profil_id = profil.id')
+                ->where('tagihan.useri_id', user_id())
+                ->where('pembayaran.tahun_ajaran', $this->tahunModel->TahunAktif())
                 ->findAll();
 
             if ($posts) {

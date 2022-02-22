@@ -1,11 +1,13 @@
 <div class="card">
     <div class="card-body">
 
-        <div id="mystep">
+        <div id="edit-mystep">
             <!-- Seller Details -->
             <h3>Data Diri</h3>
             <section>
                 <form>
+                    <input type="hidden" id="id">
+                    <input type="hidden" id="foto-before">
                     <div class="row">
 
                         <div class="col-md-4">
@@ -14,12 +16,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Username</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="user_id">
-                                                <option value=>-Select-</option>
-                                                <?php foreach ($users as $key) : ?>
-                                                <option value="<?= $key->userid; ?>"><?= $key->username; ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                            <input type="text" class="form-control" id="edit-username">
                                         </div>
                                     </div>
                                 </div>
@@ -34,7 +31,7 @@
                                             Lengkap</label>
                                         <div class="col-md-12">
                                             <input class="form-control" type="text" placeholder="Nama Lengkap"
-                                                id="nama_lengkap">
+                                                id="edit-nama_lengkap">
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +46,7 @@
                                             Asal</label>
                                         <div class="col-md-12">
                                             <input class="form-control" type="text" placeholder="Sekolah Asal"
-                                                id="sekolah_asal">
+                                                id="edit-sekolah_asal">
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +63,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Jenis Kelamin</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="jenis_kelamin">
+                                            <select class="form-select" id="edit-jenis_kelamin">
                                                 <option value=>Select</option>
                                                 <option value="Laki-laki">Laki-laki</option>
                                                 <option value="Perempuan">Perempuan</option>
@@ -83,7 +80,7 @@
                                     <div class="mb-3 row">
                                         <label for="example-text-input" class="col-md-12 col-form-label">NISN</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" type="number" placeholder="NISN" id="nisn"
+                                            <input class="form-control" type="number" placeholder="NISN" id="edit-nisn"
                                                 minlength="0" maxlength="16"
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                         </div>
@@ -99,7 +96,7 @@
                                         <label for="tempat_lahir" class="col-md-12 col-form-label">Tempat Lahir</label>
                                         <div class="col-md-12">
                                             <input class="form-control" type="text" placeholder="Tempat Lahir"
-                                                id="tempat_lahir">
+                                                id="edit-tempat_lahir">
                                         </div>
                                     </div>
                                 </div>
@@ -118,7 +115,7 @@
                                             Lahir</label>
                                         <div class="col-md-10">
                                             <input class="form-control" type="date" value="2019-08-19"
-                                                id="tanggal_lahir">
+                                                id="edit-tanggal_lahir">
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +129,7 @@
                                         <label for="example-text-input" class="col-md-12 col-form-label">NIK (Nomor
                                             KTP)</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" type="number" placeholder="NIK" id="nik"
+                                            <input class="form-control" type="number" placeholder="NIK" id="edit-nik"
                                                 minlength="12" maxlength="16"
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                         </div>
@@ -148,8 +145,8 @@
                                         <label for="example-text-input" class="col-md-12 col-form-label">Nomor Kartu
                                             Keluarga</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" type="number" placeholder="No. KK" id="no_kk"
-                                                minlength="12" maxlength="16"
+                                            <input class="form-control" type="number" placeholder="No. KK"
+                                                id="edit-no_kk" minlength="12" maxlength="16"
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                         </div>
                                     </div>
@@ -165,7 +162,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Jenjang Pendidikan</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="jenjang_pendidikan">
+                                            <select class="form-select" id="edit-jenjang_pendidikan">
                                                 <option value=>Select</option>
                                                 <option>TK</option>
                                                 <option>SD</option>
@@ -185,8 +182,8 @@
                                         <label for="example-text-input" class="col-md-12 col-form-label">Nomor HP yang
                                             Aktif</label>
                                         <div class="col-md-12">
-                                            <input class="form-control" type="number" placeholder="No. HP" id="no_hp"
-                                                minlength="8" maxlength="13"
+                                            <input class="form-control" type="number" placeholder="No. HP"
+                                                id="edit-no_hp" minlength="8" maxlength="13"
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                         </div>
                                     </div>
@@ -200,96 +197,14 @@
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label for="basicpill-address-input">Alamat Lengkap</label>
-                                <input id="alamat" class="form-control" placeholder="Jalan, Blok/Dusun, RT/RW"
+                                <input id="edit-alamat" class="form-control" placeholder="Jalan, Blok/Dusun, RT/RW"
                                     rows="2"></input>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div>
-                                <div class="d-flex align-items-start mt-2">
-                                    <div class="mb-3 row">
-                                        <label class="col-md-12 col-form-label">Provinsi</label>
-                                        <div class="col-md-20">
-                                            <select class="form-select" id="provinsi" onchange="getKabupaten()">
-                                                <option value=>Select</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div>
-                                <div class="d-flex align-items-start mt-2">
-                                    <div class="mb-3 row">
-                                        <label class="col-md-12 col-form-label">Kabupaten</label>
-                                        <div class="col-md-12">
-                                            <select class="form-select" id="kabupaten" onchange="getKecamatan()">
-                                                <option value=>Select</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div>
-                                <div class="d-flex align-items-start mt-2">
-                                    <div class="mb-3 row">
-                                        <label class="col-md-12 col-form-label">Kecamatan</label>
-                                        <div class="col-md-12">
-                                            <select class="form-select" id="kecamatan" onchange="getDesa()">
-                                                <option value=>Select</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div>
-                                <div class="d-flex align-items-start mt-2">
-                                    <div class="mb-3 row">
-                                        <label class="col-md-12 col-form-label">Desa/Kelurahan</label>
-                                        <div class="col-md-12">
-                                            <select class="form-select" id="desa">
-                                                <option value=>Select</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
                 </form>
             </section>
-            <h3>Upload Foto</h3>
-            <section>
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="text-center">
-                            <div class="card-body">
-                                <div class="clearfix"></div>
-                                <div class="mb-4">
-                                    <img src="<?= base_url(); ?>/assets/images/default.png" alt=""
-                                        class="img-thumbnail rounded" height="100" width="150">
-                                    <input type="file" class="form-control-file" id="foto" onchange="preview()">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
             <h3>Data Orang Tua</h3>
             <section>
                 <form>
@@ -302,7 +217,7 @@
                                             Ayah</label>
                                         <div class="col-md-12">
                                             <input class="form-control" type="text" placeholder="Nama Ayah"
-                                                id="nama_ayah">
+                                                id="edit-nama_ayah">
                                         </div>
                                     </div>
                                 </div>
@@ -315,7 +230,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Pendidikan Terakhir</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="pendidikan_ayah">
+                                            <select class="form-select" id="edit-pendidikan_ayah">
                                                 <option value=>Select</option>
                                                 <option value="sd">SD atau Sederajat</option>
                                                 <option value="smp">SMP atau Sederajat</option>
@@ -338,7 +253,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Penghasilan Per Bulan</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="penghasilan_ayah">
+                                            <select class="form-select" id="edit-penghasilan_ayah">
                                                 <option value=>Select</option>
                                                 <option>Tidak Berpenghasilan</option>
                                                 <option>Kurang dari Rp 1.000.000</option>
@@ -360,11 +275,11 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Pekerjaan</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="pekerjaan_ayah">
+                                            <select class="form-select" id="edit-pekerjaan_ayah">
                                                 <option value=>Select</option>
                                                 <option>Aparatur Sipil Negara (ASN)</option>
                                                 <option>TNI atau POLRI</option>
-                                                <option>Anggota DPR / DPRD</option>
+                                                <option>Anggota DPR atau DPRD</option>
                                                 <option>Dokter</optione=>
                                                 <option>Pedagang</option>
                                                 <option>Wiraswasta</option>
@@ -391,7 +306,7 @@
                                             Ibu</label>
                                         <div class="col-md-12">
                                             <input class="form-control" type="text" placeholder="Nama Ibu"
-                                                id="nama_ibu">
+                                                id="edit-nama_ibu">
                                         </div>
                                     </div>
                                 </div>
@@ -404,7 +319,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Pendidikan Terakhir</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="pendidikan_ibu">
+                                            <select class="form-select" id="edit-pendidikan_ibu">
                                                 <option value=>Select</option>
                                                 <option value="sd">SD atau Sederajat</option>
                                                 <option value="smp">SMP atau Sederajat</option>
@@ -427,7 +342,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Penghasilan Per Bulan</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="penghasilan_ibu">
+                                            <select class="form-select" id="edit-penghasilan_ibu">
                                                 <option value=>Select</option>
                                                 <option>Tidak Berpenghasilan</option>
                                                 <option>Kurang dari Rp 1.000.000</option>
@@ -449,18 +364,18 @@
                                     <div class="mb-3 row">
                                         <label class="col-md-12 col-form-label">Pekerjaan</label>
                                         <div class="col-md-12">
-                                            <select class="form-select" id="pekerjaan_ibu">
+                                            <select class="form-select" id="edit-pekerjaan_ibu">
                                                 <option value=>Select</option>
                                                 <option>Aparatur Sipil Negara (ASN)</option>
-                                                <option>TNI / POLRI</option>
-                                                <option>Anggota DPR / DPRD</option>
+                                                <option>TNI atau POLRI</option>
+                                                <option>Anggota DPR atau DPRD</option>
                                                 <option>Dokter</optione=>
                                                 <option>Pedagang</option>
                                                 <option>Wiraswasta</option>
-                                                <option>Petani / Nelayan</option>
-                                                <option>Guru/Dosen</option>
-                                                <option>Lainya / Ibu Rumah Tangga</option>
-                                                <option>Petani/Nelayan</option>
+                                                <option>Petani atau Nelayan</option>
+                                                <option>Guru atau Dosen</option>
+                                                <option>Petani atau Nelayan</option>
+                                                <option>Ibu Rumah Tangga atau Lainya</option>
                                             </select>
                                         </div>
                                     </div>
@@ -486,7 +401,7 @@
                                                 Wali</label>
                                             <div class="col-md-12">
                                                 <input class="form-control" type="text" placeholder="Nama Wali"
-                                                    id="nama_wali">
+                                                    id="edit-nama_wali">
                                             </div>
                                         </div>
                                     </div>
@@ -499,10 +414,10 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-12 col-form-label">Hubungan Sosial</label>
                                             <div class="col-md-12">
-                                                <select class="form-select" id="hubungan_sosial">
+                                                <select class="form-select" id="edit-hubungan_sosial">
                                                     <option value=>Select</option>
-                                                    <option>Kakek / Nenek</option>
-                                                    <option>Paman / Bibi</option>
+                                                    <option>Kakek atau Nenek</option>
+                                                    <option>Paman atau Bibi</option>
                                                     <option>Tetangga</option>
                                                     <option>Saudara Jauh</option>
                                                     <option>Lainya</option>
@@ -520,7 +435,7 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-12 col-form-label">Penghasilan Per Bulan</label>
                                             <div class="col-md-12">
-                                                <select class="form-select" id="penghasilan_wali">
+                                                <select class="form-select" id="edit-penghasilan_wali">
                                                     <option value=>Select</option>
                                                     <option>Tidak Berpenghasilan</option>
                                                     <option>Kurang dari Rp 1.000.000</option>
@@ -542,7 +457,7 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-12 col-form-label">Pekerjaan</label>
                                             <div class="col-md-12">
-                                                <select class="form-select" id="pekerjaan_wali">
+                                                <select class="form-select" id="edit-pekerjaan_wali">
                                                     <option value=>Select</option>
                                                     <option>Aparatur Sipil Negara (ASN)</option>
                                                     <option>TNI / POLRI</option>

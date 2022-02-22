@@ -174,6 +174,39 @@
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
 
+                <div class="modal fade updatefoto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title mt-0" id="myLargeModalLabel">Update Foto Profil
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-2">
+                                    <div class="col-md-12 d-flex justify-content-center">
+                                        <img id="edit-preview" src="<?= base_url(); ?>/assets/images/default.png" alt=""
+                                            class="img-thumbnail rounded" height="100" width="150">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 d-flex justify-content-center m-4">
+                                        <input type="file" class="form-control-file" id="edit-foto"
+                                            onchange="editpreview()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary theme-bg gradient"
+                                    id="button-updatefoto">Submit</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
                 <div class="modal fade edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -291,7 +324,7 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     function add() {
-        console.log($('#user_id').val());
+        // console.log($('#user_id').val());
         let foto = $('#foto').prop('files')[0];
         let fd = new FormData();
         fd.append('user_id', $('#user_id').val());
@@ -429,7 +462,6 @@ $(document).ready(function() {
         fd.append('tanggal_lahir', $('#edit-tanggal_lahir').val());
         fd.append('alamat', $('#edit-alamat').val());
         fd.append('no_hp', $('#edit-no_hp').val());
-        fd.append('foto-before', $('#foto-before').val());
         fd.append('nama_ayah', $('#edit-nama_ayah').val());
         fd.append('pendidikan_ayah', $('#edit-pendidikan_ayah').val());
         fd.append('pekerjaan_ayah', $('#edit-pekerjaan_ayah').val());
@@ -531,6 +563,40 @@ $(document).ready(function() {
         },
     });
 });
+
+function updatefoto() {
+    // console.log($('#edit-username').val());
+    let foto = $('#edit-foto').prop('files')[0];
+    let fd = new FormData();
+    fd.append('foto', foto);
+    fd.append('foto-before', $('#foto-before').val());
+    fd.append('id', $('#id').val());
+    fd.append('csrf_token_name', $('input[name=csrf_token_name]').val());
+    $.ajax({
+        type: "post",
+        url: "<?= route_to('admin/update-foto-students') ?>",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            console.log(data);
+            $('input[name=csrf_token_name]').val(data.csrf_token_name);
+            if (data.foto != undefined) {
+                toastr.error(data.foto);
+            } else if (data.error != undefined) {
+                Swal.fire("Failed!", data.error, "error");
+                location.reload();
+            } else if (data.success != undefined) {
+                Swal.fire("Submited!", data.success, "success");
+                location.reload();
+            }
+        },
+        error: function(error) {
+            console.log("Error:");
+            console.log(error);
+        }
+    });
+}
 </script>
 
 <script>
@@ -584,6 +650,51 @@ $(document).on('click', '#edit', function(e) {
             $('#edit-pekerjaan_wali').val(data.profil.pekerjaan_wali);
             $('#edit-penghasilan_wali').val(data.profil.penghasilan_wali);
             $('#id').val(data.profil.profilid);
+        }
+    });
+});
+
+$(document).on('click', '#updatefoto', function(e) {
+    var data = {
+        'csrf_token_name': $('input[name=csrf_token_name]').val(),
+        'id': $(this).attr('data-id'),
+    }
+    // console.log(data);
+    $.ajax({
+        url: "<?= route_to('admin/get-detail-students') ?>",
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        data: data,
+        type: "get",
+        dataType: "json",
+        method: "get",
+        success: function(data) {
+            console.log(data);
+            $('input[name=csrf_token_name]').val(data.csrf_token_name);
+            if (data.profil.foto == null) {
+                $("#edit-preview").attr("src", '/assets/images/users/default.png');
+            } else {
+                $("#edit-preview").attr("src", '/assets/images/users/' + data.profil.foto);
+            }
+            $("#foto-before").val(data.profil.foto);
+            $('#id').val(data.profil.profilid);
+        }
+    });
+});
+
+$(document).on('click', '#button-updatefoto', function(e) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#34c38f",
+        cancelButtonColor: "#f46a6a",
+        confirmButtonText: "Yes, submit it!"
+    }).then(function(result) {
+        if (result.value) {
+            updatefoto();
         }
     });
 });
@@ -770,7 +881,7 @@ $(document).on('click', '#button-setusername', function(e) {
                     if (data.error != undefined) {
                         Swal.fire("Failed!", data.error, "error");
                     } else if (data.success != undefined) {
-                        Swal.fire("Deleted!", data.success, "success");
+                        Swal.fire("Submited!", data.success, "success");
                         $('.setusername').modal('hide');
                         ambil_data();
                     }

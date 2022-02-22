@@ -63,13 +63,16 @@ $routes->group('admin', function ($routes) {
 	$routes->post('add-students', 'ProfileStudents::add', ['filter' => 'permission:manage.santri']);
 	$routes->post('setuser-students', 'ProfileStudents::setusersprofil', ['filter' => 'permission:manage.santri']);
 	$routes->post('update-students', 'ProfileStudents::update', ['filter' => 'permission:manage.santri']);
+	$routes->post('update-foto-students', 'ProfileStudents::updatefoto', ['filter' => 'permission:manage.santri']);
 	$routes->post('delete-students', 'ProfileStudents::delete', ['filter' => 'permission:manage.santri']);
 
 	$routes->get('data-teachers', 'ProfileTeachers::index', ['filter' => 'permission:manage.guru']);
 	$routes->get('data-teachers-datatable', 'ProfileTeachers::datatable', ['filter' => 'permission:manage.guru']);
 	$routes->get('detail-teachers', 'ProfileDetails::index', ['filter' => 'permission:manage.guru']);
+	$routes->get('get-detail-teachers', 'ProfileTeachers::get_detail', ['filter' => 'permission:manage.guru']);
 	$routes->post('add-teachers', 'ProfileTeachers::add', ['filter' => 'permission:manage.guru']);
 	$routes->post('setuser-teachers', 'ProfileTeachers::setusersprofil', ['filter' => 'permission:manage.guru']);
+	$routes->post('update-foto-teachers', 'ProfileTeachers::updatefoto', ['filter' => 'permission:manage.guru']);
 	$routes->post('update-teachers', 'ProfileTeachers::update', ['filter' => 'permission:manage.guru']);
 	$routes->post('delete-teachers', 'ProfileTeachers::delete', ['filter' => 'permission:manage.guru']);
 
@@ -126,6 +129,8 @@ $routes->group('admin', function ($routes) {
 
 	$routes->get('data-payments', 'DataPayments::index', ['filter' => 'permission:manage.bendahara']);
 	$routes->get('data-payments-datatable', 'DataPayments::datatable', ['filter' => 'permission:manage.bendahara']);
+	$routes->get('data-payments-billings-datatable', 'DataPayments::datatable_tagihan', ['filter' => 'permission:manage.bendahara']);
+	$routes->post('add-data-payments', 'DataPayments::add', ['filter' => 'permission:manage.bendahara']);
 
 	$routes->get('invoice', 'Invoice::index', ['filter' => 'permission:manage.bendahara']);
 
@@ -195,6 +200,7 @@ $routes->group('admin', function ($routes) {
 $routes->group('santri', function ($routes) {
 	$routes->get('/', 'Santri/Dashboard::index', ['filter' => 'permission:manage.santri']);
 	$routes->get('profil', 'Santri/Dashboard::profil', ['filter' => 'permission:manage.santri']);
+	$routes->get('detail-students', 'ProfileDetails::index', ['filter' => 'permission:manage.santri']);
 	$routes->post('profil-update', 'Santri/Dashboard::update', ['filter' => 'permission:manage.santri']);
 
 	$routes->get('tagihan', 'Santri/Tagihan::index', ['filter' => 'permission:manage.santri']);

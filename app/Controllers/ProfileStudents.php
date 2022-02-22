@@ -84,7 +84,9 @@ class ProfileStudents extends BaseController
                         <div class="dropdown-menu">
                         <a class="dropdown-item" href="detail-students?username=' . $key->username . '" >Detail</a>  
                         <a class="dropdown-item" id="edit" href="#" data-bs-toggle="modal"
-                        data-bs-target=".edit" data-id="' . $key->profilid . '" data-userid="' . $key->userid . '">Edit</a>                      
+                        data-bs-target=".edit" data-id="' . $key->profilid . '" data-userid="' . $key->userid . '">Edit</a>  
+                        <a class="dropdown-item" id="updatefoto" href="#" data-bs-toggle="modal"
+                        data-bs-target=".updatefoto" data-id="' . $key->profilid . '" data-userid="' . $key->userid . '">Update Foto</a>                      
                         <a class="dropdown-item" id="delete" href="#" data-id="' . $key->profilid . '" data-userid="' . $key->userid . '">Delete</a>
                         </div>
                         </div>';
@@ -580,15 +582,6 @@ class ProfileStudents extends BaseController
 
             $alamat = $this->request->getPost('alamat');
 
-            $file = $this->request->getFile('foto');
-
-            if ($file == "") {
-                $filename = $this->request->getPost('foto-before');
-            } else {
-                $file->move('assets/images/users');
-                $filename = $file->getName();
-            }
-
             $data = [
                 'id' => $id,
                 'nama_lengkap' => $this->request->getPost('nama_lengkap'),
@@ -602,7 +595,6 @@ class ProfileStudents extends BaseController
                 'jenjang_pendidikan' => $this->request->getPost('jenjang_pendidikan'),
                 'no_hp' => $this->request->getPost('no_hp'),
                 'alamat_lengkap' => $alamat,
-                'foto' => $filename,
             ];
 
             if (!$this->profilModel->save($data)) {
@@ -650,6 +642,70 @@ class ProfileStudents extends BaseController
             $this->logModel->save($data);
 
             $data = array('success' => 'Berhasil mengubah profil.');
+            $data[$csrfname] = $csrfhash;
+            return $this->response->setJSON($data);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+
+    public function updatefoto()
+    {
+        if ($this->request->isAJAX()) {
+            $csrfname = csrf_token();
+            $csrfhash = csrf_hash();
+
+            $id = $this->request->getPost('id');
+
+            if (!$this->validate(
+                [
+
+                    'foto' => [
+                        'rules' => 'uploaded[foto]|max_size[foto,2048]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+                        'errors' => [
+                            'uploaded' => 'Upload gambar dulu !',
+                            'max_size' => 'Ukuran gambar maximal 2Mb !',
+                            'is_image' => 'Yang anda upload bukan gambar !',
+                            'mime_in' => 'Pilih format Jpg/Jpeg/Png !'
+                        ]
+                    ],
+
+                ]
+            )) {
+                $validation = service('validation')->getErrors();
+                $data = $validation;
+                $data[$csrfname] = $csrfhash;
+                return $this->response->setJSON($data);
+            }
+
+            $file = $this->request->getFile('foto');
+
+            if ($file == "") {
+                $filename = $this->request->getPost('foto-before');
+            } else {
+                $file->move('assets/images/users');
+                $filename = $file->getName();
+            }
+
+            $data = [
+                'id' => $id,
+                'foto' => $filename,
+            ];
+
+            if (!$this->profilModel->save($data)) {
+                $data = array('error' => 'Gagal mengubah foto profil');
+                $data[$csrfname] = $csrfhash;
+                return $this->response->setJSON($data);
+            }
+
+            $data = [
+                'user_id' => user()->id,
+                'pesan' => 'Update foto profil  ' . $this->request->getPost('nama_lengkap'),
+            ];
+            $this->logModel->save($data);
+
+            $data = array('success' => 'Berhasil mengubah foto profil.');
             $data[$csrfname] = $csrfhash;
             return $this->response->setJSON($data);
         } else {

@@ -59,9 +59,7 @@ class Profil extends Migration
                 'type' => 'TEXT',
             ],
             'foto' => [
-                'type' => 'VARCHAR',
-                'constraint' => 50,
-                'null' => true,
+                'type' => 'TEXT',
             ],
             'deskripsi' => [
                 'type' => 'TEXT',

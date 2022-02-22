@@ -47,7 +47,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mt-2 col-6">
-                                            <select class="form-select" id="tahun-perkelas" onchange="ambil_data()">
+                                            <select class="form-select" id="tahun" onchange="ambil_data()">
                                                 <option value="">-Filter Tahun-</option>
                                                 <?php foreach ($alltahun as $key) : ?>
                                                 <option><?= $key->tahun; ?></option>
@@ -73,6 +73,7 @@
                                             <th>Nama Lengkap & Kelas</th>
                                             <th>Metode</th>
                                             <th>Nominal</th>
+                                            <th>Penerima</th>
                                             <th>Status</th>
                                             <th>Tahun Ajaran</th>
                                             <th>Action</th>
@@ -86,48 +87,63 @@
                         </div><!-- end card -->
                         <div class="modal fade entri" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Tambah Data Tagihan</h5>
+                                        <h5 class="modal-title">Form Bayar Tagihan</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close">
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <form>
+                                            <input type="hidden" id="total-harga">
                                             <div class="row">
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Plih Kelas</label>
-                                                        <select class="form-select" id="Kelas-Perkelas">
+                                                        <select class="form-select" id="Kelas" onchange="getnama()">
 
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Nama Tagihan</label>
-                                                        <select class="form-select " id="Tagihan-Perkelas">
+                                                        <label class="form-label">Nama Lengkap</label>
+                                                        <select class="form-select " id="Nama-Lengkap"
+                                                            onchange="tabeltagihan()">
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-                                                        </select>
-                                                    </div>
+                                                <div class="row div-tabel-tagihan">
+                                                    <table id="datatable_tagihan"
+                                                        class="table table-striped table-bordered dt-responsive nowrap"
+                                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    <div
+                                                                        class="btn-group d-flex justify-content-center">
+                                                                        <input type="checkbox" class="form-check-input"
+                                                                            id="allcheck">
+                                                                    </div>
+                                                                </th>
+                                                                <th>No Tagihan</th>
+                                                                <th>Nama Tagihan</th>
+                                                                <th>Nominal</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Jenis Kelamin</label>
-                                                        <select class="form-select " id="Jenis-Kelamin">
-                                                            <option value=""> Semua </option>
-                                                            <option>Laki-laki</option>
-                                                            <option>Perempuan</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Nominal</label>
-                                                        <input type="text" class="form-control" id="Nominal">
-                                                    </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-11 mt-4">
+                                                    <h4 class="font-size-16 float-end total">
+                                                    </h4>
                                                 </div>
                                             </div>
                                         </form>
@@ -221,6 +237,55 @@ function($) {
 </script>
 
 <script>
+var tagihan_id = [];
+var nominal = [];
+var lu;
+var no = 0;
+
+function ambil_data_tagihan() {
+    $("#datatable_tagihan").DataTable({
+        "destroy": true,
+    }).clear();
+
+    $.ajax({
+        url: "<?= route_to('admin/data-payments-billings-datatable') ?>",
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        data: {
+            'csrf_token_name': $('input[name=csrf_token_name]').val(),
+            'tahun': $('#tahun').val(),
+            'id': $('#Nama-Lengkap').val()
+        },
+        type: "get",
+        dataType: "json",
+        method: "get",
+        success: function(data) {
+            console.log(data);
+            $('#no').val(data.posts.length);
+            $('input[name=csrf_token_name]').val(data.csrf_token_name);
+            if (data.responce == "success") {
+                $("#datatable_tagihan").DataTable({
+                    "destroy": true,
+                    "data": data.posts,
+                    "responsive": true,
+                    "lengthChange": true,
+                    "autoWidth": false,
+                    "columnDefs": [{
+                        "targets": [0],
+                        "orderable": false,
+                    }],
+                    "language": {
+                        "emptyTable": "Tidak ada data"
+                    },
+                });
+            } else {
+
+            }
+        }
+    });
+}
+
 function ambil_data() {
     $("#datatable").DataTable({
         "destroy": true,
@@ -233,7 +298,7 @@ function ambil_data() {
         },
         data: {
             'csrf_token_name': $('input[name=csrf_token_name]').val(),
-            'tahun': $('#tahun-perkelas').val()
+            'tahun': $('#tahun').val()
         },
         type: "get",
         dataType: "json",
@@ -275,12 +340,14 @@ function ambil_data() {
 
 $(document).ready(function() {
     ambil_data();
+    getclass();
+    $('.div-tabel-tagihan').hide();
 });
 </script>
 
 <script>
 function getclass() {
-    $('#Kelas-Perkelas').find('option').remove().end();
+    $('#Kelas').find('option').remove().end();
     $('#Kelas-Perindividu').find('option').remove().end();
 
     $.ajax({
@@ -298,25 +365,9 @@ function getclass() {
             // console.log(data);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
             for (let i = 0; i < data.kelas.length; i++) {
-                $('#Kelas-Perkelas').append('<option value="' + data.kelas[i].id + '">' + data.kelas[i]
+                $('#Kelas').append('<option value="' + data.kelas[i].id + '">' + data.kelas[i]
                     .kelas + '  (' +
                     data.kelas[i].deskripsi + ')</option>');
-                $('#Kelas-Perindividu').append('<option value="' + data.kelas[i].id + '">' + data.kelas[i]
-                    .kelas + '  (' +
-                    data.kelas[i].deskripsi + ')</option>');
-            }
-
-            for (let i = 0; i < data.tagihan.length; i++) {
-
-                $('#Tagihan-Perkelas').append('<option value="' + data.tagihan[i].id + '">' + data.tagihan[
-                        i]
-                    .nama_tagihan + '  (' +
-                    data.tagihan[i].deskripsi + ')</option>');
-                $('#Tagihan-Perindividu').append('<option value="' + data.tagihan[i].id + '">' + data
-                    .tagihan[
-                        i]
-                    .nama_tagihan + '  (' +
-                    data.tagihan[i].deskripsi + ')</option>');
             }
         }
     });
@@ -373,6 +424,190 @@ function formatRupiah(angka, prefix) {
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
 }
+</script>
+
+<script>
+function getclass() {
+    $('#Kelas').find('option').remove().end();
+
+    $.ajax({
+        url: "<?= route_to('admin/getclass') ?>",
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        data: {
+            'csrf_token_name': $('input[name=csrf_token_name]').val(),
+        },
+        type: "get",
+        dataType: "json",
+        method: "get",
+        success: function(data) {
+            // console.log(data);
+            $('input[name=csrf_token_name]').val(data.csrf_token_name);
+            for (let i = 0; i < data.kelas.length; i++) {
+                $('#Kelas').append('<option value="' + data.kelas[i].id + '">' + data.kelas[i]
+                    .kelas + '  (' +
+                    data.kelas[i].deskripsi + ')</option>');
+            }
+        }
+    });
+}
+
+function getnama() {
+    $('#Nama-Lengkap').find('option').remove().end();
+    $.ajax({
+        url: "<?= route_to('admin/getnama') ?>",
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        data: {
+            'csrf_token_name': $('input[name=csrf_token_name]').val(),
+            'kelas': $('#Kelas').val()
+        },
+        type: "get",
+        dataType: "json",
+        method: "get",
+        success: function(data) {
+            console.log(data);
+            $('input[name=csrf_token_name]').val(data.csrf_token_name);
+            $('#Nama-Lengkap').append('<option value=>-Select-</option>');
+            for (let i = 0; i < data.nama.length; i++) {
+                $('#Nama-Lengkap').append('<option value="' + data.nama[i].userid + '">' + data.nama[i]
+                    .nama_lengkap + '</option>');
+            }
+        }
+    });
+}
+
+function tabeltagihan() {
+    $('.div-tabel-tagihan').show();
+    ambil_data_tagihan();
+    $('input:checkbox').prop('checked', this.value = 0);
+    tagihan_id = [];
+    nominal = [];
+
+}
+</script>
+
+<script>
+$(document).ready(function() {
+    $(document).on('change', '#allcheck', function() {
+
+        $('input:checkbox').prop('checked', this.checked);
+        no = $('#no').val();
+
+        let lc = $('#check:checked').length;
+        let t = $('#check:checked').attr('data-no');
+
+        if ($(this).prop("checked") == true) {
+            no = no - 1;
+            lu = lc;
+            if (lc > 0) {
+                $('.div-button-checkout').html(
+                    '<a href="javascript:void(0);" class="btn btn-outline-success uil-money-insert" id="invoice" data-bs-toggle="modal" data-bs-target=".invoice" > Checkout </a>'
+                );
+            }
+            lc = lc + parseInt(t);
+            for (let i = t; i < lc; i++) {
+                tagihan_id[i - 1] = $('.check' + (i) + ':checked').attr('data-id');
+                nominal[i - 1] = $('.check' + (i) + ':checked').attr('data-nominal');
+            }
+        } else {
+            no = 1;
+            $('.div-button-checkout').html(
+                ''
+            );
+
+            tagihan_id = [];
+            nominal = [];
+            total = 0;
+            // console.log(tagihan_id);
+        }
+
+    });
+
+    $(document).on('change', 'input[type="checkbox"]', function() {
+        let total = 0;
+        $idtagihan = $(this).attr('data-id');
+        $nominal = $(this).attr('data-nominal');
+
+        $no = $(this).attr('data-no');
+
+        if (this.checked) {
+            no++;
+            nominal[$no - 1] = $nominal;
+            $('.div-button-checkout').html(
+                '<a href="javascript:void(0);" class="btn btn-outline-success uil-money-insert" id="invoice" data-bs-toggle="modal" data-bs-target=".invoice"> Checkout </a>'
+            );
+        } else {
+            no--;
+            if (no <= 0) {
+                $('input:checkbox').prop('checked', this.value = 0);
+                $('.div-button-checkout').html(
+                    ''
+                );
+            }
+            tagihan_id[$no - 1] = null;
+            nominal[$no - 1] = null;
+        }
+
+        for (let i = 0; i < nominal.length; i++) {
+            if (nominal[i] != null) {
+                total += parseInt(nominal[i]);
+            }
+        }
+
+        $('#total-harga').val(total);
+        total = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+        }).format(total);
+
+        $('.total').text('Total : ' + total)
+        // console.log(total);
+    });
+});
+</script>
+
+<script>
+$(document).on('click', '#button-entri', function(e) {
+    var data = {
+        'csrf_token_name': $('input[name=csrf_token_name]').val(),
+        'id': tagihan_id,
+        'invoice': 'INV<?= date('dmhis') ?>' + $('#Nama-Lengkap').val(),
+        'nominal': $('#total-harga').val(),
+    }
+    console.log(data);
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#34c38f",
+        cancelButtonColor: "#f46a6a",
+        confirmButtonText: "Yes, submit it!"
+    }).then(function(result) {
+        if (result.value) {
+            $.ajax({
+                url: "<?= route_to('admin/add-data-payments') ?>",
+                type: "POST",
+                data: data,
+                success: function(data) {
+                    console.log(data);
+                    $('input[name=csrf_token_name]').val(data.csrf_token_name);
+                    if (data.error != undefined) {
+                        Swal.fire("Failed!", data.error, "error");
+                    } else if (data.success != undefined) {
+                        Swal.fire("Submited!", data.success, "success");
+                        $('.entri').modal('hide');
+                        ambil_data();
+                    }
+                }
+            });
+        }
+    });
+
+});
 </script>
 
 <script src="<?= base_url(); ?>/assets/js/app.js"></script>

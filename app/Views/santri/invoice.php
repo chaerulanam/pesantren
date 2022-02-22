@@ -145,11 +145,24 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="d-print-none mt-4">
-                                <div class="float-start">
-                                    <a href="javascript:window.print()"
-                                        class="btn btn-success waves-effect waves-light me-1"><i
-                                            class="fa fa-print"></i></a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="d-print-none mt-4">
+                                        <div class="float-start">
+                                            <a href="javascript:window.print()"
+                                                class="btn btn-success waves-effect waves-light me-1"><i
+                                                    class="fa fa-print"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="m-5 pb-5 px-3">
+                                        <div class="float-end">
+                                            <p class="text-center text-justify">Penerima
+                                                <br><br><br><?= $invoice[0]->nama_penerima; ?>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- </div>

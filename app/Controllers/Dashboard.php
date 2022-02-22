@@ -77,7 +77,10 @@ class Dashboard extends BaseController
                 ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
                 ->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id')
                 ->join('users_profil', 'users_profil.user_id = users.id', 'LEFT')
-                ->Where('name', 'guru')
+                ->orWhere('name', 'guru')
+                ->orWhere('name', 'bendahara')
+                ->orWhere('name', 'pengajaran')
+                ->orWhere('name', 'pengasuhan')
                 ->where('users_profil.user_id !=', null)
                 ->countAllresults(),
             'pelanggar' => $this->pelanggaranModel

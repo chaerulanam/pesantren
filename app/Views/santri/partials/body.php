@@ -1,4 +1,4 @@
-<body>
+<body data-layout="horizontal" data-topbar="dark">
 
     <!-- <div id="preloader">
         <div id="status">
