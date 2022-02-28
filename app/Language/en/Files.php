@@ -36,6 +36,7 @@ return [
     'Data Visitation' => 'Data Kunjungan',
     'Master Classes' => 'Master Kelas',
     'Data Classes' => 'Data Kelas',
+    'Data Lessons' => 'Data Pelajaran',
     'Data Lessons Schedules' => 'Data Jadwal Pelajaran',
     'Master Lessons' => 'Master Pelajaran',
     'Master Schedules' => 'Master Jadwal',
@@ -54,7 +55,6 @@ return [
     'Settings' => 'Pengaturan',
     'Site Identity' => 'Identitas Situs',
     'School Years' => 'Tahun Ajaran',
-
     'Minible' => 'Minible',
     'Welcome' => 'Welcome',
     'Dashboard' => 'Dashboard',

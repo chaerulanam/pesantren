@@ -111,6 +111,19 @@ $routes->group('admin', function ($routes) {
 	$routes->post('add-master-lessons', 'MasterLessons::add', ['filter' => 'permission:manage.pengajaran']);
 	$routes->post('remove-master-lessons', 'MasterLessons::delete', ['filter' => 'permission:manage.pengajaran']);
 
+	$routes->get('data-presences', 'DataPresences::index', ['filter' => 'permission:manage.pengajaran']);
+	$routes->get('data-presences-datatable', 'DataPresences::datatable', ['filter' => 'permission:manage.pengajaran']);
+	$routes->post('detail-data-presences', 'DataPresences::add', ['filter' => 'permission:manage.pengajaran']);
+	$routes->post('update-data-presences', 'DataPresences::update', ['filter' => 'permission:manage.pengajaran']);
+	$routes->get('mapel-data-presences', 'DataPresences::mapel', ['filter' => 'permission:manage.pengajaran']);
+
+	$routes->get('data-values', 'DataValues::index', ['filter' => 'permission:manage.pengajaran']);
+	$routes->get('data-values-datatable', 'DataValues::datatable', ['filter' => 'permission:manage.pengajaran']);
+	$routes->get('data-values-ranks-datatable', 'DataValues::datatable_rangking', ['filter' => 'permission:manage.pengajaran']);
+	$routes->post('detail-data-values', 'DataValues::add', ['filter' => 'permission:manage.pengajaran']);
+	$routes->post('update-data-values', 'DataValues::update', ['filter' => 'permission:manage.pengajaran']);
+	$routes->get('mapel-data-values', 'DataValues::mapel', ['filter' => 'permission:manage.pengajaran']);
+
 	$routes->get('school-years', 'MasterYears::index', ['filter' => 'permission:manage.admin']);
 	$routes->get('master-years-datatable', 'MasterYears::datatable', ['filter' => 'permission:manage.admin']);
 	$routes->get('detail-master-years', 'MasterYears::get_detail', ['filter' => 'permission:manage.admin']);
@@ -212,6 +225,24 @@ $routes->group('santri', function ($routes) {
 	$routes->post('tagihan-proses', 'Santri/Tagihan::proses', ['filter' => 'permission:manage.santri']);
 
 	$routes->get('invoice', 'Santri/Invoice::index', ['filter' => 'permission:manage.santri']);
+
+	$routes->get('kelas', 'Santri/Kelas::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('kelas-datatable', 'Santri/Kelas::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('kamar', 'Santri/Kamar::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('kamar-datatable', 'Santri/Kamar::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('kunjungan', 'Santri/Kunjungan::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('kunjungan-datatable', 'Santri/Kunjungan::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('perizinan', 'Santri/Perizinan::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('perizinan-datatable', 'Santri/Perizinan::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('pelanggaran', 'Santri/Pelanggaran::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('pelanggaran-datatable', 'Santri/Pelanggaran::datatable', ['filter' => 'permission:manage.santri']);
+
+	$routes->get('kehadiran', 'Santri/Kehadiran::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('kehadiran-datatable', 'Santri/Kehadiran::datatable', ['filter' => 'permission:manage.santri']);
+
+	$routes->get('nilai', 'Santri/Nilai::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('nilai-datatable', 'Santri/Nilai::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('nilai-rangking-datatable', 'Santri/Nilai::datatable_rangking', ['filter' => 'permission:manage.santri']);
 });
 
 $routes->post('/update-notifikasi-midtrans', 'Santri/Tagihan::notifikasi');

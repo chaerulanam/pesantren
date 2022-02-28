@@ -261,7 +261,7 @@ function ambil_data_tagihan() {
         dataType: "json",
         method: "get",
         success: function(data) {
-            console.log(data);
+            // console.log(data);
             $('#no').val(data.posts.length);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
             if (data.responce == "success") {
@@ -304,7 +304,7 @@ function ambil_data() {
         dataType: "json",
         method: "get",
         success: function(data) {
-            console.log(data);
+            // console.log(data);
             $('#no').val(data.posts.length);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
             if (data.responce == "success") {
@@ -388,7 +388,7 @@ function getnama() {
         dataType: "json",
         method: "get",
         success: function(data) {
-            console.log(data);
+            // console.log(data);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
             for (let i = 0; i < data.nama.length; i++) {
                 $('#Nama-Lengkap').append('<option value="' + data.nama[i].userid + '">' + data.nama[i]
@@ -468,7 +468,7 @@ function getnama() {
         dataType: "json",
         method: "get",
         success: function(data) {
-            console.log(data);
+            // console.log(data);
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
             $('#Nama-Lengkap').append('<option value=>-Select-</option>');
             for (let i = 0; i < data.nama.length; i++) {
@@ -536,6 +536,7 @@ $(document).ready(function() {
         if (this.checked) {
             no++;
             nominal[$no - 1] = $nominal;
+            tagihan_id[$no - 1] = $idtagihan;
             $('.div-button-checkout').html(
                 '<a href="javascript:void(0);" class="btn btn-outline-success uil-money-insert" id="invoice" data-bs-toggle="modal" data-bs-target=".invoice"> Checkout </a>'
             );
@@ -564,7 +565,7 @@ $(document).ready(function() {
         }).format(total);
 
         $('.total').text('Total : ' + total)
-        // console.log(total);
+        // console.log(tagihan_id);
     });
 });
 </script>
@@ -577,7 +578,7 @@ $(document).on('click', '#button-entri', function(e) {
         'invoice': 'INV<?= date('dmhis') ?>' + $('#Nama-Lengkap').val(),
         'nominal': $('#total-harga').val(),
     }
-    console.log(data);
+    // console.log(data);
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -593,7 +594,7 @@ $(document).on('click', '#button-entri', function(e) {
                 type: "POST",
                 data: data,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $('input[name=csrf_token_name]').val(data.csrf_token_name);
                     if (data.error != undefined) {
                         Swal.fire("Failed!", data.error, "error");

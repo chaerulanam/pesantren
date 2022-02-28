@@ -61,9 +61,7 @@
                                             <span class="d-none d-sm-block">Tagihan Per Kelas</span>
                                         </a>
                                     </li>
-
                                 </ul>
-
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div class="tab-pane" id="home1" role="tabpanel">

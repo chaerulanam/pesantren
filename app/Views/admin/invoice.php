@@ -156,6 +156,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php if ($invoice[0]->nama_penerima != "") : ?>
                                 <div class="col-md-6">
                                     <div class="m-5 pb-5 px-3">
                                         <div class="float-end">
@@ -165,6 +166,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                             </div>
                             <!-- </div>
                             </div> -->

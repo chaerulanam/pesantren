@@ -25,6 +25,7 @@ class Presences extends BaseController
                 ->join('orangtua', 'orangtua.profil_id = profil.id')
                 ->join('wali', 'wali.profil_id = profil.id')
                 ->get()->getRow(),
+            'day' => $this->time,
             'title_table' => 'Data ' . lang('Files.Profile') . ' ' . lang('Files.Students'),
             'title_meta' => view('admin/partials/title-meta', ['title' => 'Data Lessons Schedules', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
             'page_title' => view('admin/partials/page-title', ['title' => 'Data Lessons Schedules', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
@@ -42,7 +43,7 @@ class Presences extends BaseController
             $tahun = $this->request->getPost('tahun');
             if ($tahun != "") {
                 $posts = $this->jadwalpelajaranModel
-                    ->select('*, jadwal_pelajaran.id as jadwalpelajaranid')
+                    ->select('*, jadwal_pelajaran.id as jadwalpelajaranid, master_pelajaran.id as mapelid')
                     ->join('master_pelajaran', 'jadwal_pelajaran.pelajaran_id = master_pelajaran.id')
                     ->join('master_jadwal', 'jadwal_pelajaran.jadwal_id = master_jadwal.id')
                     ->join('master_kelas', 'jadwal_pelajaran.kelas_id = master_kelas.id')
@@ -56,8 +57,9 @@ class Presences extends BaseController
                     ->orderBy('jam', 'ASC')
                     ->findAll();
             } else {
+                $tahun = $this->tahunModel->TahunAktif();
                 $posts = $this->jadwalpelajaranModel
-                    ->select('*, jadwal_pelajaran.id as jadwalpelajaranid')
+                    ->select('*, jadwal_pelajaran.id as jadwalpelajaranid, master_pelajaran.id as mapelid')
                     ->join('master_pelajaran', 'jadwal_pelajaran.pelajaran_id = master_pelajaran.id')
                     ->join('master_jadwal', 'jadwal_pelajaran.jadwal_id = master_jadwal.id')
                     ->join('master_kelas', 'jadwal_pelajaran.kelas_id = master_kelas.id')
@@ -76,8 +78,12 @@ class Presences extends BaseController
                 $no = 0;
                 foreach ($posts as $key) {
                     $totalmasuk = $this->kehadiranModel
-                        ->where('jadwal_id', $key->jadwalpelajaranid)
-                        ->groupBy('date(created_at)')
+                        ->select('kehadiran.created_at as waktu')
+                        ->join('jadwal_pelajaran', 'kehadiran.jadwal_id = jadwal_pelajaran.id', 'LEFT')
+                        ->join('master_pelajaran', 'jadwal_pelajaran.pelajaran_id = master_pelajaran.id', 'LEFT')
+                        ->where('master_pelajaran.id', $key->mapelid)
+                        ->where('tahun_ajaran', $tahun)
+                        ->groupBy('date(kehadiran.created_at)')
                         ->countAllresults();
                     $no++;
                     $row = array();
@@ -87,7 +93,7 @@ class Presences extends BaseController
                     $row[] = $hari[$key->hari] . ' | ' . $key->jam;
                     $row[] = $totalmasuk;
                     $row[] = $key->tahun_ajaran;
-                    if ($key->hari == (int)$this->time->getDayOfWeek()) {
+                    if ($key->hari == (int)$this->time->getDayOfWeek() - 1) {
                         if ($this->time->difference($key->jam, 'Asia/Jakarta')->minutes <= 0 && $this->time->difference($key->jam, 'Asia/Jakarta')->minutes > -45) {
                             $row[] = '<div class="btn-group d-flex justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-outline-info" id="absen"  data-bs-toggle="modal" data-bs-target=".absen" data-id="' . $key->jadwalpelajaranid . '">

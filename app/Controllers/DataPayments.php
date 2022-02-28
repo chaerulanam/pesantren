@@ -48,6 +48,8 @@ class DataPayments extends BaseController
                     ->join('kelas_profil', 'kelas_profil.santri_id = profil.id')
                     ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id')
                     ->groupBy('order_id')
+                    ->selectSum('nominal')
+                    ->orderBy('pembayaran.id', 'DESC')
                     ->where('tagihan.tahun_ajaran', $tahun)
                     ->findAll();
             } else {
@@ -61,6 +63,8 @@ class DataPayments extends BaseController
                     ->join('kelas_profil', 'kelas_profil.santri_id = profil.id')
                     ->join('master_kelas', 'kelas_profil.kelas_id = master_kelas.id')
                     ->groupBy('order_id')
+                    ->orderBy('pembayaran.id', 'DESC')
+                    ->selectSum('nominal')
                     ->where('tagihan.tahun_ajaran', $this->tahunModel->TahunAktif())
                     ->findAll();
             }

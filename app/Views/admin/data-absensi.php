@@ -45,14 +45,55 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-2">
+                                        <label for="tahun">Filter Tahun Ajaran</label>
+                                        <select id="tahun" class="form-select" onchange="ambil_data();">
+                                            <option value=>-Pilih Tahun-</option>
+                                            <?php foreach ($alltahun as $key) : ?>
+                                            <option><?= $key->tahun; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label for="kelas">Filter Kelas</label>
+                                        <select id="kelas" class="form-control select2" onchange="getnama()">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label for="nama_lengkap">Filter Nama Lengkap</label>
+                                        <select id="nama_lengkap" class="form-control select2" onchange="getmapel();">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label for="mapel">Filter Mata Pelajaran</label>
+                                        <select id="mapel" class="form-control select2" onchange="ambil_data();">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label for="tanggal">Filter Tanggal</label>
+                                        <input type="date" id="tanggal" class="form-control" onchange="ambil_data();">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
                                 <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
                                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kelas</th>
+                                            <th>Nama Lengkap & Kelas</th>
                                             <th>Nama Pelajaran</th>
-                                            <th>Jadwal Mengajar</th>
+                                            <th>Jadwal Pelajaran</th>
+                                            <th>Total Masuk</th>
+                                            <th>Status</th>
+                                            <th>Waktu</th>
                                             <th>Tahun Ajaran</th>
                                             <th>Action</th>
                                         </tr>
@@ -65,48 +106,49 @@
                     </div>
                 </div>
 
-                <div class="modal fade nilai" tabindex="-1" role="dialog" aria-labelledby="nilai" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                <div class="modal fade edit" tabindex="-1" role="dialog" aria-labelledby="absen" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Nilai Santri</h5>
+                                <h5 class="modal-title">Update Status Kehadiran</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                 </button>
                             </div>
-                            <div class="col-md-6">
-                                <div class="ms-3">
-                                    <div>
-                                        <p class="mb-1 text-muted mata_pelajaran">
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="ms-3">
-                                    <div>
-                                        <p class="mb-1 text-muted kelas"></p>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="modal-body">
-                                <table id="datatable-nilai"
-                                    class="table table-striped table-bordered dt-responsive nowrap"
-                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Lengkap</th>
-                                            <th>Form Nilai</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                <input type="hidden" id="id">
+                                <div class="row">
+                                    <div class="col-md-12 mb-2">
+                                        <label for="kelas">Kelas</label>
+                                        <input type="text" class="form-control" id="edit-kelas" disabled>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <label for="edit-nama_lengkap">Nama Lengkap</label>
+                                        <input type="text" class="form-control" id="edit-nama_lengkap" disabled>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <label for="edit-mapel">Mata Pelajaran</label>
+                                        <input type="text" class="form-control" id="edit-mapel" disabled>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <label for="edit-tanggal">Tanggal</label>
+                                        <input type="date" id="edit-tanggal" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="state">Status</label>
+                                        <select class="form-select" id="state">
+                                            <option>Hadir</option>
+                                            <option>Izin</option>
+                                            <option>Tidak Hadir</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary theme-bg gradient button-entri"
-                                    id="button-entri" disabled>Submit</button>
+                                <button type="button" class="btn btn-primary theme-bg gradient button-update"
+                                    id="button-update">Update</button>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
@@ -165,7 +207,7 @@
 
             // Select2
             $(".select2").select2({
-                dropdownParent: $('.entri')
+                // dropdownParent: $('.entri')
             });
 
             $(".select2-limiting").select2({
@@ -189,26 +231,26 @@ function($) {
 </script>
 
 <script>
-function setTwoNumberDecimal(event) {
-    this.value = parseFloat(this.value).toFixed(2);
-    $('#button-entri').prop('disabled', false);
-    // console.log('hello');
-}
-
-function ambil_data(tahun = null) {
+function ambil_data() {
     $("#datatable").DataTable({
         "destroy": true,
     }).clear();
 
+    var data = {
+        'csrf_token_name': $('input[name=csrf_token_name]').val(),
+        'tahun': $('#tahun').val(),
+        'kelas': $('#kelas').val(),
+        'nama_lengkap': $('#nama_lengkap').val(),
+        'mapel': $('#mapel').val(),
+        'tanggal': $('#tanggal').val(),
+    }
+    console.log(data);
     $.ajax({
-        url: "<?= route_to('admin/values-datatable') ?>",
+        url: "<?= route_to('admin/data-presences-datatable') ?>",
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
-        data: {
-            'csrf_token_name': $('input[name=csrf_token_name]').val(),
-            'tahun': tahun
-        },
+        data: data,
         type: "get",
         dataType: "json",
         method: "get",
@@ -248,84 +290,111 @@ function ambil_data(tahun = null) {
 }
 $(document).ready(function() {
     ambil_data();
+    getclass();
 });
 </script>
 
 <script>
-var l;
-var profil_id = [];
-var val = [];
-var jadwal_id;
-$(document).on('click', '#nilai', function(e) {
-    jadwal_id = $(this).attr('data-id');
-    var data = {
-        'id': jadwal_id,
-        'csrf_token_name': $('input[name=csrf_token_name]').val(),
-    }
-    // console.log(data);
-    $("#datatable-nilai").DataTable({
-        "destroy": true,
-    }).clear();
+function getclass() {
+    $('#kelas').find('option').remove().end();
 
     $.ajax({
-        url: "<?= route_to('admin/values-datatable-nilai') ?>",
+        url: "<?= route_to('admin/getclass') ?>",
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
-        data: data,
+        data: {
+            'csrf_token_name': $('input[name=csrf_token_name]').val(),
+        },
         type: "get",
         dataType: "json",
         method: "get",
         success: function(data) {
-            $('.kelas').text('Kelas : ' + data.kelas)
-            $('.mata_pelajaran').text('Mata Pelajaran : ' + data.mapel)
-            l = data.posts.length;
             // console.log(data);
-            for (var i = 1; i <= l; i++) {
-                val[i] = 0;
-                profil_id[i] = data.id[i - 1];
-            }
             $('input[name=csrf_token_name]').val(data.csrf_token_name);
-            if (data.responce == "success") {
-                $("#datatable-nilai").DataTable({
-                    "destroy": true,
-                    "data": data.posts,
-                    "responsive": true,
-                    "lengthChange": true,
-                    "autoWidth": false,
-                    "searching": false,
-                    "pageLength": 50,
-                    "columnDefs": [{
-                        "targets": [0],
-                        "orderable": false,
-                    }],
-                    "language": {
-                        "emptyTable": "Tidak ada data"
-                    }
-                });
-            } else {
+            $('#kelas').append('<option value=>-Select-</option>');
+            for (let i = 0; i < data.kelas.length; i++) {
+                $('#kelas').append('<option value="' + data.kelas[i].id + '">' + data.kelas[i]
+                    .kelas + '  (' +
+                    data.kelas[i].deskripsi + ')</option>');
 
             }
         }
     });
+}
+
+function getnama() {
+    $('#nama_lengkap').find('option').remove().end();
+    $.ajax({
+        url: "<?= route_to('admin/getnama') ?>",
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        data: {
+            'csrf_token_name': $('input[name=csrf_token_name]').val(),
+            'kelas': $('#kelas').val()
+        },
+        type: "get",
+        dataType: "json",
+        method: "get",
+        success: function(data) {
+            console.log(data);
+            $('input[name=csrf_token_name]').val(data.csrf_token_name);
+            $('#nama_lengkap').append('<option value=>-Select-</option>');
+            for (let i = 0; i < data.nama.length; i++) {
+                $('#nama_lengkap').append('<option value="' + data.nama[i].userid + '">' + data.nama[i]
+                    .nama_lengkap + '</option>');
+            }
+        }
+    });
+}
+
+function getmapel() {
+    $('#mapel').find('option').remove().end();
+    $.ajax({
+        url: "<?= route_to('admin/mapel-data-presences') ?>",
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        data: {
+            'csrf_token_name': $('input[name=csrf_token_name]').val(),
+            'userid': $('#nama_lengkap').val()
+        },
+        type: "get",
+        dataType: "json",
+        method: "get",
+        success: function(data) {
+            console.log(data);
+            $('input[name=csrf_token_name]').val(data.csrf_token_name);
+            $('#mapel').append('<option value=>-Select-</option>');
+            for (let i = 0; i < data.mapel.length; i++) {
+                $('#mapel').append('<option value="' + data.mapel[i].pelajaranid + '">' + data
+                    .mapel[i]
+                    .nama_pelajaran + '</option>');
+            }
+        }
+    });
+}
+</script>
+
+<script>
+$(document).on('click', '#edit', function(e) {
+
+    $('#id').val($(this).attr('data-id'));
+    $('#edit-kelas').val($(this).attr('data-kelas'));
+    $('#edit-nama_lengkap').val($(this).attr('data-nama'));
+    $('#edit-mapel').val($(this).attr('data-mapel'));
+    $('#edit-tanggal').val($(this).attr('data-tanggal'));
 });
 
-$(document).on('change', 'input[type="number"]', function() {
-    no = $(this).attr('data-id');
-    val[no] = $('#form-nilai' + no).val();
-
-    // console.log(no);
-});
-
-$(document).on('click', '#button-entri', function(e) {
+$(document).on('click', '#button-update', function(e) {
     var data = {
-        'csrf_token_name': $('input[name=csrf_token_name]').val(),
-        'profil': profil_id,
-        'jadwal': jadwal_id,
-        'nilai': val,
-    }
+        'id': $('#id').val(),
+        'nama': $('#edit-nama_lengkap').val(),
+        'status': $('#state').val(),
+    };
 
-    // console.log(data);
+    console.log(data);
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -333,32 +402,28 @@ $(document).on('click', '#button-entri', function(e) {
         showCancelButton: true,
         confirmButtonColor: "#34c38f",
         cancelButtonColor: "#f46a6a",
-        confirmButtonText: "Yes, submit it!"
+        confirmButtonText: "Yes, update it!"
     }).then(function(result) {
         if (result.value) {
+
+            // console.log(data);
             $.ajax({
-                url: "<?= route_to('admin/add-values') ?>",
-                type: "POST",
+                url: "<?= route_to('admin/update-data-presences') ?>",
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
                 data: data,
+                type: "post",
                 dataType: "json",
-                // global: false,
-                // async: false,
-                beforeSend: function() {
-                    $('#button-entri').removeAttr('disable');
-                    $('#button-entri').html('<i class="fa fa-spin fa-spinner"></i>');
-                },
-                complete: function(e) {
-                    $('#button-entri').prop('disable', 'disable');
-                    $('#button-entri').html('Submit');
-                },
+                method: "post",
                 success: function(data) {
                     // console.log(data);
                     $('input[name=csrf_token_name]').val(data.csrf_token_name);
                     if (data.error != undefined) {
                         Swal.fire("Failed!", data.error, "error");
                     } else if (data.success != undefined) {
-                        Swal.fire("Submited!", data.success, "success");
-                        $('.nilai').modal('hide');
+                        Swal.fire("Updated!", data.success, "success");
+                        $('.edit').modal('hide');
                         ambil_data();
                     }
                 }

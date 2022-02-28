@@ -81,14 +81,7 @@
                 <li>
                     <a href="/santri/nilai" class="waves-effect">
                         <i class="uil-sort-amount-down"></i>
-                        <span>Nilai</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/santri/rangking" class="waves-effect">
-                        <i class="uil-trophy"></i>
-                        <span>Rangking</span>
+                        <span>Nilai dan Rangking</span>
                     </a>
                 </li>
 

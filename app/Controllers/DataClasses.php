@@ -69,7 +69,6 @@ class DataClasses extends BaseController
                     ->join('profil wali', 'master_kelas.wali_id = wali.id', 'LEFT')
                     ->where('master_kelas.deskripsi', $jenjang)
                     ->where('kelas_profil.tahun_ajaran', $tahun)
-                    ->groupBy('kelas')
                     ->findAll();
             } else {
                 $posts = $this->kelasprofilModel

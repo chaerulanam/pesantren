@@ -64,6 +64,7 @@ class Tagihan extends BaseController
                 ->join('master_kelas', 'tagihan.kelas_id = master_kelas.id')
                 ->join('users_profil', 'users_profil.user_id = users.id')
                 ->join('profil', 'users_profil.profil_id = profil.id')
+                ->orderBy('tagihan.id', 'DESC')
                 ->where('tagihan.user_id', user_id())
                 ->where('tahun_ajaran', $this->tahunModel->TahunAktif())
                 ->findAll();
@@ -151,13 +152,15 @@ class Tagihan extends BaseController
             $tahun = $this->request->getGet('tahun');
 
             $posts = $this->tagihanModel
-                ->select('*, tagihan.deskripsi as desc, tagihan.updated_at')
+                ->select('*, tagihan.deskripsi as desc, tagihan.updated_at, pembayaran.status')
                 ->join('master_tagihan', 'tagihan.master_tagihan_id = master_tagihan.id')
                 ->join('pembayaran', 'tagihan.invoice = pembayaran.order_id')
                 ->join('users', 'tagihan.user_id = users.id')
                 ->join('users_profil', 'users_profil.user_id = users.id')
                 ->join('profil', 'users_profil.profil_id = profil.id')
-                ->where('tagihan.useri_id', user_id())
+                ->groupBy('order_id')
+                ->orderBy('pembayaran.id', 'DESC')
+                ->where('tagihan.user_id', user_id())
                 ->where('pembayaran.tahun_ajaran', $this->tahunModel->TahunAktif())
                 ->findAll();
 
@@ -496,11 +499,16 @@ class Tagihan extends BaseController
                 $post = $this->pembayaranModel->where('order_id', $order_id)->get()->getRow();
                 $data = [
                     'id' => $post->id,
+                    'order_id' => $order_id,
+                    'payment_type' => $type,
+                    'gross_amount' => (int)$gross_amount,
+                    'pdf_link' => '',
+                    'bank' => $bank,
+                    'va_number' => $va_number,
                     'status' => $transaction,
                 ];
             } else {
                 $data = [
-                    'user_id' => substr($order_id, 13, 4),
                     'order_id' => $order_id,
                     'payment_type' => $type,
                     'gross_amount' => (int)$gross_amount,

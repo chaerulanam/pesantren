@@ -127,8 +127,8 @@
                         <li><a href="/admin/data-lessons-schedules"><?= lang('Files.Data Lessons Schedules') ?></a></li>
                         <li><a href="/admin/master-lessons"><?= lang('Files.Master Lessons') ?></a></li>
                         <li><a href="/admin/master-schedules"><?= lang('Files.Master Schedules') ?></a></li>
-                        <li><a href="/admin/data-attendences"><?= lang('Files.Data Attendences') ?></a></li>
-                        <li><a href="/admin/data-values-ranks"><?= lang('Files.Data Values and Ranks') ?></a></li>
+                        <li><a href="/admin/data-presences"><?= lang('Files.Data Attendences') ?></a></li>
+                        <li><a href="/admin/data-values"><?= lang('Files.Data Values and Ranks') ?></a></li>
                     </ul>
                 </li>
                 <?php endif; ?>

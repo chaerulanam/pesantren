@@ -51,6 +51,7 @@ class Values extends BaseController
                     ->join('users', 'users_profil.user_id = users.id')
                     ->where('users.id', user_id())
                     ->where('tahun_ajaran', $tahun)
+                    ->groupBy('nama_pelajaran')
                     ->orderBy('kelas_id', 'ASC')
                     ->orderBy('hari', 'ASC')
                     ->orderBy('jam', 'ASC')
@@ -66,6 +67,7 @@ class Values extends BaseController
                     ->join('users', 'users_profil.user_id = users.id')
                     ->where('users.id', user_id())
                     ->where('tahun_ajaran', $this->tahunModel->TahunAktif())
+                    ->groupBy('nama_pelajaran')
                     ->orderBy('kelas_id', 'ASC')
                     ->orderBy('hari', 'ASC')
                     ->orderBy('jam', 'ASC')
@@ -75,17 +77,12 @@ class Values extends BaseController
             if ($posts) {
                 $no = 0;
                 foreach ($posts as $key) {
-                    $totalmasuk = $this->kehadiranModel
-                        ->where('jadwal_id', $key->jadwalpelajaranid)
-                        ->groupBy('date(created_at)')
-                        ->countAllresults();
                     $no++;
                     $row = array();
                     $row[] = $no;
                     $row[] = $key->kelas;
                     $row[] = $key->nama_pelajaran;
                     $row[] = $hari[$key->hari] . ' | ' . $key->jam;
-                    $row[] = $totalmasuk;
                     $row[] = $key->tahun_ajaran;
                     $row[] = '<div class="btn-group d-flex justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-outline-info" id="nilai"  data-bs-toggle="modal" data-bs-target=".nilai" data-id="' . $key->jadwalpelajaranid . '">

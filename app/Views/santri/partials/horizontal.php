@@ -135,8 +135,7 @@
                                     <div class="col-lg-4">
                                         <div>
                                             <a href="/santri/kehadiran" class="dropdown-item">Kehadiran</a>
-                                            <a href="/santri/nilai" class="dropdown-item">Nilai</a>
-                                            <a href="/santri/rangking" class="dropdown-item">Rangking</a>
+                                            <a href="/santri/nilai" class="dropdown-item">Nilai dan Rangking</a>
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +154,7 @@
                                         <div>
                                             <a href="/santri/kunjungan" class="dropdown-item">Kunjungan</a>
                                             <a href="/santri/perizinan" class="dropdown-item">Perizinan</a>
-                                            <a href="/santri/pelajaran" class="dropdown-item">Pelanggaran</a>
+                                            <a href="/santri/pelanggaran" class="dropdown-item">Pelanggaran</a>
                                         </div>
                                     </div>
                                 </div>
