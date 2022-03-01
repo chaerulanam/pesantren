@@ -781,6 +781,47 @@ $(document).on('click', '#button-setusername', function(e) {
 });
 </script>
 
+<script>
+$(document).on('click', '#button-import', function(e) {
+    let file = $('#file').prop('files')[0];
+    let fd = new FormData();
+    fd.append('file', file);
+    fd.append('csrf_token_name', $('input[name=csrf_token_name]').val());
+    $.ajax({
+        url: "<?= route_to('admin/teachers-import') ?>",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        // global: false,
+        // async: false,
+        beforeSend: function() {
+            $('#button-import').removeAttr('disable');
+            $('#button-import').html('<i class="fa fa-spin fa-spinner"></i>');
+        },
+        complete: function(e) {
+            $('#button-import').prop('disable', 'disable');
+            $('#button-import').html('Yes, Import!');
+        },
+        success: function(data) {
+            console.log(data);
+            $('input[name=csrf_token_name]').val(data.csrf_token_name);
+            if (data.username != undefined) {
+                toastr.error(data.username);
+            } else if (data.email != undefined) {
+                toastr.error(data.email);
+            } else if (data.file != undefined) {
+                toastr.error(data.file);
+            } else if (data.message != undefined) {
+                toastr.success(data.message);
+                $('.entricsv').modal('hide');
+                ambil_data();
+            }
+        }
+    });
+});
+</script>
+
 <script src="<?= base_url(); ?>/assets/js/app.js"></script>
 
 </body>

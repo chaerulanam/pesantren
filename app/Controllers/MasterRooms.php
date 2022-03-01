@@ -92,13 +92,13 @@ class MasterRooms extends BaseController
             if (!$this->validate(
                 [
                     'nama_kamar' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Kamar harus diisi !'
                         ]
                     ],
                     'nama_gedung' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Nama gedung harus diisi !'
                         ]

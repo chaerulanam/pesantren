@@ -10,7 +10,7 @@ class All extends Seeder
     {
         $this->call('Opsi');
         $this->call('Admin');
-        $this->call('Users');
+        // $this->call('Users');
         $this->call('Groups');
         $this->call('GroupsUsers');
         $this->call('Permissions');
@@ -20,7 +20,7 @@ class All extends Seeder
         $this->call('MasterPelajaran');
         $this->call('MasterTahun');
         $this->call('MasterTagihan');
-        $this->call('Profil');
-        $this->call('UsersProfil');
+        // $this->call('Profil');
+        // $this->call('UsersProfil');
     }
 }

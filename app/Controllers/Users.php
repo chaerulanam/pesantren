@@ -252,12 +252,11 @@ class Users extends BaseController
 				// $allowedPostFields = array_merge(['password'], $this->config->validFields, $this->config->personalFields);
 				$user = new User($data);
 
-				$this->config->requireActivation === null ? $user->activate() : $user->generateActivateHash();
-
+				$user->activate();
 				// Ensure default group gets assigned if set
-				if (!empty($this->config->defaultUserGroup)) {
-					$users = $users->withGroup('none');
-				}
+				// if (!empty($this->config->defaultUserGroup)) {
+				$users = $users->withGroup('none');
+				// }
 
 				if (!$users->save($user)) {
 					// return redirect()->back()->withInput()->with('errors', $users->errors());
@@ -267,26 +266,9 @@ class Users extends BaseController
 					return $this->response->setJSON($data);
 				}
 
-				if ($this->config->requireActivation !== null) {
-					$activator = service('activator');
-					$sent = $activator->send($user);
-
-					if (!$sent) {
-						// return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
-						$data = $activator->error() ?? lang('Auth.unknownError');
-						$data[$csrfname] = $csrfhash;
-						return $this->response->setJSON($data);
-					}
-					// Success!
-					// return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
-					$data = array('message' => lang('Auth.activationSuccess'));
-					$data[$csrfname] = $csrfhash;
-					return $this->response->setJSON($data);
-				}
-
 				$data = [
-					'user_id' => user()->id,
-					'pesan' => 'Add New User ' . $key[0],
+					'user_id' => user_id(),
+					'pesan' => 'Menambahkan user baru ' . $key[0],
 				];
 
 				$this->logModel->save($data);

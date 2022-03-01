@@ -91,13 +91,13 @@ class MasterClasses extends BaseController
             if (!$this->validate(
                 [
                     'kelas' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Kelas is required !'
                         ]
                     ],
                     'deskripsi' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Deskripsi is required !'
                         ]

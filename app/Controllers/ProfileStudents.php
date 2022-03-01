@@ -6,10 +6,21 @@ use App\Models\OrangtuaModel;
 use App\Models\ProfilModel;
 use App\Models\UsersProfilModel;
 use App\Models\WaliModel;
+use CodeIgniter\HTTP\ResponseTrait;
+use Myth\Auth\Authorization\GroupModel;
+use Myth\Auth\Config\Auth as AuthConfig;
+use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel;
 
 class ProfileStudents extends BaseController
 {
+    protected $auth;
+    use ResponseTrait;
+
+    /**
+     * @var AuthConfig
+     */
+    protected $config;
     public function __construct()
     {
         $this->userModel = new UserModel();
@@ -17,6 +28,10 @@ class ProfileStudents extends BaseController
         $this->orangtuaModel = new OrangtuaModel();
         $this->waliModel = new WaliModel();
         $this->usersprofilModel = new UsersProfilModel();
+        $this->config = config('Auth');
+        $this->auth = service('authentication');
+        $this->auth = service('authorization');
+        $this->groupModel = new GroupModel();
     }
     public function index()
     {
@@ -315,7 +330,7 @@ class ProfileStudents extends BaseController
             ];
 
             if (!$this->profilModel->save($data)) {
-                $data = array('error' => 'Failed Add to Data Profile');
+                $data = array('error' => 'Gagal menambahkan profil santri');
                 $data[$csrfname] = $csrfhash;
                 return $this->response->setJSON($data);
             }
@@ -333,7 +348,7 @@ class ProfileStudents extends BaseController
             ];
 
             if (!$this->orangtuaModel->save($data)) {
-                $data = array('error' => 'Failed Add to Data Orang Tua.');
+                $data = array('error' => 'Gagal menambahkan orangtua santri.');
                 $data[$csrfname] = $csrfhash;
                 return $this->response->setJSON($data);
             }
@@ -347,7 +362,7 @@ class ProfileStudents extends BaseController
             ];
 
             if (!$this->waliModel->save($data)) {
-                $data = array('error' => 'Failed Add to Data Wali.');
+                $data = array('error' => 'Gagal menambahkan wali santri.');
                 $data[$csrfname] = $csrfhash;
                 return $this->response->setJSON($data);
             }
@@ -366,11 +381,11 @@ class ProfileStudents extends BaseController
 
             $data = [
                 'user_id' => user()->id,
-                'pesan' => 'Add new student  ' . $this->request->getPost('nama_lengkap'),
+                'pesan' => 'Menambah santri baru  ' . $this->request->getPost('nama_lengkap'),
             ];
             $this->logModel->save($data);
 
-            $data = array('success' => 'Successfully add new student.');
+            $data = array('success' => 'Berhasil menambah santri baru.');
             $data[$csrfname] = $csrfhash;
             return $this->response->setJSON($data);
         } else {
@@ -710,6 +725,133 @@ class ProfileStudents extends BaseController
             return $this->response->setJSON($data);
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+
+    public function import()
+    {
+        if ($this->request->isAJAX()) {
+            $csrfname = csrf_token();
+            $csrfhash = csrf_hash();
+            if (!$this->validate(
+                [
+                    'file' => [
+                        'rules' => 'uploaded[file]',
+                        'errors' => [
+                            'uploaded' => 'Upload Your File !',
+                        ],
+                    ],
+                ]
+            )) {
+                $validation = service('validation')->getErrors();
+                $data = $validation;
+                $data[$csrfname] = $csrfhash;
+                return $this->response->setJSON($data);
+            }
+
+            $file = $this->request->getFile('file');
+            $filename = $file->getTempName();
+
+            $post = array_map('str_getcsv', file($filename));
+
+            $data = array();
+            foreach ($post as $key) {
+                $data = [
+                    'username' => $key[0],
+                    'email' => $key[1] . '@al-ishlahtajug.sch.id',
+                    'password' => $key[2],
+                ];
+
+                $users = model(UserModel::class);
+
+                // $allowedPostFields = array_merge(['password'], $this->config->validFields, $this->config->personalFields);
+                $user = new User($data);
+
+                $user->activate();
+
+                $users = $users->withGroup('santri');
+
+                if (!$users->save($user)) {
+                    // return redirect()->back()->withInput()->with('errors', $users->errors());
+
+                    $data = $users->errors();
+                    $data[$csrfname] = $csrfhash;
+                    return $this->response->setJSON($data);
+                }
+
+                // // profil
+
+                $data = [
+                    'nama_lengkap' => $key[3],
+                    'sekolah_asal' => $key[4],
+                    'jenis_kelamin' => $key[5],
+                    'nisn' => $key[6],
+                    'tempat_lahir' => $key[7],
+                    'tanggal_lahir' => $key[8],
+                    'nik' => $key[9],
+                    'kk' => $key[10],
+                    'jenjang_pendidikan' => $key[11],
+                    'no_hp' => $key[12],
+                    'alamat_lengkap' => $key[13],
+                ];
+
+                if (!$this->profilModel->save($data)) {
+                    $data = array('error' => 'Gagal menambahkan profil santri');
+                    $data[$csrfname] = $csrfhash;
+                    return $this->response->setJSON($data);
+                }
+
+                // // //orangtua
+
+                $data = [
+                    'nama_ayah' => $key[14],
+                    'pendidikan_ayah' => $key[15],
+                    'penghasilan_ayah' => $key[16],
+                    'pekerjaan_ayah' => $key[17],
+                    'nama_ibu' => $key[18],
+                    'pendidikan_ibu' => $key[19],
+                    'penghasilan_ibu' => $key[20],
+                    'pekerjaan_ibu' => $key[21],
+                    'profil_id' => $this->profilModel->getID(),
+                ];
+
+                if (!$this->orangtuaModel->save($data)) {
+                    $data = array('error' => 'Gagal menambahkan orangtua santri.');
+                    $data[$csrfname] = $csrfhash;
+                    return $this->response->setJSON($data);
+                }
+
+                $data = [
+                    'nama_wali' => $key[22],
+                    'hubungan_sosial' => $key[23],
+                    'penghasilan_wali' => $key[24],
+                    'pekerjaan_wali' => $key[25],
+                    'profil_id' => $this->profilModel->getID(),
+                ];
+
+                if (!$this->waliModel->save($data)) {
+                    $data = array('error' => 'Gagal menambahkan wali santri.');
+                    $data[$csrfname] = $csrfhash;
+                    return $this->response->setJSON($data);
+                }
+
+                if (!$this->usersprofilModel->adduserstoprofil($this->userModel->getID(), $this->profilModel->getID())) {
+                    $data = array('error' => 'Gagal menambahkan santri ke user');
+                    $data[$csrfname] = $csrfhash;
+                    return $this->response->setJSON($data);
+                }
+
+                $data = [
+                    'user_id' => user_id(),
+                    'pesan' => 'Menambahkan santri baru' . $key[3],
+                ];
+
+                $this->logModel->save($data);
+            }
+            $data = array('message' => lang('Auth.registerSuccess'));
+            $data[$csrfname] = $csrfhash;
+            return $this->response->setJSON($data);
         }
     }
 }

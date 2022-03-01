@@ -114,7 +114,7 @@ class DataVisitations extends BaseController
                         ]
                     ],
                     'nama_pengunjung' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Nama pengunjung harus diisi !'
                         ]

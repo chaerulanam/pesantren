@@ -21,9 +21,9 @@ class MasterLessons extends BaseController
                 ->join('orangtua', 'orangtua.profil_id = profil.id')
                 ->join('wali', 'wali.profil_id = profil.id')
                 ->get()->getRow(),
-            'title_meta' => view('admin/partials/title-meta', ['title' => 'Master Billings', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
-            'page_title' => view('admin/partials/page-title', ['title' => 'Master Billings', 'pagetitle' => $this->opsiModel->getopsi('sitename'),]),
-            'title_table' => lang('Files.Master Billings')
+            'title_meta' => view('admin/partials/title-meta', ['title' => 'Master Lessons', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
+            'page_title' => view('admin/partials/page-title', ['title' => 'Master Lessons', 'pagetitle' => $this->opsiModel->getopsi('sitename'),]),
+            'title_table' => lang('Files.Master Lessons')
         ];
         // dd($data);
         return view('admin/master-pelajaran', $data);
@@ -72,13 +72,13 @@ class MasterLessons extends BaseController
             if (!$this->validate(
                 [
                     'pelajaran' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Mata Pelajaran is required !'
                         ]
                     ],
                     'deskripsi' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Deskripsi is required !'
                         ]

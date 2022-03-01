@@ -71,13 +71,13 @@ class MasterBillings extends BaseController
             if (!$this->validate(
                 [
                     'nama_tagihan' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => '{field} Harus diisi !'
                         ]
                     ],
                     'deskripsi' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => '{field} Harus diisi !'
                         ]

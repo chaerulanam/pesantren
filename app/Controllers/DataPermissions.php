@@ -114,7 +114,7 @@ class DataPermissions extends BaseController
                         ]
                     ],
                     'keperluan' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Keperluan harus diisi !'
                         ]

@@ -21,9 +21,9 @@ class MasterSchedules extends BaseController
                 ->join('orangtua', 'orangtua.profil_id = profil.id')
                 ->join('wali', 'wali.profil_id = profil.id')
                 ->get()->getRow(),
-            'title_meta' => view('admin/partials/title-meta', ['title' => 'Master Billings', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
-            'page_title' => view('admin/partials/page-title', ['title' => 'Master Billings', 'pagetitle' => $this->opsiModel->getopsi('sitename'),]),
-            'title_table' => lang('Files.Master Billings')
+            'title_meta' => view('admin/partials/title-meta', ['title' => 'Master Schedules', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
+            'page_title' => view('admin/partials/page-title', ['title' => 'Master Schedules', 'pagetitle' => $this->opsiModel->getopsi('sitename'),]),
+            'title_table' => lang('Files.Master Schedules')
         ];
         // dd($data);
         return view('admin/master-jadwal', $data);

@@ -90,13 +90,13 @@ class DataExpenditures extends BaseController
             if (!$this->validate(
                 [
                     'nama_penerima' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Nama penerima harus diisi !'
                         ]
                     ],
                     'nominal' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Nominal harus diisi !'
                         ]

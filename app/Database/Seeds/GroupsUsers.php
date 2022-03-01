@@ -32,20 +32,20 @@ class GroupsUsers extends Seeder
             ],
         ];
 
-        for ($i = 6; $i < 906; $i++) {
-            $row = [
-                'group_id' => 10,
-                'user_id'    => $i
-            ];
-            $data[] = $row;
-        }
-        for ($i = 906; $i < 916; $i++) {
-            $row = [
-                'group_id' => 9,
-                'user_id'    => $i
-            ];
-            $data[] = $row;
-        }
+        // for ($i = 6; $i < 906; $i++) {
+        //     $row = [
+        //         'group_id' => 10,
+        //         'user_id'    => $i
+        //     ];
+        //     $data[] = $row;
+        // }
+        // for ($i = 906; $i < 916; $i++) {
+        //     $row = [
+        //         'group_id' => 9,
+        //         'user_id'    => $i
+        //     ];
+        //     $data[] = $row;
+        // }
 
         // Using Query Builder
         $this->db->table('auth_groups_users')->insertBatch($data);

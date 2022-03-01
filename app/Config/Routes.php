@@ -61,6 +61,7 @@ $routes->group('admin', function ($routes) {
 	$routes->get('detail-students', 'ProfileDetails::index', ['filter' => 'permission:manage.santri']);
 	$routes->get('get-detail-students', 'ProfileStudents::get_detail', ['filter' => 'permission:manage.santri']);
 	$routes->post('add-students', 'ProfileStudents::add', ['filter' => 'permission:manage.santri']);
+	$routes->post('students-import', 'ProfileStudents::import', ['filter' => 'permission:manage.santri']);
 	$routes->post('setuser-students', 'ProfileStudents::setusersprofil', ['filter' => 'permission:manage.santri']);
 	$routes->post('update-students', 'ProfileStudents::update', ['filter' => 'permission:manage.santri']);
 	$routes->post('update-foto-students', 'ProfileStudents::updatefoto', ['filter' => 'permission:manage.santri']);
@@ -71,6 +72,7 @@ $routes->group('admin', function ($routes) {
 	$routes->get('detail-teachers', 'ProfileDetails::index', ['filter' => 'permission:manage.guru']);
 	$routes->get('get-detail-teachers', 'ProfileTeachers::get_detail', ['filter' => 'permission:manage.guru']);
 	$routes->post('add-teachers', 'ProfileTeachers::add', ['filter' => 'permission:manage.guru']);
+	$routes->post('teachers-import', 'ProfileTeachers::import', ['filter' => 'permission:manage.guru']);
 	$routes->post('setuser-teachers', 'ProfileTeachers::setusersprofil', ['filter' => 'permission:manage.guru']);
 	$routes->post('update-foto-teachers', 'ProfileTeachers::updatefoto', ['filter' => 'permission:manage.guru']);
 	$routes->post('update-teachers', 'ProfileTeachers::update', ['filter' => 'permission:manage.guru']);

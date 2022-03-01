@@ -115,13 +115,13 @@ class DataViolations extends BaseController
                         ]
                     ],
                     'nama_pelanggaran' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Nama pelanggaran harus diisi !'
                         ]
                     ],
                     'hukuman' => [
-                        'rules' => 'required',
+                        'rules' => 'required|alpha_numeric_punct',
                         'errors' => [
                             'required' => 'Hukuman harus diisi !'
                         ]
