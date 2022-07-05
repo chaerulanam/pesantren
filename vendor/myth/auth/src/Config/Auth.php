@@ -1,6 +1,4 @@
-<?php
-
-namespace Myth\Auth\Config;
+<?php namespace Myth\Auth\Config;
 
 use CodeIgniter\Config\BaseConfig;
 
@@ -16,7 +14,7 @@ class Auth extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $defaultUserGroup = "none";
+	public $defaultUserGroup;
 
 	/**
 	 * --------------------------------------------------------------------
@@ -37,10 +35,10 @@ class Auth extends BaseConfig
 	 * @var array
 	 */
 	public $views = [
-		'login'		   => 'App\Views\admin\auth-login',
-		'register'		=> 'App\Views\admin\auth-register',
-		'forgot'		  => 'App\Views\admin\auth-recoverpw',
-		'reset'		   => 'App\Views\admin\auth-reset',
+		'login'		   => 'Myth\Auth\Views\login',
+		'register'		=> 'Myth\Auth\Views\register',
+		'forgot'		  => 'Myth\Auth\Views\forgot',
+		'reset'		   => 'Myth\Auth\Views\reset',
 		'emailForgot'	 => 'Myth\Auth\Views\emails\forgot',
 		'emailActivation' => 'Myth\Auth\Views\emails\activation',
 	];
@@ -176,7 +174,7 @@ class Auth extends BaseConfig
 	 *
 	 * @var bool
 	 */
-	public $allowRemembering = true;
+	public $allowRemembering = false;
 
 	/**
 	 * --------------------------------------------------------------------

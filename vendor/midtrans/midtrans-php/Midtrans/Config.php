@@ -13,13 +13,13 @@ class Config
      * 
      * @static
      */
-    public static $serverKey = "SB-Mid-server-c8jXCewuJV0ZOpJz5vqEpInY";
+    public static $serverKey;
     /**
      * Your merchant's client key
      * 
      * @static
      */
-    public static $clientKey = "SB-Mid-client-_KV8hAVQKyVBfFID";
+    public static $clientKey;
     /**
      * True for production
      * false for sandbox mode
@@ -32,7 +32,7 @@ class Config
      * 
      * @static
      */
-    public static $is3ds = true;
+    public static $is3ds = false;
     /**
      *  Set Append URL notification
      * 
@@ -58,7 +58,7 @@ class Config
      * 
      * @static
      */
-    public static $isSanitized = true;
+    public static $isSanitized = false;
     /**
      * Default options for every request
      * 
@@ -79,7 +79,7 @@ class Config
     public static function getBaseUrl()
     {
         return Config::$isProduction ?
-            Config::PRODUCTION_BASE_URL : Config::SANDBOX_BASE_URL;
+        Config::PRODUCTION_BASE_URL : Config::SANDBOX_BASE_URL;
     }
 
     /**
@@ -90,6 +90,6 @@ class Config
     public static function getSnapBaseUrl()
     {
         return Config::$isProduction ?
-            Config::SNAP_PRODUCTION_BASE_URL : Config::SNAP_SANDBOX_BASE_URL;
+        Config::SNAP_PRODUCTION_BASE_URL : Config::SNAP_SANDBOX_BASE_URL;
     }
 }

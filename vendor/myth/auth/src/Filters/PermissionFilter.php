@@ -1,6 +1,4 @@
-<?php
-
-namespace Myth\Auth\Filters;
+<?php namespace Myth\Auth\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -26,18 +24,21 @@ class PermissionFilter implements FilterInterface
 	 */
 	public function before(RequestInterface $request, $params = null)
 	{
-		if (!function_exists('logged_in')) {
+		if (! function_exists('logged_in'))
+		{
 			helper('auth');
 		}
 
-		if (empty($params)) {
+		if (empty($params))
+		{
 			return;
 		}
 
 		$authenticate = service('authentication');
 
 		// if no user is logged in then send to the login form
-		if (!$authenticate->check()) {
+		if (! $authenticate->check())
+		{
 			session()->set('redirect_url', current_url());
 			return redirect('login');
 		}
@@ -46,21 +47,21 @@ class PermissionFilter implements FilterInterface
 		$result = true;
 
 		// Check each requested permission
-		foreach ($params as $permission) {
+		foreach ($params as $permission)
+		{
 			$result = $result && $authorize->hasPermission($permission, $authenticate->id());
 		}
 
-		if (!$result) {
-			if ($authenticate->silent()) {
+		if (! $result)
+		{
+			if ($authenticate->silent())
+			{
 				$redirectURL = session('redirect_url') ?? '/';
 				unset($_SESSION['redirect_url']);
 				return redirect()->to($redirectURL)->with('error', lang('Auth.notEnoughPrivilege'));
-			} else {
-				if (has_permission('dashboard.view')) {
-					return redirect()->to('/admin');
-				} else {
-					return redirect()->to('/santri');
-				}
+			}
+			else {
+				throw new PermissionException(lang('Auth.notEnoughPrivilege'));
 			}
 		}
 	}
@@ -81,6 +82,7 @@ class PermissionFilter implements FilterInterface
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
+
 	}
 
 	//--------------------------------------------------------------------
