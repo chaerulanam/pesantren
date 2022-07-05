@@ -51,10 +51,10 @@ $routes->group('admin', function ($routes) {
 	$routes->post('data-users-delete', 'Users::delete', ['filter' => 'permission:manage.users']);
 	$routes->post('data-users-reset-password', 'Users::attemptReset', ['filter' => 'permission:manage.users']);
 
-	$routes->get('management-users', 'ManagementUsers::index', ['filter' => 'role:superadmin']);
-	$routes->get('management-users-datatable', 'ManagementUsers::datatable', ['filter' => 'role:superadmin']);
-	$routes->post('management-users-add', 'ManagementUsers::addgroupstopermission', ['filter' => 'role:superadmin']);
-	$routes->post('management-users-remove', 'ManagementUsers::removegroupstopermission', ['filter' => 'role:superadmin']);
+	$routes->get('management-users', 'ManagementUsers::index', ['filter' => 'permission:manage.admin']);
+	$routes->get('management-users-datatable', 'ManagementUsers::datatable', ['filter' => 'permission:manage.admin']);
+	$routes->post('management-users-add', 'ManagementUsers::addgroupstopermission', ['filter' => 'permission:manage.admin']);
+	$routes->post('management-users-remove', 'ManagementUsers::removegroupstopermission', ['filter' => 'permission:manage.admin']);
 
 	$routes->get('data-students', 'ProfileStudents::index', ['filter' => 'permission:manage.santri']);
 	$routes->get('data-students-datatable', 'ProfileStudents::datatable', ['filter' => 'permission:manage.santri']);

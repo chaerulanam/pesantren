@@ -186,3 +186,6 @@ var options2 = {
         }
     }
 };
+
+var chart2 = new ApexCharts(document.querySelector("#growth-chart"), options2);
+chart2.render();

@@ -194,12 +194,12 @@
                 <?php endif; ?>
                 <?php if (has_permission('manage.admin')) : ?>
                 <li class="menu-title"><?= lang('Files.Settings') ?></li>
-                <li>
+                <!-- <li>
                     <a href="/admin/site-identity" class="waves-effect">
                         <i class="uil-globe"></i>
                         <span><?= lang('Files.Site Identity') ?></span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="/admin/school-years" class="waves-effect">
                         <i class="uil-clipboard-blank"></i>

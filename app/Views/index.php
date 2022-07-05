@@ -58,7 +58,7 @@
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="/" class="nav-item nav-link active">Home</a>
                 <a href="/admin" class="nav-item nav-link">SI-PES</a>
-                <a href="https://al-ishlahtajug.sch.id" class="nav-item nav-link">PSB</a>
+                <a href="https://psb.<?= str_replace('https://', '', base_url()); ?>" class="nav-item nav-link">PSB</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRESTASI</a>
                     <div class="dropdown-menu fade-down m-0">
@@ -115,7 +115,7 @@
                                 <a href="https://www.youtube.com/channel/UCT4epiMdlDgDPs4ihQ-BHDA/videos"
                                     class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Tonton
                                     video</a>
-                                <a href="http://al-ishlahtajug.sch.id/"
+                                <a href="https://psb.<?= str_replace('https://', '', base_url()); ?>"
                                     class="btn btn-light py-md-3 px-md-5 animated slideInRight">Daftar
                                     sekarang</a>
                             </div>
@@ -448,8 +448,8 @@
 
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>

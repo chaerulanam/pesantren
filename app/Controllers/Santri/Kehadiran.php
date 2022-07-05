@@ -50,18 +50,23 @@ class Kehadiran extends BaseController
                 $tahun = $this->tahunModel->TahunAktif();
             }
 
-            $posts = $this->kehadiranModel
+            $posts = $this->jadwalpelajaranModel
                 ->select('*, kehadiran.id as kehadiranid, jadwal_pelajaran.id as pelajaranid, master_pelajaran.id as mapelid, kehadiran.status, kehadiran.created_at')
-                ->join('jadwal_pelajaran', 'kehadiran.jadwal_id = jadwal_pelajaran.id')
+                ->join('kehadiran', 'kehadiran.jadwal_id = jadwal_pelajaran.id', 'LEFT')
                 ->join('master_pelajaran', 'jadwal_pelajaran.pelajaran_id = master_pelajaran.id')
                 ->join('master_jadwal', 'jadwal_pelajaran.jadwal_id = master_jadwal.id')
                 ->join('master_kelas', 'jadwal_pelajaran.kelas_id = master_kelas.id')
-                ->join('profil', 'kehadiran.santri_id = profil.id')
-                ->join('users_profil', 'users_profil.profil_id = profil.id')
-                ->join('users', 'users_profil.user_id = users.id')
-                ->where('tahun_ajaran', $tahun)
-                ->where('users.id', user_id())
-                ->orderBy('kelas_id', 'ASC')
+                ->join('profil santri1', 'kehadiran.santri_id = santri1.id', 'LEFT')
+                ->join('users_profil u1', 'u1.profil_id = santri1.id', 'LEFT')
+                ->join('kelas_profil', 'kelas_profil.kelas_id = master_kelas.id')
+                ->join('profil santri2', 'kelas_profil.santri_id = santri2.id')
+                ->join('users_profil u2', 'u2.profil_id = santri2.id')
+                ->join('users users1', 'u1.user_id = users1.id', 'LEFT')
+                ->join('users users2', 'u2.user_id = users2.id')
+                ->where('jadwal_pelajaran.tahun_ajaran', $tahun)
+                ->Where('users2.id', user_id())
+                ->orWhere('users1.id', user_id())
+                ->orderBy('master_kelas.id', 'ASC')
                 ->orderBy('hari', 'ASC')
                 ->orderBy('jam', 'ASC')
                 ->findAll();

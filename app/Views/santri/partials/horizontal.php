@@ -117,8 +117,8 @@
                                     <div class="col-lg-4">
                                         <div>
                                             <a href="/santri/tagihan" class="dropdown-item">Tagihan</a>
-                                            <a href="/santri/emoney" class="dropdown-item">E-Money</a>
-                                            <a href="/santri/isisaldo" class="dropdown-item">Isi Saldo</a>
+                                            <!-- <a href="/santri/emoney" class="dropdown-item">E-Money</a>
+                                            <a href="/santri/isisaldo" class="dropdown-item">Isi Saldo</a> -->
                                         </div>
                                     </div>
                                 </div>
