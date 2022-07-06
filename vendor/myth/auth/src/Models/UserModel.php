@@ -45,6 +45,7 @@ class UserModel extends Model
      * @param string|null $ipAddress
      * @param string|null $userAgent
      */
+
     public function logResetAttempt(string $email, string $token = null, string $ipAddress = null, string $userAgent = null)
     {
         $this->db->table('auth_reset_attempts')->insert([

@@ -43,7 +43,7 @@ $routes->group('admin', function ($routes) {
 	$routes->get('datatable-absen', 'Dashboard::chart', ['filter' => 'permission:dashboard.view']);
 
 	$routes->get('data-users', 'Users::index', ['filter' => 'permission:manage.users']);
-	$routes->get('data-users-datatable', 'Users::datatable', ['filter' => 'permission:manage.users']);
+	$routes->post('data-users-datatable', 'Users::datatable', ['filter' => 'permission:manage.users']);
 	$routes->get('data-users-detail', 'Users::get_detail', ['filter' => 'permission:manage.users']);
 	$routes->post('data-users-add', 'Users::attemptRegister', ['filter' => 'permission:manage.users']);
 	$routes->post('data-users-import', 'Users::import', ['filter' => 'permission:manage.users']);

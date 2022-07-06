@@ -11,6 +11,9 @@ use Myth\Auth\Models\UserModel;
 
 class Users extends BaseController
 {
+	protected $column_order = ['id', 'username', 'email'];
+	protected $column_search = ['username', 'email'];
+	protected $order = ['id' => 'DESC'];
 	protected $auth;
 	use ResponseTrait;
 
@@ -61,69 +64,119 @@ class Users extends BaseController
 		return view('admin/users', $data);
 	}
 
+	private function getDatatablesQuery()
+	{
+		$i = 0;
+		foreach ($this->column_search as $item) {
+			if ($this->request->getPost('search[value]')) {
+				if ($i === 0) {
+					$this->userModel->groupStart();
+					$this->userModel->like($item, $this->request->getPost('search[value]'));
+				} else {
+					$this->userModel->orLike($item, $this->request->getPost('search[value]'));
+				}
+				if (count($this->column_search) - 1 == $i)
+					$this->userModel->groupEnd();
+			}
+			$i++;
+		}
+
+		if ($this->request->getPost('order')) {
+			$this->userModel->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
+		}
+	}
+
+	public function getDatatables()
+	{
+		$this->userModel
+			->groupBy('users.id')
+			->select('users.id as userid, username, email, GROUP_CONCAT(name SEPARATOR " | ") as name')
+			->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
+			->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id');
+
+		$this->getDatatablesQuery();
+		if ($this->request->getPost('length') != -1)
+			$this->userModel
+				->limit($this->request->getPost('length'), $this->request->getPost('start'));
+
+		$query = $this->userModel
+			->get();
+		return $query->getResult();
+	}
+
+	public function countFiltered()
+	{
+		$this->getDatatablesQuery();
+		return $this->userModel->countAllResults();
+	}
+
+	public function countAll()
+	{
+		return $this->userModel->countAllResults();
+	}
+
 	public function datatable()
 	{
 		if ($this->request->isAJAX()) {
 			$csrfname = csrf_token();
 			$csrfhash = csrf_hash();
-			if ($posts = $this->userModel
-				->groupBy('users.id')
-				->select('users.id as userid, username, email, GROUP_CONCAT(name SEPARATOR " | ") as name')
-				->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
-				->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id')
-				->orderBy('users.id', 'DESC')
-				->findAll()
-			) {
-				$no = 0;
-				foreach ($posts as $key) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $key->username;
-					$row[] = $key->email;
-					$row[] = $key->name;
-					if ($key->name == 'superadmin') {
-						if ($key->userid == user_id()) {
-							$row[] = '<div class="btn-group d-flex justify-content-center">
-							<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
-							<i class="fas fa-key"></i>
-							</a></div>';
-						} else {
-							$row[] = '<div class="btn-group d-flex justify-content-center">
-                        -</div>';
-						}
+
+			$post = $this->getDatatables();
+
+			$no = $this->request->getPost('start');
+
+			foreach ($post as $key) {
+				$no++;
+				$row = [];
+				$row[] = $no;
+				$row[] = $key->username;
+				$row[] = $key->email;
+				$row[] = $key->name;
+				if ($key->name == 'superadmin') {
+					if ($key->userid == user_id()) {
+						$row[] = '<div class="btn-group d-flex justify-content-center">
+					<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
+					<i class="fas fa-key"></i>
+					</a></div>';
 					} else {
-						if ($key->userid == user_id()) {
+						$row[] = '<div class="btn-group d-flex justify-content-center">
+				-</div>';
+					}
+				} else {
+					if ($key->userid == user_id()) {
+						$row[] = '<div class="btn-group d-flex justify-content-center">
+					<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
+					<i class="fas fa-key"></i>
+					</a></div>';
+					} else {
+						if (in_groups('superadmin')) {
 							$row[] = '<div class="btn-group d-flex justify-content-center">
-							<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
-							<i class="fas fa-key"></i>
-							</a></div>';
+						<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
+						   <i class="fas fa-key"></i>
+						   </a>
+						<a href="javascript:void(0);" class="btn btn-outline-info" id="editmodal" data-bs-toggle="modal" data-bs-target=".editmodal" data-id="' . $key->userid . '">
+						<i class="fas fa-edit"></i>
+						</a>
+						<a href="javascript:void(0);" class="btn btn-outline-danger" id="button-delete" data-id="' . $key->userid . '">
+						<i class="fas fa-trash-alt"></i>
+						</a></div>';
 						} else {
-							if (in_groups('superadmin')) {
-								$row[] = '<div class="btn-group d-flex justify-content-center">
-                        		<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
-                       			<i class="fas fa-key"></i>
-                       			</a>
-                        		<a href="javascript:void(0);" class="btn btn-outline-info" id="editmodal" data-bs-toggle="modal" data-bs-target=".editmodal" data-id="' . $key->userid . '">
-                        		<i class="fas fa-edit"></i>
-                        		</a>
-                        		<a href="javascript:void(0);" class="btn btn-outline-danger" id="button-delete" data-id="' . $key->userid . '">
-                        		<i class="fas fa-trash-alt"></i>
-                        		</a></div>';
-							} else {
-								$row[] = '<div class="btn-group d-flex justify-content-center">
-                       			-</div>';
-							}
+							$row[] = '<div class="btn-group d-flex justify-content-center">
+						   -</div>';
 						}
 					}
-					$data[] = $row;
 				}
-				$data = array('responce' => 'success', 'posts' => $data);
-			} else {
-				$data = array('responce' => 'success', 'posts' => '');
+				$data[] = $row;
 			}
+
+			$output = [
+				'draw' => $this->request->getPost('draw'),
+				'recordsTotal' => $this->countAll(),
+				'recordsFiltered' => $this->countFiltered(),
+				'data' => $data
+			];
 			$data[$csrfname] = $csrfhash;
-			return $this->response->setJSON($data);
+			return $this->response->setJSON($output);
 		} else {
 			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 		}

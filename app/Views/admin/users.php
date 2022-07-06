@@ -301,54 +301,39 @@
 
 <script>
 function ambil_data() {
+    // $("#datatable").DataTable({
+    //     "destroy": true,
+    // }).clear();
     $("#datatable").DataTable({
         "destroy": true,
-    }).clear();
-
-    $.ajax({
-        url: "<?= route_to('admin/data-users-datatable') ?>",
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
+        "processing": true,
+        "serverSide": true,
+        "autoWidth": false,
+        "order": [],
+        "ajax": {
+            "data": {
+                'csrf_token_name': $('input[name=csrf_token_name]').val()
+            },
+            "url": "<?= route_to('admin/data-users-datatable') ?>",
+            "type": "POST"
         },
-        data: {
-            'csrf_token_name': $('input[name=csrf_token_name]').val()
+        "columnDefs": [{
+            "targets": [0],
+            "orderable": false,
+        }],
+        "language": {
+            "emptyTable": "Tidak ada data"
         },
-        type: "get",
-        dataType: "json",
-        method: "get",
-        success: function(data) {
-            // console.log(data);
-            $('#no').val(data.posts.length);
-            $('input[name=csrf_token_name]').val(data.csrf_token_name);
-            if (data.responce == "success") {
-                $("#datatable").DataTable({
-                    "destroy": true,
-                    "data": data.posts,
-                    "responsive": true,
-                    "lengthChange": true,
-                    "autoWidth": false,
-                    "columnDefs": [{
-                        "targets": [0],
-                        "orderable": false,
-                    }],
-                    "language": {
-                        "emptyTable": "Tidak ada data"
-                    },
-                    "buttons": [{
-                            extend: 'copy',
-                            text: 'Copy to clipboard'
-                        },
-                        'excel',
-                        'pdf'
-                    ],
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo(
-                    '#datatable_wrapper .col-md-6:eq(0)');
-            } else {
-
-            }
-        }
-    });
+        "buttons": [{
+                extend: 'copy',
+                text: 'Copy to clipboard'
+            },
+            'excel',
+            'pdf'
+        ],
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo(
+        '#datatable_wrapper .col-md-6:eq(0)');
 }
 $(document).ready(function() {
     ambil_data();
