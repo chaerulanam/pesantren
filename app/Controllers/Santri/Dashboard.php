@@ -82,8 +82,8 @@ class Dashboard extends BaseController
             'title_meta' => view('santri/partials/title-meta', ['title' => 'Profile', 'sitename' => $this->opsiModel->getopsi('sitename'),]),
             'page_title' => view('santri/partials/page-title', ['title' => 'Profile', 'pagetitle' => $this->opsiModel->getopsi('sitename'),])
         ];
-        dd($data);
-        // return view('santri/profil', $data);
+        // dd($data);
+        return view('santri/profil', $data);
     }
 
     public function update()
