@@ -33,6 +33,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('admin', 'Dashboard::index', ['filter' => 'permission:dashboard.view']);
+// $routes->get('santri', 'Santri/Dashboard::index', ['filter' => 'permission:dashboard.view']);
 
 $routes->group('admin', function ($routes) {
 	$routes->get('/', 'Dashboard::index', ['filter' => 'permission:dashboard.view']);
@@ -213,41 +214,41 @@ $routes->group('admin', function ($routes) {
 });
 
 $routes->group('santri', function ($routes) {
-	$routes->get('/', 'Santri/Dashboard::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('profil', 'Santri/Dashboard::profil', ['filter' => 'permission:manage.santri']);
+	$routes->get('/', 'Santri\Dashboard::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('profil', 'Santri\Dashboard::profil', ['filter' => 'permission:manage.santri']);
 	$routes->get('detail-students', 'ProfileDetails::index', ['filter' => 'permission:manage.santri']);
-	$routes->post('profil-update', 'Santri/Dashboard::update', ['filter' => 'permission:manage.santri']);
+	$routes->post('profil-update', 'Santri\Dashboard::update', ['filter' => 'permission:manage.santri']);
 
-	$routes->get('tagihan', 'Santri/Tagihan::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('tagihan-datatable', 'Santri/Tagihan::datatable', ['filter' => 'permission:manage.santri']);
-	$routes->post('tagihan-bayar', 'Santri/Tagihan::pay', ['filter' => 'permission:manage.santri']);
-	$routes->post('tagihan-invoice', 'Santri/Tagihan::invoice', ['filter' => 'permission:manage.santri']);
-	$routes->get('tagihan-datatable-pembayaran', 'Santri/Tagihan::datatable_pembayaran', ['filter' => 'permission:manage.santri']);
-	$routes->post('tagihan-add', 'Santri/Tagihan::add', ['filter' => 'permission:manage.santri']);
-	$routes->post('tagihan-proses', 'Santri/Tagihan::proses', ['filter' => 'permission:manage.santri']);
+	$routes->get('tagihan', 'Santri\Tagihan::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('tagihan-datatable', 'Santri\Tagihan::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->post('tagihan-bayar', 'Santri\Tagihan::pay', ['filter' => 'permission:manage.santri']);
+	$routes->post('tagihan-invoice', 'Santri\Tagihan::invoice', ['filter' => 'permission:manage.santri']);
+	$routes->get('tagihan-datatable-pembayaran', 'Santri\Tagihan::datatable_pembayaran', ['filter' => 'permission:manage.santri']);
+	$routes->post('tagihan-add', 'Santri\Tagihan::add', ['filter' => 'permission:manage.santri']);
+	$routes->post('tagihan-proses', 'Santri\Tagihan::proses', ['filter' => 'permission:manage.santri']);
 
-	$routes->get('invoice', 'Santri/Invoice::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('invoice', 'Santri\Invoice::index', ['filter' => 'permission:manage.santri']);
 
-	$routes->get('kelas', 'Santri/Kelas::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('kelas-datatable', 'Santri/Kelas::datatable', ['filter' => 'permission:manage.santri']);
-	$routes->get('kamar', 'Santri/Kamar::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('kamar-datatable', 'Santri/Kamar::datatable', ['filter' => 'permission:manage.santri']);
-	$routes->get('kunjungan', 'Santri/Kunjungan::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('kunjungan-datatable', 'Santri/Kunjungan::datatable', ['filter' => 'permission:manage.santri']);
-	$routes->get('perizinan', 'Santri/Perizinan::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('perizinan-datatable', 'Santri/Perizinan::datatable', ['filter' => 'permission:manage.santri']);
-	$routes->get('pelanggaran', 'Santri/Pelanggaran::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('pelanggaran-datatable', 'Santri/Pelanggaran::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('kelas', 'Santri\Kelas::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('kelas-datatable', 'Santri\Kelas::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('kamar', 'Santri\Kamar::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('kamar-datatable', 'Santri\Kamar::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('kunjungan', 'Santri\Kunjungan::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('kunjungan-datatable', 'Santri\Kunjungan::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('perizinan', 'Santri\Perizinan::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('perizinan-datatable', 'Santri\Perizinan::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('pelanggaran', 'Santri\Pelanggaran::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('pelanggaran-datatable', 'Santri\Pelanggaran::datatable', ['filter' => 'permission:manage.santri']);
 
-	$routes->get('kehadiran', 'Santri/Kehadiran::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('kehadiran-datatable', 'Santri/Kehadiran::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('kehadiran', 'Santri\Kehadiran::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('kehadiran-datatable', 'Santri\Kehadiran::datatable', ['filter' => 'permission:manage.santri']);
 
-	$routes->get('nilai', 'Santri/Nilai::index', ['filter' => 'permission:manage.santri']);
-	$routes->get('nilai-datatable', 'Santri/Nilai::datatable', ['filter' => 'permission:manage.santri']);
-	$routes->get('nilai-rangking-datatable', 'Santri/Nilai::datatable_rangking', ['filter' => 'permission:manage.santri']);
+	$routes->get('nilai', 'Santri\Nilai::index', ['filter' => 'permission:manage.santri']);
+	$routes->get('nilai-datatable', 'Santri\Nilai::datatable', ['filter' => 'permission:manage.santri']);
+	$routes->get('nilai-rangking-datatable', 'Santri\Nilai::datatable_rangking', ['filter' => 'permission:manage.santri']);
 });
 
-$routes->post('/update-notifikasi-midtrans', 'Santri/Tagihan::notifikasi');
+$routes->post('/update-notifikasi-midtrans', 'Santri\Tagihan::notifikasi');
 
 
 

@@ -309,6 +309,7 @@ function ambil_data() {
         "processing": true,
         "serverSide": true,
         "autoWidth": false,
+        "dom": 'Blfrtip',
         "order": [],
         "ajax": {
             "data": {
@@ -318,9 +319,22 @@ function ambil_data() {
             "type": "POST"
         },
         "columnDefs": [{
-            "targets": [0],
-            "orderable": false,
-        }],
+                'targets': 0,
+                'checkboxes': {
+                    'seletRow': true
+                }
+            },
+            {
+                "targets": [4],
+                "orderable": false,
+            }
+        ],
+        "select": {
+            'style': 'multi'
+        },
+        'order': [
+            [1, 'asc']
+        ],
         "language": {
             "emptyTable": "Tidak ada data"
         },
@@ -505,6 +519,11 @@ $(document).on('click', '#button-update', function(e) {
 });
 
 $(document).on('click', '#button-delete', function(e) {
+    var data = {
+        'id': $(this).attr('data-id'),
+        'csrf_token_name': $('input[name=csrf_token_name]').val()
+    };
+    // console.log(data);
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -515,11 +534,6 @@ $(document).on('click', '#button-delete', function(e) {
         confirmButtonText: "Yes, delete it!"
     }).then(function(result) {
         if (result.value) {
-            var data = {
-                'id': $('#button-delete').attr('data-id'),
-                'csrf_token_name': $('input[name=csrf_token_name]').val()
-            };
-            // console.log(data);
             $.ajax({
                 url: "<?= route_to('admin/data-users-delete') ?>",
                 headers: {

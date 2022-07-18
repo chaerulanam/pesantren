@@ -88,20 +88,22 @@ class Users extends BaseController
 
 	public function getDatatables()
 	{
+		$this->getDatatablesQuery();
 		$this->userModel
 			->groupBy('users.id')
 			->select('users.id as userid, username, email, GROUP_CONCAT(name SEPARATOR " | ") as name')
 			->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
 			->join('auth_groups', 'auth_groups_users.group_id = auth_groups.id');
 
-		$this->getDatatablesQuery();
 		if ($this->request->getPost('length') != -1)
 			$this->userModel
 				->limit($this->request->getPost('length'), $this->request->getPost('start'));
 
 		$query = $this->userModel
-			->get();
-		return $query->getResult();
+			->where('users.deleted_at', null)
+			->get()
+			->getResult();
+		return $query;
 	}
 
 	public function countFiltered()
@@ -124,33 +126,33 @@ class Users extends BaseController
 			$post = $this->getDatatables();
 
 			$no = $this->request->getPost('start');
-
-			foreach ($post as $key) {
-				$no++;
-				$row = [];
-				$row[] = $no;
-				$row[] = $key->username;
-				$row[] = $key->email;
-				$row[] = $key->name;
-				if ($key->name == 'superadmin') {
-					if ($key->userid == user_id()) {
-						$row[] = '<div class="btn-group d-flex justify-content-center">
-					<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
-					<i class="fas fa-key"></i>
-					</a></div>';
-					} else {
-						$row[] = '<div class="btn-group d-flex justify-content-center">
-				-</div>';
-					}
-				} else {
-					if ($key->userid == user_id()) {
-						$row[] = '<div class="btn-group d-flex justify-content-center">
-					<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
-					<i class="fas fa-key"></i>
-					</a></div>';
-					} else {
-						if (in_groups('superadmin')) {
+			if ($post) {
+				foreach ($post as $key) {
+					$no++;
+					$row = [];
+					$row[] = $no;
+					$row[] = $key->username;
+					$row[] = $key->email;
+					$row[] = $key->name;
+					if ($key->name == 'superadmin') {
+						if ($key->userid == user_id()) {
 							$row[] = '<div class="btn-group d-flex justify-content-center">
+					<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
+					<i class="fas fa-key"></i>
+					</a></div>';
+						} else {
+							$row[] = '<div class="btn-group d-flex justify-content-center">
+				-</div>';
+						}
+					} else {
+						if ($key->userid == user_id()) {
+							$row[] = '<div class="btn-group d-flex justify-content-center">
+					<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
+					<i class="fas fa-key"></i>
+					</a></div>';
+						} else {
+							if (in_groups('superadmin')) {
+								$row[] = '<div class="btn-group d-flex justify-content-center">
 						<a href="javascript:void(0);" class="btn btn-outline-secondary" id="passmodal" data-bs-toggle="modal" data-bs-target=".passmodal" data-id="' . $key->userid . '">
 						   <i class="fas fa-key"></i>
 						   </a>
@@ -160,13 +162,16 @@ class Users extends BaseController
 						<a href="javascript:void(0);" class="btn btn-outline-danger" id="button-delete" data-id="' . $key->userid . '">
 						<i class="fas fa-trash-alt"></i>
 						</a></div>';
-						} else {
-							$row[] = '<div class="btn-group d-flex justify-content-center">
+							} else {
+								$row[] = '<div class="btn-group d-flex justify-content-center">
 						   -</div>';
+							}
 						}
 					}
+					$data[] = $row;
 				}
-				$data[] = $row;
+			} else {
+				$data = '';
 			}
 
 			$output = [
@@ -175,7 +180,7 @@ class Users extends BaseController
 				'recordsFiltered' => $this->countFiltered(),
 				'data' => $data
 			];
-			$data[$csrfname] = $csrfhash;
+			$output[$csrfname] = $csrfhash;
 			return $this->response->setJSON($output);
 		} else {
 			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
